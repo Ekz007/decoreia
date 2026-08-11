@@ -1,4 +1,31 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><title>DecoreIA · AI Interior Design</title></head><body><header class="top"><div class="wrap"><div class="logo">🏠</div><div><h1>DecoreIA</h1><p class="sub">AI Interior Design</p></div></div></header><nav><div class="wrap"><a href="index.html">Home</a><a href="support.html">Support</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></nav><main><div class="wrap">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Este arquivo e servido em DOIS lugares, e por isso ele e assim:
+       1. ekz007.github.io/decoreia/  (GitHub Pages) — e a pagina inicial do site
+          legal do app: privacy.html e support.html sao os enderecos que estao
+          cadastrados na App Store Connect e linkam de volta pra ca.
+       2. appsmobile.com.br/          (Vercel) — a raiz do dominio de venda, que
+          precisa levar a pessoa pro funil em /decoreia/.
+
+     Duas armadilhas ficam registradas aqui:
+     - NAO usar <meta http-equiv="refresh" url="/decoreia/">: no GitHub Pages o
+       caminho /decoreia/ E esta propria pagina, entao o redirecionamento vira
+       um LOOP INFINITO e derruba o link de privacidade que a Apple visita.
+       Por isso o desvio e por JavaScript e so no dominio de venda.
+     - A meta tag de verificacao da Meta tem que vir no HTML SERVIDO da pagina
+       inicial (nao injetada depois, nem atras de um 307), senao a verificacao
+       do dominio cai e os anuncios param de atribuir. -->
+<meta name="facebook-domain-verification" content="zh24lw4ribx7ez11nvkkr5x3yo9elh" />
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#C2410C">
+<title>DecoreIA · AI Interior Design</title>
+<script>
+  /* So o dominio de venda desvia pro funil. No GitHub Pages esta pagina continua
+     sendo a inicial do site legal — sem isto, loop. */
+  if (/(^|\.)appsmobile\.com\.br$/.test(location.hostname)) location.replace('/decoreia/');
+</script>
+</head><body><header class="top"><div class="wrap"><div class="logo">🏠</div><div><h1>DecoreIA</h1><p class="sub">AI Interior Design</p></div></div></header><nav><div class="wrap"><a href="index.html">Home</a><a href="support.html">Support</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></nav><main><div class="wrap">
 <h2>DecoreIA</h2><p class="lead">Your AI interior designer. Turn any room photo into a stunning redesign, cinematic video or 3D home — in seconds.</p>
 <div class="card"><h3>Get help &amp; info</h3><p><a href="support.html">Support &amp; FAQ</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a></p><p class="muted">Contact: <a href="mailto:suporte@decoreia.com">suporte@decoreia.com</a></p></div>
 </div></main><footer><div class="wrap">© 2026 EKZ Apps · DecoreIA · <a href="mailto:suporte@decoreia.com">suporte@decoreia.com</a></div></footer></body></html>
