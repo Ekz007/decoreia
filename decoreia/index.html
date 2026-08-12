@@ -426,7 +426,9 @@
     <div class="vgrid" id="vgrid"></div>
     <p class="cap" data-i="videoCap">Clipes de demonstração de outros ambientes. O vídeo do seu é gerado na assinatura.</p>
     <button class="btn" onclick="go(5)" data-i="wantVideo">Quero gerar vídeo tour do meu ambiente</button>
-    <button class="btn ghost" onclick="go(6)" data-i="skipVideo">Agora não, quero só minha imagem</button>
+    <!-- vai pro CHECKOUT (5), nao pra tela de obrigado (6): quem recusa o video
+         ainda nao pagou nada. So o retorno da Stripe com ?pago=1 abre a tela 6. -->
+    <button class="btn ghost" onclick="go(5)" data-i="skipVideo">Agora não, quero só minha imagem</button>
   </section>
 
   <!-- 5 — checkout -->
@@ -1215,7 +1217,14 @@ async function pay(){
   const b=document.querySelector('.applepay');
   if(b){ b.disabled=true; b.querySelector('span').textContent=T('loadingPay'); }
   const foi=await checkout(e);
-  if(!foi){ if(b){b.disabled=false; applyLang();} go(6); window.open(APP_STORE,'_blank','noopener'); }
+  /* Se a Stripe nao abriu, NAO mande pra tela de obrigado: ela diz "pagamento
+     confirmado, assinatura ativa, olhe seu e-mail" e nada disso aconteceu.
+     Mostra o erro e oferece a App Store como caminho alternativo. */
+  if(!foi){
+    if(b){ b.disabled=false; applyLang(); }
+    const m=document.getElementById('ckMsg');
+    if(m){ m.textContent=T('erroPag'); m.style.display='block'; }
+  }
 }
 async function toCard(){
   const e=checkEmail(); if(!e) return;
@@ -1267,11 +1276,13 @@ applyLang(); renderPerks(); renderFaq(); renderCheck();
 (function(){
   const q=new URLSearchParams(location.search);
   if(q.get('pago')==='1'){
-    const nomes={basico_mensal:['Plano Básico','900 diamantes'],
-                 plus_semanal:['Plano Plus','690 diamantes'],
-                 plus_mensal:['Plano Plus','1.800 diamantes'],
-                 plus_trimestral:['Plus 3 meses','4.720 diamantes']};
-    const info=nomes[q.get('plano')];
+    /* nome e diamantes saem do CHECK do idioma atual — antes eram texto fixo
+       em portugues e apareciam assim pra quem comprou em ingles */
+    const pid=q.get('plano');
+    const o=(CHECK[LANG]||[]).find(x=>x.id===pid);
+    const num=n=>n.toLocaleString(LANG==='pt'?'pt-BR':'en-US');
+    const info = o ? [o.t, num(o.dia)+' '+T('diamonds')]
+                   : (pid==='plus_semanal' ? [LANG==='pt'?'Plano Plus':'Plus plan', num(690)+' '+T('diamonds')] : null);
     if(info){
       document.getElementById('okPlanNome').textContent=info[0];
       document.getElementById('okPlanDia').textContent='💎 '+info[1];
