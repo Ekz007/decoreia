@@ -230,12 +230,36 @@
   .rating{display:flex;align-items:center;justify-content:center;gap:9px;margin:0 0 22px;color:var(--ink-2);font-size:14px}
   .rating svg{width:17px;height:20px;flex:none}
   .rating b{font-weight:700;color:var(--ink)}
-  .perks{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 17px;margin-bottom:20px}
-  .perks h3{margin:0 0 11px;font-size:15px;letter-spacing:-.01em}
-  .perks li{list-style:none;display:grid;grid-template-columns:22px 1fr;gap:9px;align-items:start;margin-bottom:9px;font-size:14.5px;color:var(--ink-2);line-height:1.4}
-  .perks li:last-child{margin-bottom:0}
-  .perks .em{font-size:15px;line-height:1.3}
-  .perks b{color:var(--ink)}
+  /* ---------- o que entra na assinatura: um card por item ----------
+     Cada linha carrega UMA promessa concreta e o numero que a sustenta.
+     Fica no tema claro da pagina: nada de faixa escura, que brigaria com
+     o resto do funil. */
+  .perks{margin-bottom:22px}
+  .perks .lab{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--terra);margin:0 0 6px}
+  .perks h3{margin:0 0 13px;font-size:20px;line-height:1.25;letter-spacing:-.02em;color:var(--ink)}
+  .perks ul{margin:0;padding:0;display:grid;gap:9px}
+  .pcard{list-style:none;display:grid;grid-template-columns:46px 1fr 22px;gap:12px;align-items:center;
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
+  .pcard .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:21px;
+    background:rgba(194,65,12,.09)}
+  .pcard .t{display:block;font-size:15.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em;line-height:1.25}
+  .pcard .s{display:block;font-size:13px;color:var(--muted);line-height:1.35;margin-top:2px}
+  .pcard .ck{color:var(--ok);font-size:17px;font-weight:700;text-align:center}
+
+  /* ---------- para quem e / para quem nao e ----------
+     Desqualificar antes de vender: quem se reconhece na 2a lista chega no
+     preco ja convencido, e quem se reconhece na 1a nao vira reembolso. */
+  .fit{margin-bottom:22px;display:grid;gap:11px}
+  .fitbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 15px}
+  .fitbox h4{margin:0 0 9px;font-size:14.5px;letter-spacing:-.01em;color:var(--ink)}
+  .fitbox li{list-style:none;display:grid;grid-template-columns:18px 1fr;gap:9px;align-items:start;
+    margin-bottom:7px;font-size:14px;color:var(--ink-2);line-height:1.4}
+  .fitbox li:last-child{margin-bottom:0}
+  .fitbox .m{font-weight:700;line-height:1.3}
+  .fitno .m{color:var(--muted)}
+  .fityes{border-color:rgba(194,65,12,.28);background:rgba(194,65,12,.035)}
+  .fityes .m{color:var(--terra)}
   .faq{margin-top:26px}
   .faq h3{font-size:17px;margin:0 0 12px;letter-spacing:-.015em}
   .faq details{border-bottom:1px solid var(--line);padding:13px 0}
@@ -463,6 +487,9 @@
     </div>
 
     <div class="perks" id="perks"></div>
+    <!-- qualificar vem ANTES do preco: quem se reconhece decide olhando o
+         valor ja convencido, e quem nao se reconhece sai antes de pagar -->
+    <div class="fit" id="fit"></div>
     <div class="stack" id="checkPlans"></div>
 
     <div class="card" style="margin-bottom:16px">
@@ -719,21 +746,51 @@ const I18N = {
   step2:{pt:"🔒 Passo 2 — seu vídeo do ambiente", en:"🔒 Step 2 — your room video"},
   unlockCta:{pt:"Liberar vídeo tour", en:"Unlock video tour"},
   unlockCap:{pt:"Gerado no seu ambiente assim que o teste começar", en:"Generated from your room as soon as the trial starts"},
-  perksTitle:{pt:"O que você desbloqueia", en:"What you unlock"},
-  perk1:{pt:"<b>Redecorar</b> — 35 estilos, do minimalista ao industrial, na sua própria foto.",
-         en:"<b>Redecorate</b> — 35 styles, from minimalist to industrial, on your own photo."},
-  perk2:{pt:"<b>31 formatos de vídeo</b> — tour, drone, timelapse, antes e depois, obra em progresso.",
-         en:"<b>31 video formats</b> — tour, drone, timelapse, before/after, construction progress."},
-  perk3:{pt:"<b>Trocar piso, parede e teto</b> — mais de 100 materiais reais para testar.",
-         en:"<b>Swap floor, wall and ceiling</b> — over 100 real materials to try."},
-  perk4:{pt:"<b>Remover objetos</b> — esvazie o ambiente ou tire só o que atrapalha.",
-         en:"<b>Remove objects</b> — empty the room or erase just what's in the way."},
-  perk5:{pt:"<b>Planta baixa em 3D</b> — vire a planta numa maquete realista da casa.",
-         en:"<b>Floor plan in 3D</b> — turn the plan into a realistic dollhouse of the home."},
-  perk6:{pt:"<b>Jardim e varanda</b> — 60 estilos de área externa, com churrasqueira e paisagismo.",
-         en:"<b>Garden and balcony</b> — 60 outdoor styles, with grill and landscaping."},
-  perk7:{pt:"<b>Vídeo vertical pronto para postar</b> — sai no formato do Reels e do Stories.",
-         en:"<b>Vertical video ready to post</b> — exported for Reels and Stories."},
+  /* ---- o que entra na assinatura (cards) ----
+     titulo = a promessa; sub = o numero ou a condicao que a sustenta.
+     Todos os numeros foram conferidos no codigo do app. */
+  perksLab:{pt:"O que entra hoje", en:"What you get today"},
+  perksTitle:{pt:"Tudo isto abre no mesmo teste de 3 dias",
+              en:"All of this opens on the same 3-day trial"},
+  p1t:{pt:"125 estilos na sua foto", en:"125 styles on your photo"},
+  p1s:{pt:"35 de interior e 90 de área externa — jardim, varanda e piscina",
+       en:"35 indoor and 90 outdoor — garden, balcony and pool"},
+  p2t:{pt:"O seu ambiente vira vídeo", en:"Your room becomes a video"},
+  p2s:{pt:"31 formatos: tour, drone, timelapse, antes e depois, obra em progresso",
+       en:"31 formats: tour, drone, timelapse, before/after, construction progress"},
+  p3t:{pt:"Piso, parede e teto trocados", en:"Floor, wall and ceiling swapped"},
+  p3s:{pt:"118 materiais reais e 20 cores, para decidir antes de comprar",
+       en:"118 real materials and 20 colors, so you decide before buying"},
+  p4t:{pt:"Objetos removidos da foto", en:"Objects removed from the photo"},
+  p4s:{pt:"Esvazie o ambiente inteiro ou tire só o que atrapalha",
+       en:"Empty the whole room or erase just what's in the way"},
+  p5t:{pt:"A planta baixa vira casa", en:"The floor plan becomes a home"},
+  p5s:{pt:"Envie a planta e receba a maquete 3D, com o nome e o m² de cada cômodo",
+       en:"Send the plan and get the 3D model, with each room's name and area"},
+  p6t:{pt:"O esboço vira foto 4K", en:"The sketch becomes a 4K photo"},
+  p6s:{pt:"Seu render do SketchUp sai como fotografia do imóvel construído",
+       en:"Your SketchUp render comes out as a photo of the finished property"},
+  p7t:{pt:"Sem marca d'água", en:"No watermark"},
+  p7s:{pt:"A imagem sai limpa e em alta resolução, pronta para mandar ao cliente",
+       en:"The image comes out clean and high resolution, ready to send to a client"},
+
+  /* ---- desqualificar antes de vender ---- */
+  fitNoTitle:{pt:"Não assine se você:", en:"Don't subscribe if you:"},
+  fitNo1:{pt:"Só quer uma foto bonita para postar, e nada além disso",
+          en:"Just want a nice photo to post, and nothing beyond that"},
+  fitNo2:{pt:"Espera que a IA adivinhe o estilo sem você escolher nenhum",
+          en:"Expect the AI to guess the style without you picking one"},
+  fitNo3:{pt:"Precisa de projeto técnico assinado por arquiteto, com planta e medidas",
+          en:"Need a technical project signed by an architect, with plans and measurements"},
+  fitYesTitle:{pt:"Assine se você:", en:"Subscribe if you:"},
+  fitYes1:{pt:"Vai reformar e quer ver como fica antes de gastar com material",
+           en:"Are renovating and want to see the result before spending on materials"},
+  fitYes2:{pt:"Vende imóvel e precisa mostrar o depois, não o cômodo vazio",
+           en:"Sell property and need to show the after, not the empty room"},
+  fitYes3:{pt:"Atende cliente de decoração e perde a venda por não ter imagem na hora",
+           en:"Take on decor clients and lose the sale for having no image on the spot"},
+  fitYes4:{pt:"Já tentou explicar sua ideia com foto do Pinterest e não funcionou",
+           en:"Have tried explaining your idea with a Pinterest photo and it didn't work"},
   guarantee:{pt:"<b>30 dias de garantia.</b> Não gostou? Devolvemos o dinheiro.",
              en:"<b>30-day guarantee.</b> Not happy? We refund you."},
   diamonds:{pt:"diamantes", en:"diamonds"},
@@ -1093,9 +1150,30 @@ function renderFaq(){
 }
 function renderPerks(){
   const el=document.getElementById('perks'); if(!el) return;
-  const itens=[['🎨','perk1'],['🎬','perk2'],['🧱','perk3'],['🧹','perk4'],['📐','perk5'],['🌿','perk6'],['📱','perk7']];
-  el.innerHTML = `<h3>${T('perksTitle')}</h3><ul style="margin:0;padding:0">` +
-    itens.map(([e,k])=>`<li><span class="em">${e}</span><span>${T(k)}</span></li>`).join('') + '</ul>';
+  const itens=[['🎨','p1'],['🎬','p2'],['🧱','p3'],['🧹','p4'],['📐','p5'],['🏠','p6'],['💧','p7']];
+  el.innerHTML =
+    `<p class="lab">${T('perksLab')}</p><h3>${T('perksTitle')}</h3><ul>` +
+    itens.map(([e,k])=>`
+      <li class="pcard">
+        <span class="ic">${e}</span>
+        <span><span class="t">${T(k+'t')}</span><span class="s">${T(k+'s')}</span></span>
+        <span class="ck">✓</span>
+      </li>`).join('') + '</ul>';
+}
+/* Quem se reconhece na lista de baixo chega no preco ja convencido; quem se
+   reconhece na de cima desiste agora, e nao vira pedido de reembolso depois. */
+function renderFit(){
+  const el=document.getElementById('fit'); if(!el) return;
+  const bloco=(cls,titulo,marca,chaves)=>`
+    <div class="fitbox ${cls}">
+      <h4>${T(titulo)}</h4>
+      <ul style="margin:0;padding:0">
+        ${chaves.map(k=>`<li><span class="m">${marca}</span><span>${T(k)}</span></li>`).join('')}
+      </ul>
+    </div>`;
+  el.innerHTML =
+    bloco('fitno','fitNoTitle','—',['fitNo1','fitNo2','fitNo3']) +
+    bloco('fityes','fitYesTitle','✓',['fitYes1','fitYes2','fitYes3','fitYes4']);
 }
 /* cobrança web ativa: Stripe conectada e /checkout/create respondendo.
    (RC_LINKS continua suportado caso um dia se use link hospedado da RevenueCat) */
@@ -1269,7 +1347,7 @@ setInterval(tickClock,1000);
 const _go=go;
 go=function(n){ if(n===5&&!deadline){ deadline=Date.now()+10*60*1000; tickClock(); } _go(n); };
 
-applyLang(); renderPerks(); renderFaq(); renderCheck();
+applyLang(); renderPerks(); renderFit(); renderFaq(); renderCheck();
 
 /* Volta do checkout da Stripe. Sem isto a pessoa paga e cai na home, sem
    nenhuma confirmacao — foi o que aconteceu na primeira compra real. */
