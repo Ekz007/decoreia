@@ -247,19 +247,6 @@
   .pcard .s{display:block;font-size:13px;color:var(--muted);line-height:1.35;margin-top:2px}
   .pcard .ck{color:var(--ok);font-size:17px;font-weight:700;text-align:center}
 
-  /* ---------- para quem e / para quem nao e ----------
-     Desqualificar antes de vender: quem se reconhece na 2a lista chega no
-     preco ja convencido, e quem se reconhece na 1a nao vira reembolso. */
-  .fit{margin-bottom:22px;display:grid;gap:11px}
-  .fitbox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 15px}
-  .fitbox h4{margin:0 0 9px;font-size:14.5px;letter-spacing:-.01em;color:var(--ink)}
-  .fitbox li{list-style:none;display:grid;grid-template-columns:18px 1fr;gap:9px;align-items:start;
-    margin-bottom:7px;font-size:14px;color:var(--ink-2);line-height:1.4}
-  .fitbox li:last-child{margin-bottom:0}
-  .fitbox .m{font-weight:700;line-height:1.3}
-  .fitno .m{color:var(--muted)}
-  .fityes{border-color:rgba(194,65,12,.28);background:rgba(194,65,12,.035)}
-  .fityes .m{color:var(--terra)}
   .faq{margin-top:26px}
   .faq h3{font-size:17px;margin:0 0 12px;letter-spacing:-.015em}
   .faq details{border-bottom:1px solid var(--line);padding:13px 0}
@@ -487,6 +474,11 @@
     </div>
 
     <div class="perks" id="perks"></div>
+
+    <!-- a garantia vem ANTES do preco: a pessoa le quanto custa ja sabendo
+         que pode devolver, entao o numero pesa menos -->
+    <div class="guarantee"><span class="g">🛡️</span><span data-i="guarantee"></span></div>
+
     <div class="stack" id="checkPlans"></div>
 
     <div class="card" style="margin-bottom:16px">
@@ -509,14 +501,6 @@
     <p class="terms" data-i="appleWhy" style="margin-top:12px"></p>
     <button class="btn card2" onclick="toCard()" data-i="payCard">Prefiro pagar com cartão</button>
 
-    <!-- qualificar fica colado na garantia: a pessoa se reconhece na lista e
-         ja le, na linha seguinte, que pode desistir sem perder dinheiro -->
-    <div class="fit" id="fit"></div>
-
-    <div class="guarantee"><span class="g">🛡️</span><span data-i="guarantee"></span></div>
-
-    <!-- a promessa mais concreta da pagina fecha o bloco, depois da garantia -->
-    <ul class="perks" id="perkWm" style="margin-bottom:18px"></ul>
 
     <div class="trust">
       <span data-i="tSecure">🔒 Pagamento seguro</span>
@@ -778,23 +762,6 @@ const I18N = {
   p7s:{pt:"A imagem sai limpa e em alta resolução, pronta para mandar ao cliente",
        en:"The image comes out clean and high resolution, ready to send to a client"},
 
-  /* ---- desqualificar antes de vender ---- */
-  fitNoTitle:{pt:"Não assine se você:", en:"Don't subscribe if you:"},
-  fitNo1:{pt:"Só quer uma foto bonita para postar, e nada além disso",
-          en:"Just want a nice photo to post, and nothing beyond that"},
-  fitNo2:{pt:"Espera que a IA adivinhe o estilo sem você escolher nenhum",
-          en:"Expect the AI to guess the style without you picking one"},
-  fitNo3:{pt:"Precisa de projeto técnico assinado por arquiteto, com planta e medidas",
-          en:"Need a technical project signed by an architect, with plans and measurements"},
-  fitYesTitle:{pt:"Assine se você:", en:"Subscribe if you:"},
-  fitYes1:{pt:"Vai reformar e quer ver como fica antes de gastar com material",
-           en:"Are renovating and want to see the result before spending on materials"},
-  fitYes2:{pt:"Vende imóvel e precisa mostrar o depois, não o cômodo vazio",
-           en:"Sell property and need to show the after, not the empty room"},
-  fitYes3:{pt:"Atende cliente de decoração e perde a venda por não ter imagem na hora",
-           en:"Take on decor clients and lose the sale for having no image on the spot"},
-  fitYes4:{pt:"Já tentou explicar sua ideia com foto do Pinterest e não funcionou",
-           en:"Have tried explaining your idea with a Pinterest photo and it didn't work"},
   guarantee:{pt:"<b>30 dias de garantia.</b> Não gostou? Devolvemos o dinheiro.",
              en:"<b>30-day guarantee.</b> Not happy? We refund you."},
   diamonds:{pt:"diamantes", en:"diamonds"},
@@ -1162,29 +1129,10 @@ function cardPerk(emoji,k){
 function renderPerks(){
   const el=document.getElementById('perks');
   if(el){
-    const itens=[['🎨','p1'],['🎬','p2'],['🧱','p3'],['🧹','p4'],['📐','p5'],['🏠','p6']];
+    const itens=[['🎨','p1'],['🎬','p2'],['🧱','p3'],['🧹','p4'],['📐','p5'],['🏠','p6'],['💧','p7']];
     el.innerHTML = `<p class="lab">${T('perksLab')}</p><h3>${T('perksTitle')}</h3><ul>` +
       itens.map(([e,k])=>cardPerk(e,k)).join('') + '</ul>';
   }
-  /* "sem marca d'agua" saiu da lista e fechou o bloco da garantia: e a
-     promessa mais concreta da pagina, entao vale sozinha, nao numa lista */
-  const wm=document.getElementById('perkWm');
-  if(wm) wm.innerHTML = cardPerk('💧','p7');
-}
-/* Quem se reconhece na lista de baixo chega no preco ja convencido; quem se
-   reconhece na de cima desiste agora, e nao vira pedido de reembolso depois. */
-function renderFit(){
-  const el=document.getElementById('fit'); if(!el) return;
-  const bloco=(cls,titulo,marca,chaves)=>`
-    <div class="fitbox ${cls}">
-      <h4>${T(titulo)}</h4>
-      <ul style="margin:0;padding:0">
-        ${chaves.map(k=>`<li><span class="m">${marca}</span><span>${T(k)}</span></li>`).join('')}
-      </ul>
-    </div>`;
-  el.innerHTML =
-    bloco('fitno','fitNoTitle','—',['fitNo1','fitNo2','fitNo3']) +
-    bloco('fityes','fitYesTitle','✓',['fitYes1','fitYes2','fitYes3','fitYes4']);
 }
 /* cobrança web ativa: Stripe conectada e /checkout/create respondendo.
    (RC_LINKS continua suportado caso um dia se use link hospedado da RevenueCat) */
@@ -1358,7 +1306,7 @@ setInterval(tickClock,1000);
 const _go=go;
 go=function(n){ if(n===5&&!deadline){ deadline=Date.now()+10*60*1000; tickClock(); } _go(n); };
 
-applyLang(); renderPerks(); renderFit(); renderFaq(); renderCheck();
+applyLang(); renderPerks(); renderFaq(); renderCheck();
 
 /* Volta do checkout da Stripe. Sem isto a pessoa paga e cai na home, sem
    nenhuma confirmacao — foi o que aconteceu na primeira compra real. */
