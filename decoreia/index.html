@@ -217,8 +217,14 @@
     font-family:inherit;font-size:15px;font-weight:600;cursor:pointer}
 
   .teaser{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1;background:#0E1620;margin-bottom:8px}
-  .teaser video{width:100%;height:100%;object-fit:cover;display:block;filter:blur(22px) saturate(.85) brightness(.72);transform:scale(1.2)}
-  .teaser .unlock{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:14px;padding:20px}
+  /* O video fica IRRECONHECIVEL de proposito: e o que esta sendo vendido.
+     Com blur baixo dava pra acompanhar o tour rodando e nao restava motivo
+     pra assinar. O scale alto evita que a borda desfocada mostre o fundo,
+     e o veu escuro no .unlock garante o efeito mesmo onde o filtro falha. */
+  .teaser video{width:100%;height:100%;object-fit:cover;display:block;
+    filter:blur(60px) saturate(.6) brightness(.5) contrast(.85);transform:scale(1.8)}
+  .teaser .unlock{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:14px;padding:20px;
+    background:linear-gradient(180deg,rgba(14,22,32,.52),rgba(14,22,32,.66))}
   .teaser .ubtn{display:flex;align-items:center;gap:9px;border:0;border-radius:28px;padding:15px 26px;
     background:var(--terra);color:#fff;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;
     box-shadow:0 8px 26px rgba(0,0,0,.35)}
