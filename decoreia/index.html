@@ -487,9 +487,6 @@
     </div>
 
     <div class="perks" id="perks"></div>
-    <!-- qualificar vem ANTES do preco: quem se reconhece decide olhando o
-         valor ja convencido, e quem nao se reconhece sai antes de pagar -->
-    <div class="fit" id="fit"></div>
     <div class="stack" id="checkPlans"></div>
 
     <div class="card" style="margin-bottom:16px">
@@ -512,7 +509,14 @@
     <p class="terms" data-i="appleWhy" style="margin-top:12px"></p>
     <button class="btn card2" onclick="toCard()" data-i="payCard">Prefiro pagar com cartão</button>
 
+    <!-- qualificar fica colado na garantia: a pessoa se reconhece na lista e
+         ja le, na linha seguinte, que pode desistir sem perder dinheiro -->
+    <div class="fit" id="fit"></div>
+
     <div class="guarantee"><span class="g">🛡️</span><span data-i="guarantee"></span></div>
+
+    <!-- a promessa mais concreta da pagina fecha o bloco, depois da garantia -->
+    <ul class="perks" id="perkWm" style="margin-bottom:18px"></ul>
 
     <div class="trust">
       <span data-i="tSecure">🔒 Pagamento seguro</span>
@@ -1148,17 +1152,24 @@ function renderFaq(){
   el.innerHTML = `<h3>${T('faqTitle')}</h3>` +
     qs.map(([q,a])=>`<details><summary>${T(q)}</summary><p>${T(a)}</p></details>`).join('');
 }
+function cardPerk(emoji,k){
+  return `<li class="pcard">
+    <span class="ic">${emoji}</span>
+    <span><span class="t">${T(k+'t')}</span><span class="s">${T(k+'s')}</span></span>
+    <span class="ck">✓</span>
+  </li>`;
+}
 function renderPerks(){
-  const el=document.getElementById('perks'); if(!el) return;
-  const itens=[['🎨','p1'],['🎬','p2'],['🧱','p3'],['🧹','p4'],['📐','p5'],['🏠','p6'],['💧','p7']];
-  el.innerHTML =
-    `<p class="lab">${T('perksLab')}</p><h3>${T('perksTitle')}</h3><ul>` +
-    itens.map(([e,k])=>`
-      <li class="pcard">
-        <span class="ic">${e}</span>
-        <span><span class="t">${T(k+'t')}</span><span class="s">${T(k+'s')}</span></span>
-        <span class="ck">✓</span>
-      </li>`).join('') + '</ul>';
+  const el=document.getElementById('perks');
+  if(el){
+    const itens=[['🎨','p1'],['🎬','p2'],['🧱','p3'],['🧹','p4'],['📐','p5'],['🏠','p6']];
+    el.innerHTML = `<p class="lab">${T('perksLab')}</p><h3>${T('perksTitle')}</h3><ul>` +
+      itens.map(([e,k])=>cardPerk(e,k)).join('') + '</ul>';
+  }
+  /* "sem marca d'agua" saiu da lista e fechou o bloco da garantia: e a
+     promessa mais concreta da pagina, entao vale sozinha, nao numa lista */
+  const wm=document.getElementById('perkWm');
+  if(wm) wm.innerHTML = cardPerk('💧','p7');
 }
 /* Quem se reconhece na lista de baixo chega no preco ja convencido; quem se
    reconhece na de cima desiste agora, e nao vira pedido de reembolso depois. */
