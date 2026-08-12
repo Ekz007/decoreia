@@ -221,8 +221,11 @@
      atravessam — mas nao da pra dizer QUAL. Com 22px acompanhava-se o tour
      (entregava de graca o que se vende); com 60px virava um painel liso e
      sumia a vontade. O scale evita que a borda desfocada revele o fundo. */
-  .teaser video{width:100%;height:100%;object-fit:cover;display:block;
+  .teaser video, .teaser img{width:100%;height:100%;object-fit:cover;display:block;
     filter:blur(34px) saturate(1.15) brightness(.8);transform:scale(1.5)}
+  .teaser img{position:absolute;inset:0}
+  /* com a foto dela por baixo, o clipe fica so como fonte de movimento */
+  .teaser video.sobre{position:absolute;inset:0;opacity:.42;mix-blend-mode:screen}
   .teaser .unlock{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:14px;padding:20px;
     background:linear-gradient(180deg,rgba(14,22,32,.28),rgba(14,22,32,.46))}
   .teaser .ubtn{display:flex;align-items:center;gap:9px;border:0;border-radius:28px;padding:15px 26px;
@@ -461,6 +464,8 @@
 
     <p class="step2" data-i="step2">🔒 Passo 2 — seu vídeo do ambiente</p>
     <div class="teaser">
+      <!-- a foto redecorada DELA entra por baixo; o clipe fica so como movimento -->
+      <img id="teaserImg" alt="" hidden>
       <video src="img/v_room_tour.mp4?v=1786290116" autoplay muted loop playsinline></video>
       <div class="unlock">
         <button class="ubtn" onclick="document.getElementById('checkPlans').scrollIntoView({behavior:'smooth'})">
@@ -739,6 +744,9 @@ const I18N = {
   urgGo:{pt:"Continuar", en:"Continue"},
   step2:{pt:"🔒 Passo 2 — seu vídeo do ambiente", en:"🔒 Step 2 — your room video"},
   unlockCta:{pt:"Liberar vídeo tour", en:"Unlock video tour"},
+  step2sel:{pt:"🔒 Passo 2 — seu {f}", en:"🔒 Step 2 — your {f}"},
+  unlockCapSel:{pt:"<b>{f}</b> — é só gerar, no seu ambiente, assim que o teste ativar",
+                en:"<b>{f}</b> — just generate it, on your own room, once the trial starts"},
   unlockCap:{pt:"Gerado no seu ambiente assim que o teste começar", en:"Generated from your room as soon as the trial starts"},
   /* ---- o que entra na assinatura (cards) ----
      titulo = a promessa; sub = o numero ou a condicao que a sustenta.
@@ -764,6 +772,9 @@ const I18N = {
   p6t:{pt:"O esboço vira foto 4K", en:"The sketch becomes a 4K photo"},
   p6s:{pt:"Seu render do SketchUp sai como fotografia do imóvel construído",
        en:"Your SketchUp render comes out as a photo of the finished property"},
+  p8t:{pt:"App nativo no iPhone", en:"Native iPhone app"},
+  p8s:{pt:"Tudo isto na App Store, com o mesmo login desta compra",
+       en:"All of this on the App Store, with the same login as this purchase"},
   p7t:{pt:"Sem marca d'água", en:"No watermark"},
   p7s:{pt:"A imagem sai limpa e em alta resolução, pronta para mandar ao cliente",
        en:"The image comes out clean and high resolution, ready to send to a client"},
@@ -1135,7 +1146,7 @@ function cardPerk(emoji,k){
 function renderPerks(){
   const el=document.getElementById('perks');
   if(el){
-    const itens=[['🎨','p1'],['🎬','p2'],['🧱','p3'],['🧹','p4'],['📐','p5'],['🏠','p6'],['💧','p7']];
+    const itens=[['🎨','p1'],['🎬','p2'],['🧱','p3'],['🧹','p4'],['📐','p5'],['🏠','p6'],['💧','p7'],['📱','p8']];
     el.innerHTML = `<p class="lab">${T('perksLab')}</p><h3>${T('perksTitle')}</h3><ul>` +
       itens.map(([e,k])=>cardPerk(e,k)).join('') + '</ul>';
   }
@@ -1296,9 +1307,28 @@ function fecharZoom(e){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') fecharZoom(); });
+/* A escolha era jogada fora: so trocava o aria-pressed. Agora ela sobrevive
+   ate o checkout, onde a pessoa le o nome do formato que ELA escolheu. */
+let videoEscolhido='room_tour';
 function pickVideo(id,el){
+  videoEscolhido=id;
   document.querySelectorAll('.vcard').forEach(v=>v.setAttribute('aria-pressed','false'));
   el.setAttribute('aria-pressed','true');
+  renderTeaser();
+}
+/* O teaser passa a mostrar o ambiente DELA (o resultado que acabou de sair),
+   desfocado do mesmo jeito, com o clipe por cima so pra dar movimento.
+   A promessa "gerado no seu ambiente" deixa de ser texto e vira evidencia. */
+function renderTeaser(){
+  const img=document.getElementById('teaserImg');
+  const vid=document.querySelector('.teaser video');
+  if(img && shots[0]){ img.src=shots[0]; img.hidden=false; if(vid) vid.classList.add('sobre'); }
+  const v=VIDEOS.find(x=>x.id===videoEscolhido);
+  const nome=v?T(v.k):'';
+  const st=document.querySelector('[data-i="step2"]');
+  if(st) st.innerHTML = nome ? T('step2sel').replace('{f}', nome) : T('step2');
+  const cap=document.querySelector('[data-i="unlockCap"]');
+  if(cap) cap.innerHTML = nome ? T('unlockCapSel').replace('{f}', nome) : T('unlockCap');
 }
 
 /* contador da oferta — 10 min a partir da 1ª vez que o checkout abre */
@@ -1310,7 +1340,7 @@ function tickClock(){
 }
 setInterval(tickClock,1000);
 const _go=go;
-go=function(n){ if(n===5&&!deadline){ deadline=Date.now()+10*60*1000; tickClock(); } _go(n); };
+go=function(n){ if(n===5&&!deadline){ deadline=Date.now()+10*60*1000; tickClock(); } if(n===5) renderTeaser(); _go(n); };
 
 applyLang(); renderPerks(); renderFaq(); renderCheck();
 
