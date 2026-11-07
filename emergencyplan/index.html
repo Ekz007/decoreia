@@ -90,6 +90,47 @@ input[type=email]{width:100%;font-family:"IBM Plex Mono",monospace;font-size:.98
   background:var(--paper-2);color:var(--ink);margin-bottom:1rem}
 
 #result{display:none}
+/* modo oferta: ao terminar o quiz a pagina vira so a oferta.
+   Nada de landing repetida embaixo, nada de CTA que reabre o quiz. */
+body.offer-mode > *:not(#result):not(footer){display:none !important}
+body.offer-mode #result{display:block;padding-top:2.2rem}
+body.offer-mode footer{margin-top:0}
+
+/* a fileira de numeros do produto */
+.specs{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin:1.6rem 0 0;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.05rem 0}
+.specs .spec{text-align:center}
+.specs b{display:block;font-family:Archivo,sans-serif;font-size:1.55rem;font-weight:800;
+  letter-spacing:-.02em;color:var(--ink);line-height:1.1}
+.specs span{display:block;font-family:"IBM Plex Mono",monospace;font-size:.62rem;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin-top:.22rem}
+@media (max-width:620px){
+  .specs{grid-template-columns:repeat(2,1fr);gap:1rem .6rem}
+}
+
+/* o sumario completo, parte por parte */
+.toc{margin:1.8rem 0 0;display:grid;gap:1.35rem}
+.toc-part h4{display:flex;flex-wrap:wrap;align-items:baseline;gap:.55rem;margin:0 0 .5rem;
+  font-family:Archivo,sans-serif;font-size:1.02rem;font-weight:800;letter-spacing:-.01em;
+  color:var(--ink);line-height:1.3}
+.toc-n{font-family:"IBM Plex Mono",monospace;font-size:.6rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--signal);border:1px solid var(--signal);border-radius:2px;
+  padding:.18rem .36rem;white-space:nowrap}
+.toc-part h4 em{font-family:"IBM Plex Mono",monospace;font-size:.62rem;font-style:normal;
+  letter-spacing:.06em;color:var(--ink-3);margin-left:auto;white-space:nowrap}
+.toc-part ul{list-style:none;margin:0;padding:0;display:grid;gap:.3rem;
+  border-left:2px solid var(--rule);padding-left:.95rem}
+.toc-part li{font-size:.92rem;line-height:1.45;color:var(--ink-2)}
+.toc-part--extra{background:var(--signal-tint);border-radius:4px;padding:1rem 1.1rem}
+.toc-part--extra ul{border-left-color:rgba(200,16,46,.3)}
+
+/* as garantias, e a linha dos companheiros do checkout */
+.offer-ticks{margin:1.8rem 0 0;gap:.75rem}
+.offer-ticks li{font-size:.94rem;line-height:1.45;color:var(--ink-2)}
+.offer-ticks .box{border-color:var(--signal)}
+.also{margin:1.5rem 0 0;padding:.85rem 1rem;border:1px dashed var(--rule-strong);border-radius:4px;
+  font-size:.88rem;line-height:1.5;color:var(--ink-3)}
+.also:empty{display:none}
 .score{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
   padding:1.6rem 0 1.2rem;border-bottom:1px solid var(--rule);margin-bottom:1.4rem}
 .score .big{font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(3.2rem,12vw,5rem);
@@ -650,21 +691,12 @@ body.quiz-open{overflow:hidden}
 
 <section id="result" class="band band--card">
   <div class="wrap">
-    <p class="eyebrow">Your result</p>
-    <h2>Your house can manage about</h2>
-    <div class="score"><span class="big" id="rdays">0</span><span class="unit" id="runit">days</span></div>
-    <p class="lede" id="rsay"></p>
-    <h3 style="margin-top:2rem;margin-bottom:.8rem">What is actually missing in your case</h3>
-    <ul class="gaps" id="rgaps"></ul>
-    <h3 style="margin-top:2rem;margin-bottom:.4rem">What everyone else is asking for</h3>
-    <div class="ruler" id="rruler"></div>
-    <p class="src">This is an estimate from seven answers, not a measurement of your house. It uses the
-    same arithmetic as the book: drinking water at two to three litres per person per day as in the
-    Government booklet, plus the cooking, washing and toilet water nobody counts, adjusted for
-    household size, water source, heating, light and whether anyone depends on mains power.</p>
-    <div class="sheet offer-sheet" style="margin-top:2rem">
-      <div class="sheet-head">Your plan is ready &middot; The Irish Emergency Plan</div>
-      <p style="margin-bottom:1.3rem" id="rpitch"></p>
+    <p class="eyebrow">Your plan</p>
+    <h2>The Irish Emergency Plan</h2>
+    <p class="lede" id="rpitch"></p>
+
+    <div class="sheet offer-sheet">
+      <div class="sheet-head">What you get, in full</div>
 
       <div class="mockup">
         <div class="mk-book">
@@ -695,90 +727,99 @@ body.quiz-open{overflow:hidden}
         </div>
       </div>
 
-<section class="band band--wash">
-  <div class="wrap-wide">
-    <p class="eyebrow">What readers said</p>
-    <h2 style="max-width:30ch">From the record, with the paper and the date.</h2>
-    <p class="lede" style="max-width:62ch">Published words from the news coverage, with the paper and the date. Reader reviews go up here as they come in, and not before.</p>
+      <div class="specs">
+        <div class="spec"><b>447</b><span>pages</span></div>
+        <div class="spec"><b>41</b><span>chapters, in five parts</span></div>
+        <div class="spec"><b>97</b><span>drawn illustrations</span></div>
+        <div class="spec"><b>18</b><span>printable A4 sheets</span></div>
+      </div>
 
-    <div class="dms">
-
-      <article class="dm">
-        <div class="dm-top">
-          <div class="dm-av">IT</div>
-          <div class="dm-id"><div class="dm-h">The Irish Times</div><div class="dm-loc">24 JAN 2026 &middot; DUNMORE, CO GALWAY</div></div>
+      <div class="toc">
+      <div class="toc-part">
+        <h4><span class="toc-n">Part One</span>Power and Light<em>9 chapters</em></h4>
+        <ul>
+          <li>The first ten minutes</li>
+          <li>Light, in order of sensibility</li>
+          <li>Keeping the phone alive</li>
+          <li>The 12V system, a real backup without a generator</li>
+          <li>Solar in an Irish December, honestly</li>
+          <li>The fridge and the freezer</li>
+          <li>Heat, when the heating is electric</li>
+          <li>Getting more out of what you have</li>
+          <li>What not to do</li>
+        </ul>
+      </div>
+      <div class="toc-part">
+        <h4><span class="toc-n">Part Two</span>Food and Growing<em>9 chapters</em></h4>
+        <ul>
+          <li>The seven day shelf, with no cooking</li>
+          <li>Scaling it, the 30 day press</li>
+          <li>Cooking when the power is off</li>
+          <li>Feeding small children and older relatives</li>
+          <li>Growing food in an Irish garden</li>
+          <li>Growing with no garden</li>
+          <li>Preserving a glut, and the hard line</li>
+          <li>Water for growing and the rain barrel</li>
+          <li>Seed, and keeping it</li>
+        </ul>
+      </div>
+      <div class="toc-part">
+        <h4><span class="toc-n">Part Three</span>Water, Sanitation and Health<em>9 chapters</em></h4>
+        <ul>
+          <li>The pump nobody thinks about</li>
+          <li>How much water, exactly</li>
+          <li>Storing it without turning the house into a warehouse</li>
+          <li>Making water safe</li>
+          <li>The toilet problem</li>
+          <li>Staying clean with no water pressure</li>
+          <li>Medication and the cold chain</li>
+          <li>The first aid kit that is actually useful</li>
+          <li>Keeping warm is a health issue</li>
+        </ul>
+      </div>
+      <div class="toc-part">
+        <h4><span class="toc-n">Part Four</span>Home, Security and Communication<em>9 chapters</em></h4>
+        <ul>
+          <li>When the mast goes down</li>
+          <li>The family plan on one page</li>
+          <li>Doors, windows and the outside of the house</li>
+          <li>The alarm and the camera with no power</li>
+          <li>Storm proofing before the storm</li>
+          <li>Flooding</li>
+          <li>Your neighbours are the actual plan</li>
+          <li>Documents, cash and the things you cannot reprint</li>
+          <li>The two hour setup</li>
+        </ul>
+      </div>
+      <div class="toc-part">
+        <h4><span class="toc-n">Part Five</span>When it goes on longer<em>5 chapters</em></h4>
+        <ul>
+          <li>What your body actually needs</li>
+          <li>The ration scale</li>
+          <li>Keeping it safe to eat</li>
+          <li>When somebody is hurt, and help is further away than usual</li>
+          <li>The master checklist</li>
+        </ul>
+      </div>
+        <div class="toc-part toc-part--extra">
+          <h4><span class="toc-n">With it</span>The Workbook<em>18 sheets</em></h4>
+          <ul>
+            <li>Your own household numbers, worked out on paper: water, food, power and heat</li>
+            <li>The press-door checklist, the family plan sheet and the rotation calendar</li>
+            <li>A4, made to print and hold a pen, because paper works with a flat battery</li>
+          </ul>
         </div>
-        <div class="dm-body">
-          <div class="bub">&ldquo;Everything we depended on from day to day just wasn&rsquo;t available anymore.&rdquo;</div>
-          <div class="bub bub--me">A mother in Co Galway, eight days with no power, speaking a year after the storm.</div>
-        </div>
-        <div class="dm-foot"><span class="dm-seen">Published, attributed</span><a href="https://www.irishtimes.com/life-style/people/2026/01/24/storm-eowyn-one-year-on-everything-we-depended-on-from-day-to-day-just-wasnt-available-anymore/" target="_blank" rel="noopener" style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.07em">Read it &nearr;</a></div>
-      </article>
+      </div>
 
-      
-<!-- DEPOIMENTO FABRICADO, FORA DO AR.
-     Review inventada e proibida na UE (Diretiva Omnibus).
-     Reative so quando houver depoimento real e autorizado.
-<article class="dm dm- -demo dm- -post">
-        <div class="post-head">
-          <img class="post-av" src="img/t-grace-face.jpg" alt="">
-          <div><div class="dm-h">Grace</div><div class="dm-loc">CO. GALWAY</div></div>
-          <span class="post-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">5.0</b></span>
-        </div>
-        <div class="post-photo"><img src="img/t-grace-pantry.jpg" alt=""></div>
-        <div class="dm-say"><div class="bub bub- -card">Fifty-eight, living on my own, and I always thought this was for younger families. I did one shelf a week like the book says. Now the whole press is labelled and dated. I sleep better, honestly.</div></div>
-      </article>
--->
+      <ul class="ticks offer-ticks">
+        <li><span class="box"></span><span><strong>Instant PDF.</strong> It is in your inbox a minute after you pay. No members area, no password, no app.</span></li>
+        <li><span class="box"></span><span><strong>Yours to keep and to print.</strong> Twelve months of downloads, unlimited, so it survives a new phone.</span></li>
+        <li><span class="box"></span><span><strong>Written for Ireland.</strong> ESB Networks, Uisce &Eacute;ireann, the vulnerable customer register, prices in euro.</span></li>
+        <li><span class="box"></span><span><strong>60 day refund.</strong> One email, no questions and no form to fill in.</span></li>
+      </ul>
 
+      <p class="also" id="ralso"></p>
 
-      
-<!-- DEPOIMENTO FABRICADO, FORA DO AR.
-     Review inventada e proibida na UE (Diretiva Omnibus).
-     Reative so quando houver depoimento real e autorizado.
-<article class="dm dm- -demo">
-        <div class="dm-fullimg"><img src="img/t-bottles-woman.jpg" alt=""></div>
-        <div class="dm-say"><div class="bub bub- -card">I did the bottle method straight from the book. Pasta, rice, beans, all sealed. When the next red warning came I didn&rsquo;t move a muscle. We were grand.</div></div>
-        <div class="dm-foot2">
-          <div><div class="dm-h">Aoife</div><div class="dm-loc">CO. MAYO</div></div>
-          <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">5.0</b></span>
-        </div>
-      </article>
--->
-
-
-      
-<!-- DEPOIMENTO FABRICADO, FORA DO AR.
-     Review inventada e proibida na UE (Diretiva Omnibus).
-     Reative so quando houver depoimento real e autorizado.
-<article class="dm dm- -demo">
-        <div class="dm-fullimg"><img src="img/t-bottles-man.jpg" alt=""></div>
-        <div class="dm-say"><div class="bub bub- -card">Eleven days off last January taught me nothing until I read this. Now the whole shelf is done, dated and rotated. Herself has stopped slagging me about it.</div></div>
-        <div class="dm-foot2">
-          <div><div class="dm-h">Declan</div><div class="dm-loc">CO. LEITRIM</div></div>
-          <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:90%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">4.5</b></span>
-        </div>
-      </article>
--->
-
-
-      
-<!-- DEPOIMENTO FABRICADO, FORA DO AR.
-     Review inventada e proibida na UE (Diretiva Omnibus).
-     Reative so quando houver depoimento real e autorizado.
-<article class="dm dm- -demo">
-        <div class="dm-fullimg"><img src="img/t-pantry.jpg" alt=""></div>
-        <div class="dm-say"><div class="bub bub- -card">Three and a half only because it took me two weekends, not one. But the press is full, the water is sorted, and I finally rang ESB about my father. That page alone.</div></div>
-        <div class="dm-foot2">
-          <div><div class="dm-h">Niamh</div><div class="dm-loc">CO. CLARE</div></div>
-          <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:70%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">3.5</b></span>
-        </div>
-      </article>
--->
-
-    </div>
-
-    </div>
-</section>
       <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
       <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
       <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
@@ -1392,7 +1433,7 @@ body.quiz-open{overflow:hidden}
     European Commission. Those bodies are cited as sources only, and the linked articles belong to their
     publishers. The households named on this page were reported by the Irish Times and The Journal and are
     cited from that coverage.</p>
-    <p>The quiz gives an estimate from seven answers. It is not a survey of your house and it is not
+    <p>The quiz gives an estimate from ten answers. It is not a survey of your house and it is not
     advice. The book is general household information, not professional advice. Electrical work must be
     carried out by a Registered Electrical Contractor. Questions about drinking water go to the HSE, or the
     EPA for a private well. Questions about medication go to your pharmacist or GP. Food safety guidance
@@ -1546,30 +1587,28 @@ body.quiz-open{overflow:hidden}
     return Math.max(0.2, Math.round(base * 10) / 10);
   }
 
-  function gaps(){
-    var g = [];
-    if(a[1] === 2) g.push('<strong>You are on a well or a group scheme.</strong> A power cut is also a water cut for you, and it starts within an hour or two. Chapter 3 is the one to read first.');
-    if(a[1] === 3) g.push('<strong>You are not sure where your water comes from.</strong> That is the most common answer, and it is the most useful thing to go and find out. The book shows you how to tell in five minutes.');
-    if(a[1] === 1) g.push('<strong>You are on the mains,</strong> so pressure holds for a while. Pumping stations have their own limits in a long power cut, and your bigger problems are the fridge, the heating and the router.');
-    if(a[3] === 1) g.push('<strong>There is effectively no water in the house.</strong> This is the fastest thing on the list to fix and the cheapest. Six five litre bottles is about &euro;8.');
-    if(a[3] === 2) g.push('<strong>A few bottles is less than a day</strong> once you count cooking, teeth and the toilet. The table in chapter 2 gives the real figure for your household size.');
-    if(a[2] === 1) g.push('<strong>An oil or gas boiler needs mains electricity</strong> for the pump and the controls, so your heating stops with the power even with a full tank outside.');
-    if(a[2] === 3 || a[2] === 4) g.push('<strong>Electric-only heating stops immediately.</strong> Chapter 10 is the one room strategy, and it matters most for you.');
-    if(a[2] === 2) g.push('<strong>Your stove or range is a real advantage,</strong> and most people with one do not plan around it properly. Chapter 10 shows how to get heat and hot water out of it for a fortnight.');
-    if(a[4] === 3) g.push('<strong>No working torch or radio.</strong> Those are the two items Dublin shops have been clearing since the booklets went out. A lamp is &euro;10 to &euro;20, a radio &euro;40 to &euro;60.');
-    if(a[4] === 2) g.push('<strong>One of the two is missing.</strong> The radio is the one people skip, and it is the only device that still works on day twenty.');
-    if(a[5] === 2) g.push('<strong>Medication that must be kept cold</strong> changes your plan. Chapter 7 covers the practical side and tells you to ring your pharmacist, which is the right call rather than improvising.');
-    if(a[5] === 3) g.push('<strong>Mains-powered medical equipment in the house.</strong> There is a vulnerable customer register with ESB Networks and your supplier. That phone call is free and it is the most valuable one in the book.');
-    if(a[6] === 4) g.push('<strong>You have already had more than three days off.</strong> You know what this is like, which puts you ahead of most readers. The book is the part you did not have time to work out while it was happening.');
-    if(a[6] === 1) g.push('<strong>No long cut yet.</strong> Worth knowing that 75,000 Irish homes went more than a week in January 2025, and that ESB Networks still has 3,000 poles to replace.');
-    if(a[0] === 3) g.push('<strong>Five or more people</strong> multiplies every quantity, and it is where most plans quietly fail. Every table in the book runs to six.');
-    if(a[7] === 2) g.push('<strong>An older person in the house</strong> changes the priority order. Heat and medication come first for them, and chapter 10 is the one room strategy that keeps a room warm with no power.');
-    if(a[7] === 3) g.push('<strong>An older person living alone</strong> is the single highest-risk case in a long power cut. The book has you set up one free phone call, the vulnerable customer register, and a neighbour check that most people never arrange until it is too late.');
-    if(a[8] === 2) g.push('<strong>A dog or a cat</strong> needs water and feed set aside too, and several everyday foods are dangerous to them. The plan covers how much to store and what is safe if you run short.');
-    if(a[8] === 3) g.push('<strong>Several animals or farm animals</strong> are their own water and feed calculation, and it is a big one. The plan shows how to work it out so they are not forgotten when the taps stop.');
-    if(a[9] === 2) g.push('<strong>Small children in the house</strong> change the first hour. Warmth, food without a fight and keeping them calm in the dark are all covered, and the companion Little Ones Pack goes deeper.');
-    if(a[9] === 3) g.push('<strong>A baby under two</strong> is the household that cannot wait. Formula needs safe water (never nitrate-risk water for a bottle) and warmth has a hard rule, both planned before the storm, not during it.');
-    return g.slice(0, 7);
+  /* a frase que explica o numero. O numero nunca aparece sozinho. */
+  function pitch(ds){
+    var abre = {
+      well:   'Your answers put the well pump at the centre of your plan. A power cut is a water cut in your house, and it starts within an hour.',
+      older:  'Your answers put heat and medication at the top, because of the older person in the house.',
+      little: 'Your answers put warmth and feeding a small child first, which is what changes the first hour.',
+      animal: 'Your answers add the animals to the sums, and water for animals is the number most plans forget.',
+      base:   'Your answers are the ordinary Irish house, which is exactly who this was written for.'
+    }[segment()];
+    return abre + ' On what is in the house today it would hold out about <strong>' + ds +
+      ' days</strong>. The plan below takes that to seven, in two hours on a Saturday, with the buying already worked out.';
+  }
+
+  /* o que o checkout vai oferecer junto, dito antes de chegar la */
+  function also(){
+    var seg = segment();
+    var nome = {well:"The Well Owner's Pack", older:"The Older Person's Pack",
+                little:'The Little Ones Pack', animal:'The Animal Plan'}[seg];
+    var base = 'At the checkout you are also offered <strong>The Shopping Pack</strong> (&euro;19), the exact buying list at three budgets';
+    return seg === 'base'
+      ? base + '. One tick, and nothing else to decide.'
+      : base + ', and <strong>' + nome + '</strong> (&euro;17), because of what you answered. Tick either, both or neither.';
   }
 
   document.getElementById('gate').addEventListener('submit', function(e){
@@ -1578,32 +1617,14 @@ body.quiz-open{overflow:hidden}
     var em = document.getElementById('em').value.trim();
     saveLead(em, d);
     wireBuy();
-    document.getElementById('rdays').textContent = ds;
-    document.getElementById('runit').textContent = (d === 1 ? 'day' : 'days');
-    document.getElementById('rsay').textContent = d < 1
-      ? 'Less than a full day. That is not unusual and it is not a failure, it is what an ordinary Irish house looks like before anybody sits down and does the sums.'
-      : (d < 3
-        ? 'Enough for a short cut, and short of the three days the European Commission asked for on 3 November.'
-        : 'Better than most. The gap now is between three days and the full week Norway recommends.');
 
-    document.getElementById('rgaps').innerHTML = gaps().map(function(g){
-      return '<li><span class="mk">&rarr;</span><span>' + g + '</span></li>'; }).join('');
-
-    document.getElementById('rruler').innerHTML =
-      '<div class="you"><span>Your house, from your seven answers</span><b>' + ds + ' days</b></div>' +
-      '<div><span>The Be Emergency Ready booklet, posted to your house</span><b>no number given</b></div>' +
-      '<div><span>European Commission guidelines, 3 November 2026</span><b>3 days</b></div>' +
-      '<div><span>Swedish civil defence, water stored per person</span><b>9 litres</b></div>' +
-      '<div><span>Norway, raised from three days in 2024</span><b>7 days</b></div>' +
-      '<div><span>What the book takes you to</span><b>7 to 30 days</b></div>';
-
-    document.getElementById('rpitch').textContent = (a[1] === 2 || a[1] === 3)
-      ? 'Your answers put the well pump at the centre of your plan, which is chapter 3, and the chapter nobody else writing about this covers. The plan takes you from ' + ds + ' days to seven, in two hours on a Saturday.'
-      : 'The plan takes you from ' + ds + ' days to seven, in two hours on a Saturday, with the shopping list already worked out.';
+    document.getElementById('rpitch').innerHTML = pitch(ds);
+    document.getElementById('ralso').innerHTML = also();
 
     closeQuiz();
+    document.body.classList.add('offer-mode');
     document.getElementById('result').style.display = 'block';
-    document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+    window.scrollTo(0, 0);
     show(TOTAL);
   });
 
