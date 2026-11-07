@@ -128,9 +128,32 @@ body.offer-mode footer{margin-top:0}
 .offer-ticks{margin:1.8rem 0 0;gap:.75rem}
 .offer-ticks li{font-size:.94rem;line-height:1.45;color:var(--ink-2)}
 .offer-ticks .box{border-color:var(--signal)}
-.also{margin:1.5rem 0 0;padding:.85rem 1rem;border:1px dashed var(--rule-strong);border-radius:4px;
-  font-size:.88rem;line-height:1.5;color:var(--ink-3)}
-.also:empty{display:none}
+/* a prova, dentro da oferta */
+.proof{margin:1.9rem 0 0;padding-top:1.5rem;border-top:1px solid var(--rule)}
+.proof-head{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:.5rem}
+.proof-note{font-size:.86rem;line-height:1.5;color:var(--ink-3);margin:0 0 1.1rem;max-width:58ch}
+.proof .dm{margin:0}
+
+/* o order bump de verdade: marca aqui, chega marcado no Digistore24 */
+.bumps{margin:1.9rem 0 0;display:grid;gap:.7rem}
+.bumps-head{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--signal)}
+.bump{display:grid;grid-template-columns:1.3rem 1fr;gap:.85rem;align-items:start;cursor:pointer;
+  border:1.5px dashed var(--signal);border-radius:4px;padding:1rem 1.1rem;
+  background:var(--signal-tint);transition:background .15s,border-color .15s}
+.bump:hover{background:rgba(200,16,46,.09)}
+.bump.on{border-style:solid;background:rgba(200,16,46,.11)}
+.bump input{width:1.3rem;height:1.3rem;margin:.1rem 0 0;accent-color:var(--signal);cursor:pointer}
+.bump-t{display:block;font-family:Archivo,sans-serif;font-size:1rem;font-weight:800;
+  letter-spacing:-.01em;color:var(--ink);line-height:1.3}
+.bump-t b{color:var(--signal);white-space:nowrap}
+.bump-d{display:block;font-size:.88rem;line-height:1.5;color:var(--ink-2);margin-top:.3rem}
+.bump-n{display:block;font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:.4rem}
+
+/* rodape: o miudo so na landing, no checkout fica a linha curta */
+body.offer-mode .legal-long{display:none}
 .score{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
   padding:1.6rem 0 1.2rem;border-bottom:1px solid var(--rule);margin-bottom:1.4rem}
 .score .big{font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(3.2rem,12vw,5rem);
@@ -818,9 +841,28 @@ body.quiz-open{overflow:hidden}
         <li><span class="box"></span><span><strong>60 day refund.</strong> One email, no questions and no form to fill in.</span></li>
       </ul>
 
-      <p class="also" id="ralso"></p>
+      <div class="proof">
+        <div class="proof-head">What readers said</div>
+        <p class="proof-note">Published words from the news coverage, with the paper and the date.
+        Reader reviews go up here as they come in, and not before.</p>
+        <article class="dm">
+          <div class="dm-top">
+            <div class="dm-av">IT</div>
+            <div class="dm-id"><div class="dm-h">The Irish Times</div><div class="dm-loc">24 JAN 2026 &middot; DUNMORE, CO GALWAY</div></div>
+          </div>
+          <div class="dm-body">
+            <div class="bub">&ldquo;Everything we depended on from day to day just wasn&rsquo;t available anymore.&rdquo;</div>
+            <div class="bub bub--me">A mother in Co Galway, eight days with no power, speaking a year after the storm.</div>
+          </div>
+          <div class="dm-foot"><span class="dm-seen">Published, attributed</span><a href="https://www.irishtimes.com/life-style/people/2026/01/24/storm-eowyn-one-year-on-everything-we-depended-on-from-day-to-day-just-wasnt-available-anymore/" target="_blank" rel="noopener" style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.07em">Read it &nearr;</a></div>
+        </article>
+      </div>
 
-      <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
+      <div class="bumps" id="rbumps">
+        <div class="bumps-head">Add to your plan, one tick</div>
+      </div>
+
+      <div class="price"><span class="amt" id="rtotal">&euro;47</span><span class="note" id="rtotnote">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
       <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
       <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
       <div class="freebie">
@@ -1427,18 +1469,18 @@ body.quiz-open{overflow:hidden}
 
 <footer>
   <div class="wrap">
-    <p>The Irish Emergency Plan is an independent publication. It is not affiliated with, endorsed by or produced on
+    <p class="legal-long">The Irish Emergency Plan is an independent publication. It is not affiliated with, endorsed by or produced on
     behalf of the Department of Defence, the Office of Emergency Planning, ESB Networks, Met
     &Eacute;ireann, Uisce &Eacute;ireann, the HSE, the EPA, the World Meteorological Organization or the
     European Commission. Those bodies are cited as sources only, and the linked articles belong to their
     publishers. The households named on this page were reported by the Irish Times and The Journal and are
     cited from that coverage.</p>
-    <p>The quiz gives an estimate from ten answers. It is not a survey of your house and it is not
+    <p class="legal-long">The quiz gives an estimate from ten answers. It is not a survey of your house and it is not
     advice. The book is general household information, not professional advice. Electrical work must be
     carried out by a Registered Electrical Contractor. Questions about drinking water go to the HSE, or the
     EPA for a private well. Questions about medication go to your pharmacist or GP. Food safety guidance
     follows the FSAI and safefood.</p>
-    <p>Price includes VAT. 60 day refund on request by email. &nbsp;&middot;&nbsp; Privacy &nbsp;&middot;&nbsp; Terms &nbsp;&middot;&nbsp; Contact</p>
+    <p class="legal-min">Price includes VAT. 60 day refund on request by email. &nbsp;&middot;&nbsp; Privacy &nbsp;&middot;&nbsp; Terms &nbsp;&middot;&nbsp; Contact</p>
   </div>
 </footer>
 
@@ -1475,11 +1517,67 @@ body.quiz-open{overflow:hidden}
               .toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,40);
     return (c + '_' + seg).slice(0,60);
   }
+  /* os add-ons, com o id do Digistore24. Marcar aqui pre-marca la,
+     por quantity_<id>=1 na URL do formulario de pedido. */
+  var BUMPS = {
+    shopping: {id:'761395', eur:19, nome:'The Shopping Pack', pags:60,
+      texto:'The exact buying list at three budgets, &euro;81, &euro;199 and &euro;444. What to buy, where, and what it costs, so one Saturday morning finishes the job.'},
+    well:     {id:'761396', eur:17, nome:"The Well Owner's Pack", pags:36,
+      texto:'Your pump, your tank and your filter, sized and worked out. What a power cut does to a private well, and how to have water standing before it happens.'},
+    older:    {id:'761398', eur:17, nome:"The Older Person's Pack", pags:33,
+      texto:'Heat, medication and the phone calls that matter when an older person is at home. The vulnerable customer register, and the one warm room that needs no power.'},
+    little:   {id:'761399', eur:17, nome:'The Little Ones Pack', pags:29,
+      texto:'Formula, safe water and warmth for a baby or a small child, planned before the storm instead of during it. The first hour, hour by hour.'},
+    animal:   {id:'761397', eur:17, nome:'The Animal Plan', pags:54,
+      texto:'Dogs, cats, rabbits, the fish tank, hens and the herd. Water and feed worked out per animal, and the everyday foods that are dangerous to them.'}
+  };
+  function bumpsDaVez(){
+    var seg = segment(), lista = [BUMPS.shopping];
+    if(BUMPS[seg]) lista.push(BUMPS[seg]);
+    return lista;
+  }
+  function marcados(){
+    return Array.prototype.filter.call(
+      document.querySelectorAll('#rbumps .bump'), function(b){ return b.querySelector('input').checked; });
+  }
   function checkoutUrl(){
     var seg = segment(), q = ['tracking=' + encodeURIComponent(trackingKey(seg))];
     var em = (document.getElementById('em') || {}).value;
     if(em) q.push('email=' + encodeURIComponent(em.trim()));
+    marcados().forEach(function(b){ q.push('quantity_' + b.getAttribute('data-bump') + '=1'); });
     return 'https://www.digistore24.com/product/' + CORE[seg] + '?' + q.join('&');
+  }
+  /* desenha as caixas e mantem o total e o link em dia */
+  function montaBumps(){
+    var alvo = document.getElementById('rbumps');
+    if(!alvo) return;
+    Array.prototype.forEach.call(alvo.querySelectorAll('.bump'), function(n){ n.remove(); });
+    bumpsDaVez().forEach(function(b){
+      var l = document.createElement('label');
+      l.className = 'bump';
+      l.setAttribute('data-bump', b.id);
+      l.setAttribute('data-eur', b.eur);
+      l.innerHTML = '<input type="checkbox">' +
+        '<span class="bump-body"><span class="bump-t">' + b.nome + ' <b>+&euro;' + b.eur + '</b></span>' +
+        '<span class="bump-d">' + b.texto + '</span>' +
+        '<span class="bump-n">' + b.pags + ' page PDF &middot; added to the same download</span></span>';
+      l.querySelector('input').addEventListener('change', function(){
+        l.classList.toggle('on', this.checked);
+        atualizaTotal();
+      });
+      alvo.appendChild(l);
+    });
+    atualizaTotal();
+  }
+  function atualizaTotal(){
+    var extra = 0;
+    marcados().forEach(function(b){ extra += parseInt(b.getAttribute('data-eur'), 10); });
+    var t = document.getElementById('rtotal'), n = document.getElementById('rtotnote');
+    if(t) t.innerHTML = '&euro;' + (47 + extra);
+    if(n) n.innerHTML = (extra
+        ? 'plan &euro;47 plus &euro;' + extra + ' added'
+        : 'one payment') + ' &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund';
+    wireBuy();
   }
   function wireBuy(){
     var url = checkoutUrl();
@@ -1600,17 +1698,6 @@ body.quiz-open{overflow:hidden}
       ' days</strong>. The plan below takes that to seven, in two hours on a Saturday, with the buying already worked out.';
   }
 
-  /* o que o checkout vai oferecer junto, dito antes de chegar la */
-  function also(){
-    var seg = segment();
-    var nome = {well:"The Well Owner's Pack", older:"The Older Person's Pack",
-                little:'The Little Ones Pack', animal:'The Animal Plan'}[seg];
-    var base = 'At the checkout you are also offered <strong>The Shopping Pack</strong> (&euro;19), the exact buying list at three budgets';
-    return seg === 'base'
-      ? base + '. One tick, and nothing else to decide.'
-      : base + ', and <strong>' + nome + '</strong> (&euro;17), because of what you answered. Tick either, both or neither.';
-  }
-
   document.getElementById('gate').addEventListener('submit', function(e){
     e.preventDefault();
     var d = score(), ds = d.toFixed(1).replace(/\.0$/,'');
@@ -1619,7 +1706,7 @@ body.quiz-open{overflow:hidden}
     wireBuy();
 
     document.getElementById('rpitch').innerHTML = pitch(ds);
-    document.getElementById('ralso').innerHTML = also();
+    montaBumps();
 
     closeQuiz();
     document.body.classList.add('offer-mode');
@@ -1642,8 +1729,7 @@ body.quiz-open{overflow:hidden}
     if(s === 'little') a[9] = 3;
     if(s === 'animal') a[8] = 3;
     document.getElementById('rpitch').innerHTML = pitch('0.6');
-    document.getElementById('ralso').innerHTML = also();
-    wireBuy();
+    montaBumps();
     document.body.classList.add('offer-mode');
     document.getElementById('result').style.display = 'block';
   }
