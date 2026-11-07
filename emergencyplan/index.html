@@ -122,6 +122,19 @@ input[type=email]{width:100%;font-family:"IBM Plex Mono",monospace;font-size:.98
 .facts li:first-child{border-top:0}
 .facts .n{font-family:Archivo,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-.025em;color:var(--signal);font-variant-numeric:tabular-nums}
 .facts .t{font-size:.96rem;line-height:1.45}
+/* consentimento de marketing: caixa de verdade, desmarcada (ePrivacy IE) */
+.consent{display:grid;grid-template-columns:1.15rem 1fr;gap:.75rem;align-items:start;
+  margin:0 0 1.2rem;font-size:.9rem;line-height:1.45;color:var(--ink-3);cursor:pointer}
+.consent input{width:1.15rem;height:1.15rem;margin:.18rem 0 0;accent-color:var(--signal);cursor:pointer}
+/* a isca, entregue na hora */
+.freebie{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;justify-content:space-between;
+  margin:1.4rem 0 0;padding:.95rem 1.1rem;border:1px solid var(--rule);border-radius:4px;
+  background:var(--signal-tint)}
+.freebie p{margin:0;font-size:.9rem;color:var(--ink-2);max-width:40ch}
+.freebie a{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--signal);border-bottom:1px solid var(--signal);
+  text-decoration:none;white-space:nowrap}
+.freebie a:hover{color:var(--c-emp);border-color:var(--c-emp)}
 .ticks{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
 .ticks li{display:grid;grid-template-columns:1.15rem 1fr;gap:.75rem;align-items:start;font-size:1rem}
 .ticks .box{width:1.15rem;height:1.15rem;margin-top:.22rem;border:1.5px solid var(--rule-strong);border-radius:2px;position:relative}
@@ -615,13 +628,16 @@ body.quiz-open{overflow:hidden}
 
       <div class="q" data-q="10">
         <h3>Where should we send your result?</h3>
-        <p class="qhint">You get your number on the next screen, and the free one page checklist by email.</p>
+        <p class="qhint">Your number comes up on the next screen, with the free one page checklist to download.</p>
         <form id="gate">
           <input type="email" id="em" required placeholder="you@example.ie" autocomplete="email">
-          <ul class="ticks" style="margin-bottom:1.2rem;font-size:.93rem">
-            <li><span class="box" style="border-color:var(--signal)"></span><span>Send me my result and the free one page checklist.</span></li>
-            <li><span class="box" style="border-color:var(--rule-strong)"></span><span>Email me occasional practical tips on home preparedness. Unsubscribe any time.</span></li>
+          <ul class="ticks" style="margin-bottom:.9rem;font-size:.93rem">
+            <li><span class="box" style="border-color:var(--signal)"></span><span>Your result and the free one page checklist, on the next screen and to that address.</span></li>
           </ul>
+          <label class="consent" for="tips">
+            <input type="checkbox" id="tips">
+            <span>Email me occasional practical tips on home preparedness. Unsubscribe any time. Tick this one or leave it, you get the checklist either way.</span>
+          </label>
           <button class="btn" type="submit">Show me my number</button>
           <p class="btn-sub">We will not pass your address to anyone.</p>
         </form>
@@ -764,8 +780,12 @@ body.quiz-open{overflow:hidden}
     </div>
 </section>
       <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
-      <a class="btn" href="#checkout" data-buy>Get instant access &rarr;</a>
+      <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
       <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
+      <div class="freebie">
+        <p><strong>Your free one page checklist,</strong> as promised. One A4 sheet for the press door, nothing to buy.</p>
+        <a href="the-one-page-checklist.pdf" download type="application/pdf">Download the PDF &darr;</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1384,6 +1404,91 @@ body.quiz-open{overflow:hidden}
 <script>
 (function(){
   var TOTAL = 10, a = {}, i = 0;
+
+  /* ─── checkout: 5 copias do core no Digistore24, uma por segmento.
+     O Digistore24 anexa add-on no nivel do PRODUTO, nao do link, por isso
+     cada copia tem exatamente 2 bumps. Ver produto/logica-bumps-checkout.md ─── */
+  var CORE = {
+    base:   '761393',   /* so Shopping Pack                 */
+    well:   '761412',   /* Shopping + Well Owner's Pack     */
+    older:  '761413',   /* Shopping + Older Person's Pack   */
+    little: '761414',   /* Shopping + Little Ones Pack      */
+    animal: '761415'    /* Shopping + Animal Plan           */
+  };
+  /* prioridade: poco > idoso > crianca > animal. Um bump segmentado, nunca dois. */
+  function segment(){
+    if(a[1] === 2 || a[1] === 3) return 'well';
+    if(a[7] === 2 || a[7] === 3) return 'older';
+    if(a[9] === 2 || a[9] === 3) return 'little';
+    if(a[8] === 2 || a[8] === 3) return 'animal';
+    return 'base';
+  }
+  var PARAMS = new URLSearchParams(location.search);
+  function utm(){
+    var o = {}, keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ttclid','gclid'];
+    keys.forEach(function(k){ if(PARAMS.get(k)) o[k] = PARAMS.get(k).slice(0,120); });
+    return o;
+  }
+  function trackingKey(seg){
+    var c = (PARAMS.get('utm_campaign') || PARAMS.get('utm_source') || 'direct')
+              .toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,40);
+    return (c + '_' + seg).slice(0,60);
+  }
+  function checkoutUrl(){
+    var seg = segment(), q = ['tracking=' + encodeURIComponent(trackingKey(seg))];
+    var em = (document.getElementById('em') || {}).value;
+    if(em) q.push('email=' + encodeURIComponent(em.trim()));
+    return 'https://www.digistore24.com/product/' + CORE[seg] + '?' + q.join('&');
+  }
+  function wireBuy(){
+    var url = checkoutUrl();
+    Array.prototype.forEach.call(document.querySelectorAll('[data-buy]'), function(b){
+      b.setAttribute('href', url);
+      b.setAttribute('rel', 'noopener');
+    });
+  }
+
+  /* ─── captura do lead: insert-only numa tabela do Supabase em eu-west-1 ─── */
+  var LEAD = {
+    url: 'https://yreedufkyjcriwedmtkg.supabase.co/rest/v1/leads',
+    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlyZWVkdWZreWpjcml3ZWRtdGtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwNzEwODQsImV4cCI6MjEwOTY0NzA4NH0.RMgHEK3V3l7oAaHcZbF1P2Fmec3hs_jKyrNGtqlyT-8'
+  };
+  function saveLead(email, days){
+    var seg = segment();
+    var tips = document.getElementById('tips');
+    var body = JSON.stringify({
+      email: email, days: days, segment: seg, product_id: CORE[seg],
+      consent_tips: !!(tips && tips.checked),
+      answers: a, source: 'quiz', utm: utm(),
+      user_agent: (navigator.userAgent || '').slice(0, 300)
+    });
+    try{
+      fetch(LEAD.url, {
+        method: 'POST', keepalive: true,
+        headers: {'apikey': LEAD.key, 'Authorization': 'Bearer ' + LEAD.key,
+                  'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+        body: body
+      }).catch(function(){ queue(body); });
+    }catch(e){ queue(body); }
+  }
+  /* se a rede falhar, guarda e tenta no proximo carregamento */
+  function queue(body){
+    try{
+      var q = JSON.parse(localStorage.getItem('br_lead_q') || '[]');
+      q.push(body); localStorage.setItem('br_lead_q', JSON.stringify(q.slice(-10)));
+    }catch(e){}
+  }
+  function flushQueue(){
+    var q;
+    try{ q = JSON.parse(localStorage.getItem('br_lead_q') || '[]'); }catch(e){ return; }
+    if(!q.length) return;
+    localStorage.removeItem('br_lead_q');
+    q.forEach(function(body){
+      fetch(LEAD.url, {method:'POST', headers:{'apikey': LEAD.key,
+        'Authorization':'Bearer ' + LEAD.key, 'Content-Type':'application/json',
+        'Prefer':'return=minimal'}, body: body}).catch(function(){ queue(body); });
+    });
+  }
   var qs = Array.prototype.slice.call(document.querySelectorAll('.q'));
   var pl = document.getElementById('pl'), pb = document.getElementById('pb');
   var back = document.getElementById('back');
@@ -1470,6 +1575,9 @@ body.quiz-open{overflow:hidden}
   document.getElementById('gate').addEventListener('submit', function(e){
     e.preventDefault();
     var d = score(), ds = d.toFixed(1).replace(/\.0$/,'');
+    var em = document.getElementById('em').value.trim();
+    saveLead(em, d);
+    wireBuy();
     document.getElementById('rdays').textContent = ds;
     document.getElementById('runit').textContent = (d === 1 ? 'day' : 'days');
     document.getElementById('rsay').textContent = d < 1
@@ -1499,6 +1607,8 @@ body.quiz-open{overflow:hidden}
     show(TOTAL);
   });
 
+  wireBuy();
+  flushQueue();
   show(0);
 })();
 </script>
