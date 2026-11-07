@@ -1631,6 +1631,22 @@ body.quiz-open{overflow:hidden}
   wireBuy();
   flushQueue();
   show(0);
+
+  /* ?preview=offer abre a tela da oferta direto, sem responder o quiz.
+     Para revisar a pagina. Nao grava lead nenhum.
+     ?preview=offer&s=well|older|little|animal escolhe o segmento. */
+  if(PARAMS.get('preview') === 'offer'){
+    var s = PARAMS.get('s') || 'well';
+    if(s === 'well')   a[1] = 2;
+    if(s === 'older')  a[7] = 3;
+    if(s === 'little') a[9] = 3;
+    if(s === 'animal') a[8] = 3;
+    document.getElementById('rpitch').innerHTML = pitch('0.6');
+    document.getElementById('ralso').innerHTML = also();
+    wireBuy();
+    document.body.classList.add('offer-mode');
+    document.getElementById('result').style.display = 'block';
+  }
 })();
 </script>
 </body>
