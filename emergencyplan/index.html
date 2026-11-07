@@ -1,0 +1,1463 @@
+<!doctype html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Climate Emergencies 2027</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23C8102E%22/%3E%3Ctext x=%2250%22 y=%2250%22 dy=%22.35em%22 text-anchor=%22middle%22 font-family=%22Arial,Helvetica,sans-serif%22 font-size=%2252%22 font-weight=%22800%22 fill=%22%23fff%22%3ECE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --paper-2:#FFFFFF; --card:#FFFFFF;
+  --ink:#111111; --ink-2:#2E2E2E; --ink-3:#4D5257;
+  --signal:#C8102E; --signal-fill:#E8112D; --signal-tint:rgba(200,16,46,.06);
+  --spruce:#111111;
+  --rule:rgba(17,17,17,.14); --rule-strong:rgba(17,17,17,.45);
+  --wash:rgba(200,16,46,.03);
+  --shadow:0 1px 2px rgba(17,17,17,.05), 0 10px 26px -20px rgba(17,17,17,.3);
+}
+
+
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:Lato,"Helvetica Neue",Arial,sans-serif;
+  font-size:1.14rem;line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.5rem}
+.wrap-wide{max-width:60rem;margin:0 auto;padding:0 1.5rem}
+.band{border-top:1px solid var(--rule);padding:4rem 0}
+.band--wash{background:var(--wash)}
+.band--card{background:var(--paper-2)}
+
+h1,h2,h3{font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:800;
+  letter-spacing:-.021em;line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.3rem)}
+h2{font-size:clamp(1.45rem,3.8vw,2.05rem);margin-bottom:1.1rem}
+h3{font-size:1.08rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.35rem}
+p{margin:0 0 1.15rem;font-weight:400} p:last-child{margin-bottom:0}
+strong{font-weight:600} a{color:var(--signal)}
+.eyebrow,.src,.btn-sub,.figc,.sheet-head,.qprog{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.eyebrow{font-size:.74rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin:0 0 1.15rem}
+.src{font-size:.78rem;line-height:1.55;color:var(--ink-3);margin:.5rem 0 0;font-weight:500}
+.lede{font-size:1.24rem;line-height:1.5;color:var(--ink);font-weight:400}
+.blank{display:inline-block;min-width:4.4rem;border-bottom:3px dotted var(--signal);color:var(--signal)}
+
+#quiz{padding:2.6rem 0 3.5rem}
+.stamp{display:inline-flex;align-items:center;gap:.55rem;font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--spruce);
+  border:1px solid currentColor;border-radius:2px;padding:.38rem .6rem;margin-bottom:1.5rem}
+.qcard{background:var(--card);border:1px solid var(--rule-strong);border-radius:4px;
+  box-shadow:var(--shadow);padding:1.7rem 1.5rem;margin-top:2rem}
+.qprog{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  display:flex;justify-content:space-between;gap:1rem;padding-bottom:.85rem;margin-bottom:1.3rem;
+  border-bottom:1px solid var(--rule)}
+.qbar{height:3px;background:var(--rule);border-radius:2px;overflow:hidden;margin-bottom:1.4rem}
+.qbar span{display:block;height:100%;background:var(--signal-fill);width:0;transition:width .28s ease}
+.q{display:none} .q.on{display:block}
+.q h3{font-family:Archivo,sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-.018em;margin-bottom:.4rem}
+.qhint{font-size:.92rem;color:var(--ink-2);margin:0 0 1.2rem}
+.opts{display:grid;gap:.6rem}
+.opt{display:block;width:100%;text-align:left;font-family:Lato,"Helvetica Neue",Arial,sans-serif;
+  font-size:1.08rem;font-weight:700;color:var(--ink);background:var(--paper-2);
+  border:1.5px solid var(--rule-strong);border-radius:3px;padding:.9rem 1rem;cursor:pointer;
+  transition:border-color .12s ease, background .12s ease}
+.opt:hover{border-color:var(--signal);background:var(--signal-tint)}
+.opt:focus-visible{outline:3px solid var(--spruce);outline-offset:2px}
+.opt small{display:block;font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--ink-3);margin-top:.22rem;letter-spacing:.02em}
+.qback{background:none;border:0;font-family:"IBM Plex Mono",monospace;font-size:.7rem;
+  letter-spacing:.08em;color:var(--ink-3);cursor:pointer;padding:.9rem 0 0;text-decoration:underline}
+input[type=email]{width:100%;font-family:"IBM Plex Mono",monospace;font-size:.98rem;
+  padding:.85rem;border:1.5px solid var(--rule-strong);border-radius:3px;
+  background:var(--paper-2);color:var(--ink);margin-bottom:1rem}
+
+#result{display:none}
+.score{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  padding:1.6rem 0 1.2rem;border-bottom:1px solid var(--rule);margin-bottom:1.4rem}
+.score .big{font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(3.2rem,12vw,5rem);
+  line-height:.9;letter-spacing:-.04em;color:var(--signal);font-variant-numeric:tabular-nums}
+.score .unit{font-family:Archivo,sans-serif;font-weight:700;font-size:1.3rem;color:var(--ink-2)}
+.gaps{list-style:none;margin:0 0 1.4rem;padding:0;display:grid;gap:.8rem}
+.gaps li{display:grid;grid-template-columns:1.4rem 1fr;gap:.7rem;font-size:1rem;align-items:start}
+.gaps .mk{font-family:Archivo,sans-serif;font-weight:800;color:var(--signal);line-height:1.5}
+.ruler{margin:1.4rem 0;border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.ruler div{display:grid;grid-template-columns:1fr auto;gap:1rem;padding:.7rem .9rem;
+  font-size:.95rem;border-top:1px solid var(--rule);background:var(--card)}
+.ruler div:first-child{border-top:0}
+.ruler div.you{background:var(--signal-tint);font-weight:600}
+.ruler b{font-family:Archivo,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.sheet{background:var(--card);border:1px solid var(--rule-strong);border-radius:4px;box-shadow:var(--shadow);padding:1.6rem 1.5rem}
+.sheet-head{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  padding-bottom:.7rem;margin-bottom:1.1rem;border-bottom:1px solid var(--rule)}
+.price{display:flex;flex-wrap:wrap;align-items:baseline;gap:.75rem;margin:0 0 1.2rem}
+.price .amt{font-family:Archivo,sans-serif;font-weight:800;font-size:3.2rem;letter-spacing:-.03em;line-height:1}
+.price .note{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-3);letter-spacing:.03em}
+.btn{display:block;width:100%;text-align:center;font-family:Archivo,sans-serif;font-weight:700;
+  font-size:1.05rem;background:var(--signal);color:#FFFFFF;border:0;border-radius:3px;
+  padding:1.05rem 1.25rem;text-decoration:none;cursor:pointer;transition:filter .12s ease, transform .12s ease}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn:focus-visible{outline:3px solid var(--spruce);outline-offset:3px}
+.btn-sub{font-size:.7rem;letter-spacing:.06em;color:var(--ink-3);text-align:center;margin:.7rem 0 0}
+.facts{display:grid;margin:0;padding:0;list-style:none}
+.facts li{display:grid;grid-template-columns:5.4rem 1fr;gap:1.1rem;padding:.95rem 0;border-top:1px solid var(--rule);align-items:baseline}
+.facts li:first-child{border-top:0}
+.facts .n{font-family:Archivo,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-.025em;color:var(--signal);font-variant-numeric:tabular-nums}
+.facts .t{font-size:.96rem;line-height:1.45}
+.ticks{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.ticks li{display:grid;grid-template-columns:1.15rem 1fr;gap:.75rem;align-items:start;font-size:1rem}
+.ticks .box{width:1.15rem;height:1.15rem;margin-top:.22rem;border:1.5px solid var(--rule-strong);border-radius:2px;position:relative}
+.ticks .box::after{content:"";position:absolute;left:.22rem;top:.08rem;width:.42rem;height:.68rem;
+  border-right:2px solid var(--signal);border-bottom:2px solid var(--signal);transform:rotate(42deg)}
+.chapters{list-style:none;margin:0;padding:0}
+.chapters li{padding:1.05rem 0;border-top:1px solid var(--rule)}
+.chapters li:first-child{border-top:0}
+.chapters .ch{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.13em;color:var(--ink-3);display:block;margin-bottom:.3rem}
+.chapters p{font-size:1rem;color:var(--ink-2);margin:0}
+.pull{border-left:3px solid var(--signal);padding:.15rem 0 .15rem 1.25rem;margin:1.6rem 0;font-size:1.12rem;line-height:1.5}
+
+.clips{display:grid;gap:1rem;margin-top:1.8rem}
+@media(min-width:40rem){.clips{grid-template-columns:1fr 1fr}}
+.clip{background:var(--card);border:1px solid var(--rule-strong);border-radius:4px;
+  padding:1.1rem 1.15rem;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.55rem}
+.clip .org{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--signal);display:flex;justify-content:space-between;gap:.6rem;
+  border-bottom:1px solid var(--rule);padding-bottom:.5rem}
+.clip .org span{color:var(--ink-3);white-space:nowrap}
+.clip .hd{font-family:Archivo,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.26;letter-spacing:-.012em}
+.clip .ex{font-size:.92rem;color:var(--ink-2);line-height:1.5;margin:0}
+.clip a{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.06em;margin-top:auto}
+
+.voices{display:grid;gap:1rem;margin-top:1.6rem}
+.voice{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--spruce);
+  border-radius:3px;padding:1.1rem 1.2rem}
+.voice blockquote{margin:0 0 .6rem;font-size:1.04rem;line-height:1.52;font-style:italic}
+.voice cite{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.06em;color:var(--ink-3);font-style:normal;line-height:1.6;display:block}
+.slot{border:1.5px dashed var(--rule-strong);border-radius:3px;padding:1.1rem 1.2rem}
+.slot p{font-family:"IBM Plex Mono",monospace;font-size:.72rem;line-height:1.7;color:var(--ink-3);margin:0;letter-spacing:.02em}
+
+details{border-top:1px solid var(--rule);padding:1rem 0}
+details summary{font-family:Archivo,sans-serif;font-weight:700;font-size:1.01rem;cursor:pointer;
+  list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";color:var(--signal);font-weight:600;flex:none}
+details[open] summary::after{content:"\2013"}
+details summary:focus-visible{outline:2px solid var(--spruce);outline-offset:3px}
+details .ans{padding-top:.8rem;font-size:1.04rem;color:var(--ink-2)}
+details .ans p{margin-bottom:.8rem}
+
+figure{margin:2rem 0;padding:0}
+figure svg{display:block;width:100%;height:auto;border:1px solid var(--rule-strong);border-radius:4px;background:var(--card)}
+.figc{font-size:.7rem;letter-spacing:.07em;color:var(--ink-3);margin-top:.6rem}
+.cm-ink{stroke:var(--ink);fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.cm-thin{stroke:var(--ink-2);fill:none;stroke-width:1.4;stroke-linecap:round}
+.cm-sig{stroke:var(--signal-fill);fill:none;stroke-width:2.6;stroke-linecap:round}
+.cm-fill{fill:var(--signal-fill);opacity:.2}
+.cm-rule{stroke:var(--rule-strong);fill:none;stroke-width:1.2}
+.cm-txt{font-family:"IBM Plex Mono",monospace;font-size:11.5px;fill:var(--ink-2);letter-spacing:.04em}
+.cm-num{font-family:Archivo,sans-serif;font-size:13px;font-weight:800;fill:var(--signal)}
+
+.tbl{overflow-x:auto;margin:1.4rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:.65rem .8rem;border-top:1px solid var(--rule);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);border-top:0}
+td b{font-family:Archivo,sans-serif;font-variant-numeric:tabular-nums}
+
+footer{border-top:1px solid var(--rule);padding:2.5rem 0 3.5rem;color:var(--ink-3)}
+footer p{font-family:"IBM Plex Mono",monospace;font-size:.71rem;line-height:1.75;letter-spacing:.015em}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:30rem){.facts li{grid-template-columns:4.3rem 1fr;gap:.8rem}.facts .n{font-size:1.18rem}}
+
+
+/* ── instagram-style DM testimonials ── */
+.dms{display:grid;gap:1.1rem;margin-top:1.7rem;align-items:start}
+@media(min-width:44rem){.dms{grid-template-columns:1fr 1fr}}
+.dm{background:var(--card);border:1px solid var(--rule-strong);border-radius:14px;
+  box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.dm-top{display:flex;align-items:center;gap:.65rem;padding:.75rem .9rem;
+  border-bottom:1px solid var(--rule)}
+.dm-av{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-family:Archivo,sans-serif;font-weight:700;font-size:.8rem;color:#FFFFFF;
+  background:linear-gradient(135deg,var(--signal-fill),var(--signal))}
+.dm-av--empty{background:none;border:1.5px dashed var(--rule-strong);color:var(--ink-3)}
+.dm-id{min-width:0}
+.dm-h{font-family:Archivo,sans-serif;font-weight:700;font-size:.9rem;letter-spacing:-.01em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dm-loc{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.07em;color:var(--ink-3)}
+.dm-body{padding:.9rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
+.bub{background:var(--signal-tint);border-radius:14px 14px 14px 4px;padding:.65rem .85rem;
+  font-size:.96rem;line-height:1.5;align-self:flex-start;max-width:92%}
+.bub--me{background:var(--wash);border-radius:14px 14px 4px 14px;align-self:flex-end;
+  color:var(--ink-2);font-size:.9rem}
+.bub--slot{background:none;border:1.5px dashed var(--rule-strong);border-radius:10px;
+  align-self:stretch;max-width:100%;font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+  line-height:1.65;color:var(--ink-3);letter-spacing:.015em}
+.dm-foot{display:flex;align-items:center;justify-content:space-between;gap:.7rem;
+  padding:.6rem .9rem;border-top:1px solid var(--rule)}
+.stars{display:flex;gap:.1rem;color:var(--signal);font-size:.92rem;letter-spacing:.06em}
+.stars--empty{color:var(--ink-3);opacity:.45}
+.dm-seen{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.07em;color:var(--ink-3)}
+.dm--demo{position:relative}
+.dm-stamp{position:absolute;top:.55rem;right:.6rem;z-index:2;
+  font-family:"IBM Plex Mono",monospace;font-size:.56rem;font-weight:600;letter-spacing:.12em;
+  color:var(--signal);background:var(--card);border:1px solid var(--signal);
+  border-radius:3px;padding:.2rem .35rem;text-transform:uppercase}
+.dm--demo .dm-av{filter:saturate(.3)}
+.demo-warn{background:var(--signal-tint);border:1px solid var(--signal);border-radius:4px;
+  padding:1rem 1.1rem;margin-top:1.7rem;font-family:"IBM Plex Mono",monospace;
+  font-size:.74rem;line-height:1.75;letter-spacing:.015em;color:var(--ink)}
+.dm-note{font-family:"IBM Plex Mono",monospace;font-size:.72rem;line-height:1.7;
+  color:var(--ink-3);letter-spacing:.02em;border-left:2px solid var(--rule-strong);
+  padding-left:.9rem;margin-top:1.6rem}
+
+/* ── chart + new section tokens ── */
+:root{ --c-mut:#D6485B; --c-emp:#8A0B20; --c-up:#C8102E; --c-dn:#111111; }
+
+
+
+/* charts */
+.ch-ttl{font-family:Archivo,sans-serif;font-size:14px;font-weight:800;fill:var(--ink);letter-spacing:-.01em}
+.ch-sub{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--ink-3);letter-spacing:.03em}
+.ch-grid{stroke:var(--rule);stroke-width:1}
+.ch-axis{stroke:var(--rule-strong);stroke-width:1.2}
+.ch-ref{stroke:var(--ink-3);stroke-width:1.2;stroke-dasharray:3 3}
+.ch-reft{font-family:"IBM Plex Mono",monospace;font-size:9.5px;fill:var(--ink-3);letter-spacing:.04em}
+.ch-lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:var(--ink-2);text-anchor:end;letter-spacing:.03em}
+.ch-lbl-on{fill:var(--ink);font-weight:600}
+.ch-val{font-family:Archivo,sans-serif;font-size:13px;font-weight:700;fill:var(--ink-2);font-variant-numeric:tabular-nums}
+.ch-val-on{fill:var(--signal);font-weight:800}
+.ch-val-dn{fill:var(--c-dn);font-weight:800}
+.ch-note{font-family:"IBM Plex Mono",monospace;font-size:10px;fill:var(--ink-3);letter-spacing:.03em}
+.ch-ax{font-family:"IBM Plex Mono",monospace;font-size:10px;fill:var(--ink-3);letter-spacing:.03em}
+.b-mut{fill:var(--c-mut);opacity:.5}
+.b-emp{fill:var(--c-emp)}
+.b-up{fill:var(--c-up)}
+.b-dn{fill:var(--c-dn)}
+.bar{cursor:default}
+.bar:hover rect{opacity:1;filter:brightness(1.08)}
+.a-fill{fill:var(--c-mut);opacity:.17}
+.a-line{stroke:var(--c-emp);stroke-width:2;fill:none;stroke-linejoin:round}
+.a-dot{fill:var(--card);stroke:var(--c-emp);stroke-width:2}
+.a-dot-end{fill:var(--c-emp)}
+.dtbl{border-top:0;padding:.4rem 0 0}
+.dtbl summary{font-family:"IBM Plex Mono",monospace;font-size:.7rem;font-weight:400;letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase}
+.dtbl summary::after{font-size:.9rem}
+
+/* family cases */
+.cases{display:grid;gap:.9rem;margin:1.8rem 0 1.2rem}
+.case{display:grid;grid-template-columns:6.4rem 1fr;gap:1.1rem;background:var(--card);
+  border:1px solid var(--rule-strong);border-left:3px solid var(--signal);border-radius:4px;
+  padding:1.1rem 1.2rem;box-shadow:var(--shadow)}
+.case-n{font-family:Archivo,sans-serif;font-weight:800;font-size:1.5rem;line-height:1.05;
+  letter-spacing:-.03em;color:var(--signal);font-variant-numeric:tabular-nums}
+.case-b h3{margin-bottom:.3rem}
+.case-b p{font-size:.97rem;color:var(--ink-2);margin:0}
+@media(max-width:30rem){.case{grid-template-columns:1fr;gap:.5rem}.case-n{font-size:1.3rem}}
+
+/* risk list */
+.risk{list-style:none;margin:1.8rem 0 1.4rem;padding:0;display:grid;gap:1.1rem}
+.risk li{border-top:1px solid var(--rule);padding-top:1.1rem;font-size:1rem;color:var(--ink-2)}
+.risk li:first-child{border-top:0;padding-top:0}
+.r-h{display:block;font-family:Archivo,sans-serif;font-weight:700;font-size:1.05rem;
+  color:var(--ink);letter-spacing:-.01em;margin-bottom:.3rem}
+
+/* modules */
+.mods{list-style:none;margin:1.8rem 0 0;padding:0;counter-reset:m}
+.mods li{padding:1.35rem 0;border-top:1px solid var(--rule)}
+.mods li:first-child{border-top:0}
+.m-ch{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.3rem}
+.mods h3{font-size:1.14rem;margin-bottom:.45rem}
+.mods p{font-size:1.02rem;color:var(--ink-2);margin:0 0 .55rem}
+.m-out{font-family:"IBM Plex Mono",monospace;font-size:.78rem!important;letter-spacing:.015em;
+  color:var(--ink)!important;background:var(--signal-tint);border-radius:3px;
+  padding:.5rem .7rem;margin:.6rem 0 0!important}
+.m-out b{font-family:Archivo,sans-serif;color:var(--signal)}
+.m-warn{font-size:.9rem!important;border-left:3px solid var(--signal);padding-left:.9rem;margin-top:.7rem!important}
+
+/* prints de noticia */
+.prints{display:grid;gap:1.5rem;margin-top:1.8rem;align-items:start}
+@media(min-width:44rem){.prints{grid-template-columns:1fr 1fr}}
+figure.print{margin:0;background:#FFF;border:1.5px solid #111;padding:0;border-radius:0;
+  box-shadow:6px 6px 0 rgba(17,17,17,.14)}
+figure.print img{display:block;width:100%;height:auto;border-bottom:1.5px solid #111}
+figure.print figcaption{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.13em;
+  text-transform:uppercase;padding:.6rem .8rem;display:flex;justify-content:space-between;gap:1rem;color:#111}
+figure.print figcaption b{color:var(--signal);font-weight:600}
+/* graficos em recorte */
+figure.nf{background:#FFF;border:1.5px solid #111;border-radius:0;padding:0 0 .4rem;
+  box-shadow:6px 6px 0 rgba(17,17,17,.14)}
+figure.nf svg{border:0;border-radius:0}
+figure.nf .figc,figure.nf .dtbl,figure.nf>p{margin-left:.9rem;margin-right:.9rem}
+.mast{display:flex;justify-content:space-between;gap:1rem;padding:.55rem .9rem;background:#111;color:#FFF;
+  border-bottom:3px solid var(--signal);font-family:"IBM Plex Mono",monospace;font-size:.6rem;
+  letter-spacing:.14em;text-transform:uppercase}
+.mast b{font-weight:600}.mast span{color:#F3B4BD}
+/* depoimento: balao + foto */
+.bub--big{position:relative;background:#FBEAED;border:1px solid rgba(200,16,46,.3);border-radius:14px;
+  padding:.9rem 1rem;font-size:1rem;line-height:1.55;align-self:stretch;max-width:100%}
+.bub--big::after{content:"";position:absolute;left:24px;bottom:-8.5px;width:15px;height:15px;
+  background:#FBEAED;border-right:1px solid rgba(200,16,46,.3);border-bottom:1px solid rgba(200,16,46,.3);
+  transform:rotate(45deg)}
+.who{display:flex;align-items:center;gap:.7rem;margin-top:1rem}
+.who-img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid #111;flex:none}
+/* estrelas fracionadas */
+.stars{position:relative;display:inline-block;font-size:1.05rem;letter-spacing:.06em;line-height:1;color:#DDD}
+.stars i{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap;color:var(--signal);font-style:normal}
+.stars-n{font-family:Archivo,sans-serif;font-weight:800;font-size:.82rem;margin-left:.5rem;color:#111}
+
+.cta-big{display:flex;flex-direction:column;align-items:center;gap:.25rem;text-align:center;
+  background:var(--signal);color:#FFF;text-decoration:none;font-family:Archivo,sans-serif;
+  font-weight:800;font-size:1.3rem;letter-spacing:-.015em;line-height:1.12;
+  padding:1.15rem 1.5rem;border-radius:6px;margin-top:2rem;
+  box-shadow:0 4px 0 #8A0B20, 0 12px 28px -10px rgba(200,16,46,.6);
+  animation:ctapulse 2.2s ease-in-out infinite;transition:transform .1s ease}
+.cta-big small{font-family:"IBM Plex Mono",monospace;font-size:.68rem;font-weight:400;letter-spacing:.06em;opacity:.92}
+.cta-big:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.cta-big:active{transform:translateY(2px);box-shadow:0 1px 0 #8A0B20}
+@keyframes ctapulse{0%,100%{box-shadow:0 4px 0 #8A0B20, 0 12px 28px -10px rgba(200,16,46,.55)}
+  50%{box-shadow:0 4px 0 #8A0B20, 0 12px 36px -4px rgba(200,16,46,.95)}}
+@media (prefers-reduced-motion:reduce){.cta-big{animation:none}}
+
+.scare{display:grid;gap:0;margin:1.8rem 0;border:1.5px solid #111;border-radius:0;box-shadow:6px 6px 0 rgba(17,17,17,.14)}
+.scare-row{display:grid;grid-template-columns:7rem 1fr;gap:1.2rem;align-items:baseline;padding:1rem 1.2rem;border-top:1.5px solid rgba(17,17,17,.14)}
+.scare-row:first-child{border-top:0}
+.scare-n{font-family:Archivo,sans-serif;font-weight:800;font-size:1.9rem;letter-spacing:-.03em;color:var(--signal);font-variant-numeric:tabular-nums;line-height:1}
+.scare-row span:last-child{font-size:1rem;line-height:1.5}
+@media(max-width:30rem){.scare-row{grid-template-columns:1fr;gap:.3rem}.scare-n{font-size:1.5rem}}
+
+.dm-photo{position:relative;width:100%;border-radius:12px 12px 0 0;overflow:hidden;background:#EEE}
+.dm-photo::before{content:"";display:block;padding-top:calc(var(--r,0.7) * 100%)}
+.dm-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.bub--over{position:absolute;left:.7rem;right:.7rem;bottom:.7rem;background:rgba(255,255,255,.96);
+  border:0;border-radius:12px;padding:.75rem .9rem;font-size:.92rem;line-height:1.45;color:#111;
+  box-shadow:0 6px 20px -8px rgba(0,0,0,.5);max-width:100%}
+.dm-foot2{display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.8rem .9rem;
+  border-top:1px solid var(--rule)}
+.dm--demo{overflow:hidden}
+
+/* full-screen quiz */
+#quizscreen{position:fixed;inset:0;z-index:1000;background:var(--paper);
+  display:none;flex-direction:column;overflow-y:auto}
+#quizscreen.open{display:flex}
+body.quiz-open{overflow:hidden}
+.qs-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:1rem 1.5rem;border-bottom:1.5px solid #111;position:sticky;top:0;background:var(--paper);z-index:2}
+.qs-brand{font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#111}
+.qs-close{background:none;border:0;font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+  letter-spacing:.1em;color:var(--ink-3);cursor:pointer;text-transform:uppercase}
+.qs-close:hover{color:var(--signal)}
+.qs-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1.5rem}
+#quizscreen .qcard{width:100%;max-width:38rem;margin:0;box-shadow:0 20px 50px -30px rgba(17,17,17,.4)}
+#quizscreen .q h3{font-size:1.55rem}
+#quizscreen .opt{padding:1.05rem 1.15rem;font-size:1.06rem}
+@media(min-width:40rem){.qs-stage{padding:3rem 1.5rem}}
+
+/* testimonial: full uncropped image */
+.dm-fullimg{background:#F2F2F2;border-radius:12px 12px 0 0;overflow:hidden;line-height:0;text-align:center}
+.dm-fullimg img{width:100%;height:auto;max-height:420px;object-fit:contain;display:inline-block}
+.dm-say{padding:.9rem .9rem 0}
+.bub--card{background:var(--signal-tint);border:1px solid rgba(200,16,46,.22);border-radius:12px;
+  padding:.8rem .95rem;font-size:.96rem;line-height:1.5;color:#111}
+
+.whatmeans{background:#FFF6F7;border-left:3px solid var(--signal);margin:1rem .9rem 0;
+  padding:.85rem 1rem;font-size:.95rem;line-height:1.5}
+.whatmeans b{font-family:Archivo,sans-serif;color:var(--signal)}
+
+/* testimonial post style */
+.dm--post .post-head{display:flex;align-items:center;gap:.7rem;padding:.9rem .9rem .7rem}
+.post-av{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid #111;flex:none}
+.post-head .dm-h{font-size:.98rem}
+.post-stars{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:.1rem}
+.post-photo{line-height:0;background:#F2F2F2;text-align:center}
+.post-photo img{width:100%;height:auto;max-height:420px;object-fit:contain;display:inline-block}
+.dm--post .dm-say{padding:.9rem}
+
+/* ebook mockup on result */
+.offer-sheet{border:1.5px solid #111}
+.mockup{display:flex;gap:1.1rem;align-items:center;margin:0 0 1.5rem;flex-wrap:wrap}
+.mk-book{flex:none;perspective:900px}
+.mk-cover{width:150px;height:208px;background:linear-gradient(150deg,#1C242B,#2b3845);
+  border-radius:3px 6px 6px 3px;box-shadow:-6px 8px 22px -8px rgba(0,0,0,.5), inset 7px 0 0 rgba(255,255,255,.08), inset 9px 0 0 rgba(0,0,0,.25);
+  transform:rotateY(-14deg);transform-style:preserve-3d;
+  display:flex;flex-direction:column;justify-content:center;gap:.5rem;padding:1.1rem 1rem 1rem 1.3rem;color:#FFF;position:relative;overflow:hidden}
+.mk-cover::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--signal)}
+.mk-kicker{font-family:"IBM Plex Mono",monospace;font-size:.56rem;letter-spacing:.2em;color:#9DAAB4}
+.mk-title{font-family:Archivo,sans-serif;font-weight:800;font-size:1.08rem;line-height:1.05;letter-spacing:-.03em}
+.mk-sub{font-family:"IBM Plex Mono",monospace;font-size:.52rem;line-height:1.5;color:#C9D2D9;margin-top:.2rem}
+.mk-badge{margin-top:auto;font-family:"IBM Plex Mono",monospace;font-size:.5rem;letter-spacing:.08em;
+  color:#FFF;background:var(--signal);align-self:flex-start;padding:.2rem .4rem;border-radius:2px}
+.mk-sheets{flex:1;min-width:200px;display:grid;gap:.55rem}
+.mk-sheet{background:#FFF;border:1px solid var(--rule-strong);border-radius:3px;padding:.55rem .65rem;box-shadow:2px 3px 0 rgba(17,17,17,.08)}
+.mk-sh-head{font-family:"IBM Plex Mono",monospace;font-size:.52rem;letter-spacing:.12em;color:var(--signal);margin-bottom:.35rem;font-weight:600}
+.mk-tbl{width:100%;border-collapse:collapse;font-size:.72rem}
+.mk-tbl td{padding:.12rem 0;border-top:1px solid var(--rule)}
+.mk-tbl td:last-child{text-align:right;font-family:Archivo,sans-serif;font-weight:700;font-variant-numeric:tabular-nums}
+.mk-tbl tr:first-child td{border-top:0}
+.mk-row{display:flex;align-items:center;gap:.4rem;font-size:.72rem;padding:.1rem 0}
+.mk-tick{width:.7rem;height:.7rem;border:1.3px solid #111;border-radius:2px;position:relative;flex:none}
+.mk-tick:not(.off)::after{content:"";position:absolute;left:.16rem;top:.02rem;width:.22rem;height:.4rem;border-right:1.6px solid var(--signal);border-bottom:1.6px solid var(--signal);transform:rotate(42deg)}
+.mk-bars{display:flex;gap:.25rem;align-items:flex-end;height:26px;margin:.2rem 0}
+.mk-bars i{background:var(--signal);border-radius:2px 2px 0 0;height:100%;flex:1;opacity:.85}
+.mk-bars i:nth-child(1){opacity:.4}.mk-bars i:nth-child(2){opacity:.65}
+.mk-sh-foot{font-family:"IBM Plex Mono",monospace;font-size:.56rem;color:var(--ink-3);letter-spacing:.04em}
+@media(max-width:34rem){.mk-book{margin:0 auto}.mk-sheets{min-width:100%}}
+
+/* animated question icons + entrance */
+.q-icon{width:54px;height:50px;margin:0 0 .7rem}
+.q-icon svg{width:100%;height:100%;stroke:var(--signal);fill:none;stroke-width:2.6;
+  stroke-linecap:round;stroke-linejoin:round}
+.q-icon svg [fill]{fill:none}
+.q.on .q-icon{animation:qpop .45s cubic-bezier(.2,1.3,.4,1) both}
+.q.on .q-icon svg *{stroke-dasharray:200;stroke-dashoffset:200;animation:qdraw .7s ease .1s forwards}
+@keyframes qpop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes qdraw{to{stroke-dashoffset:0}}
+.q.on h3{animation:qrise .4s ease both}
+.q.on .qhint{animation:qrise .4s ease .06s both}
+.q.on .opts{animation:qrise .45s ease .12s both}
+@keyframes qrise{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+.qbar span{transition:width .5s cubic-bezier(.3,1,.4,1)}
+@media (prefers-reduced-motion:reduce){.q-icon,.q.on h3,.q.on .qhint,.q.on .opts,.q.on .q-icon svg *{animation:none}.q.on .q-icon svg *{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+
+<section id="quiz">
+  <div class="wrap">
+    <div class="stamp">United Nations &middot; WMO &middot; strongest El Ni&ntilde;o on record</div>
+    <h1>Climate emergencies in 2027. Is your house ready for what is coming?</h1>
+    <p class="lede" style="margin-top:1.3rem">The UN&rsquo;s weather agency has confirmed the strongest
+    El Ni&ntilde;o ever measured, <strong>+2.47&deg;C</strong> and still climbing. In January 2025 one storm
+    left 768,000 Irish homes without power and 84,000 without water, some for twenty days. The next one is
+    a question of when, not if. In September the Government posted 2.2 million households a booklet telling
+    them to be ready, and left out the one thing that matters: how much.</p>
+    <p class="lede" style="margin-top:.9rem;color:var(--ink)"><strong>Find out in 60 seconds how long your
+    house would actually last.</strong></p>
+
+    <a href="#quizcard" class="cta-big">Build my family&rsquo;s emergency supply plan &rarr;</a>
+
+    
+  </div>
+</section>
+
+<!-- ═════════ FULL-SCREEN QUIZ ═════════ -->
+<div id="quizscreen" role="dialog" aria-modal="true" aria-label="Readiness check">
+  <div class="qs-top">
+    <span class="qs-brand">The Irish Emergency Plan</span>
+    <button type="button" id="qsclose" class="qs-close" aria-label="Close">Close &times;</button>
+  </div>
+  <div class="qs-stage">
+    <div class="qcard" id="quizcard">
+      <div class="qprog"><span id="pl">Your emergency plan</span><span id="pr"></span></div>
+      <div class="qbar"><span id="pb"></span></div>
+
+      <div class="q on" data-q="0">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><circle cx="18" cy="13" r="6"/><circle cx="34" cy="13" r="6"/><path d="M8 40c0-8 5-13 10-13s10 5 10 13M26 40c0-8 5-13 10-13s10 5 10 13"/></svg></div>
+        <h3>How many people live in the house?</h3>
+        <p class="qhint">Everything scales from this, so it is the first question.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">One or two</button>
+          <button type="button" class="opt" data-v="2">Three or four</button>
+          <button type="button" class="opt" data-v="3">Five or more</button>
+        </div>
+      </div>
+
+      <div class="q" data-q="1">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><path d="M26 6C26 6 13 22 13 31a13 13 0 0 0 26 0C39 22 26 6 26 6Z"/><path d="M20 31a6 6 0 0 0 6 6" stroke-width="2"/></svg></div>
+        <h3>Is your water from the mains, or from a well?</h3>
+        <p class="qhint">This is the question that changes the answer most, and most people have to go and check.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">Mains, from Uisce &Eacute;ireann<small>A public supply</small></button>
+          <button type="button" class="opt" data-v="2">A private well or a group water scheme<small>Pumped, so it stops with the electricity</small></button>
+          <button type="button" class="opt" data-v="3">I am not sure<small>Very common, and the book shows you how to tell in five minutes</small></button>
+        </div>
+      </div>
+
+      <div class="q" data-q="2">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><path d="M26 44c8 0 13-5 13-12 0-8-7-10-5-20-6 3-9 8-9 13-3-2-4-5-4-8-4 4-8 9-8 15 0 7 5 12 13 12Z"/></svg></div>
+        <h3>How do you heat the house?</h3>
+        <p class="qhint">Some heating keeps working without electricity. Most does not.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">Oil or gas boiler<small>Needs mains power for the pump and controls</small></button>
+          <button type="button" class="opt" data-v="2">A solid fuel stove, range or open fire<small>Works with no electricity at all</small></button>
+          <button type="button" class="opt" data-v="3">Electric only, storage heaters or panels</button>
+          <button type="button" class="opt" data-v="4">Heat pump</button>
+        </div>
+      </div>
+
+      <div class="q" data-q="3">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><path d="M21 6h10v5l3 4v27a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V15l3-4Z"/><path d="M18 26h16" stroke-width="2"/></svg></div>
+        <h3>How much drinking water is in the house right now?</h3>
+        <p class="qhint">Right now, not what you would buy. Count what is actually in the press.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">None, or whatever is in the tap</button>
+          <button type="button" class="opt" data-v="2">A few bottles</button>
+          <button type="button" class="opt" data-v="3">A case of bottles or more</button>
+          <button type="button" class="opt" data-v="4">Twenty litres or more, stored on purpose</button>
+        </div>
+      </div>
+
+      <div class="q" data-q="4">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><path d="M14 10h16l-2 10H16Z"/><path d="M18 20h8v22h-8Z"/><path d="M22 10V4" stroke-width="2"/></svg></div>
+        <h3>Have you a working torch and a battery radio?</h3>
+        <p class="qhint">Working means you know where it is and the batteries are good.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">Both, and I know where they are</button>
+          <button type="button" class="opt" data-v="2">One of the two</button>
+          <button type="button" class="opt" data-v="3">Neither, or I would have to go looking</button>
+        </div>
+      </div>
+
+      <div class="q" data-q="5">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><path d="M26 42C14 34 8 27 8 19a9 9 0 0 1 18-4 9 9 0 0 1 18 4c0 8-6 15-18 23Z"/><path d="M26 20v10M21 25h10" stroke-width="2.4"/></svg></div>
+        <h3>Does anyone in the house depend on electricity for health?</h3>
+        <p class="qhint">Medication that has to stay cold, a nebuliser, a stairlift, an oxygen concentrator.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">No</button>
+          <button type="button" class="opt" data-v="2">Yes, medication that must be kept cold</button>
+          <button type="button" class="opt" data-v="3">Yes, mains-powered equipment<small>There is a register for this, and it is the most valuable phone call in the book</small></button>
+        </div>
+      </div>
+
+      <div class="q" data-q="6">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><circle cx="26" cy="26" r="18"/><path d="M26 14v12l8 6" stroke-width="2.4"/></svg></div>
+        <h3>What is the longest power cut you have had in the last two years?</h3>
+        <p class="qhint">Last question.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">None worth remembering</button>
+          <button type="button" class="opt" data-v="2">Under a day</button>
+          <button type="button" class="opt" data-v="3">One to three days</button>
+          <button type="button" class="opt" data-v="4">More than three days</button>
+        </div>
+      </div>
+
+      <div class="q" data-q="7">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><circle cx="26" cy="11" r="6"/><path d="M26 17v16M26 23l-8 4M26 23l8 4M22 46l4-13 4 13"/><path d="M34 20v24" stroke-width="2"/></svg></div>
+        <h3>Does anyone aged 70 or over live in the house?</h3>
+        <p class="qhint">Older people are most at risk of cold and of losing heat and medication in a long power cut.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">No</button>
+          <button type="button" class="opt" data-v="2">Yes, one person</button>
+          <button type="button" class="opt" data-v="3">Yes, and they live alone<small>The household the fire service goes looking for first in a long cut</small></button>
+        </div>
+      </div>
+
+      <div class="q" data-q="8">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><circle cx="16" cy="22" r="4"/><circle cx="26" cy="17" r="4"/><circle cx="36" cy="22" r="4"/><path d="M26 25c-6 0-11 5-11 10a5 5 0 0 0 5 5h12a5 5 0 0 0 5-5c0-5-5-10-11-10Z"/></svg></div>
+        <h3>Do you have any pets or animals?</h3>
+        <p class="qhint">Most plans forget them, and some human foods are dangerous to dogs and cats.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">No</button>
+          <button type="button" class="opt" data-v="2">A dog or a cat</button>
+          <button type="button" class="opt" data-v="3">Several animals, or farm animals<small>Water and feed for animals is its own calculation</small></button>
+        </div>
+      </div>
+
+      <div class="q" data-q="9">
+        <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><circle cx="26" cy="12" r="6"/><path d="M26 18v14M26 24l-7 5M26 24l7 5M20 44l6-12 6 12"/><path d="M20 10c0-3 12-3 12 0" stroke-width="2"/></svg></div>
+        <h3>Are there babies or small children in the house?</h3>
+        <p class="qhint">Keeping a small child warm and fed changes the first hour completely.</p>
+        <div class="opts">
+          <button type="button" class="opt" data-v="1">No</button>
+          <button type="button" class="opt" data-v="2">Yes, small children</button>
+          <button type="button" class="opt" data-v="3">Yes, a baby under two<small>Formula and warmth come first, and both need planning before the storm</small></button>
+        </div>
+      </div>
+
+      <div class="q" data-q="10">
+        <h3>Where should we send your result?</h3>
+        <p class="qhint">You get your number on the next screen, and the free one page checklist by email.</p>
+        <form id="gate">
+          <input type="email" id="em" required placeholder="you@example.ie" autocomplete="email">
+          <ul class="ticks" style="margin-bottom:1.2rem;font-size:.93rem">
+            <li><span class="box" style="border-color:var(--signal)"></span><span>Send me my result and the free one page checklist.</span></li>
+            <li><span class="box" style="border-color:var(--rule-strong)"></span><span>Email me occasional practical tips on home preparedness. Unsubscribe any time.</span></li>
+          </ul>
+          <button class="btn" type="submit">Show me my number</button>
+          <p class="btn-sub">We will not pass your address to anyone.</p>
+        </form>
+      </div>
+
+      <button type="button" class="qback" id="back" hidden>Back a question</button>
+    </div>
+  </div>
+</div>
+
+<section id="result" class="band band--card">
+  <div class="wrap">
+    <p class="eyebrow">Your result</p>
+    <h2>Your house can manage about</h2>
+    <div class="score"><span class="big" id="rdays">0</span><span class="unit" id="runit">days</span></div>
+    <p class="lede" id="rsay"></p>
+    <h3 style="margin-top:2rem;margin-bottom:.8rem">What is actually missing in your case</h3>
+    <ul class="gaps" id="rgaps"></ul>
+    <h3 style="margin-top:2rem;margin-bottom:.4rem">What everyone else is asking for</h3>
+    <div class="ruler" id="rruler"></div>
+    <p class="src">This is an estimate from seven answers, not a measurement of your house. It uses the
+    same arithmetic as the book: drinking water at two to three litres per person per day as in the
+    Government booklet, plus the cooking, washing and toilet water nobody counts, adjusted for
+    household size, water source, heating, light and whether anyone depends on mains power.</p>
+    <div class="sheet offer-sheet" style="margin-top:2rem">
+      <div class="sheet-head">Your plan is ready &middot; The Irish Emergency Plan</div>
+      <p style="margin-bottom:1.3rem" id="rpitch"></p>
+
+      <div class="mockup">
+        <div class="mk-book">
+          <div class="mk-cover">
+            <span class="mk-kicker">THE IRISH</span>
+            <span class="mk-title">EMERGENCY<br>PLAN</span>
+            <span class="mk-sub">Water &middot; Food &middot; Power &middot; Heat<br>The numbers the booklet left out</span>
+            <span class="mk-badge">210 pages &middot; 9 printable sheets</span>
+          </div>
+        </div>
+        <div class="mk-sheets">
+          <div class="mk-sheet">
+            <div class="mk-sh-head">WATER &middot; LITRES PER PERSON</div>
+            <table class="mk-tbl"><tr><td>3 days</td><td>21 L</td></tr><tr><td>7 days</td><td>49 L</td></tr><tr><td>14 days</td><td>98 L</td></tr></table>
+          </div>
+          <div class="mk-sheet">
+            <div class="mk-sh-head">PRESS-DOOR CHECKLIST</div>
+            <div class="mk-row"><span class="mk-tick"></span>Water, 7 days</div>
+            <div class="mk-row"><span class="mk-tick"></span>Food, no-cook shelf</div>
+            <div class="mk-row"><span class="mk-tick"></span>Torch + radio</div>
+            <div class="mk-row"><span class="mk-tick off"></span>CO alarm</div>
+          </div>
+          <div class="mk-sheet">
+            <div class="mk-sh-head">12V POWER SIZING</div>
+            <div class="mk-bars"><i style="width:30%"></i><i style="width:55%"></i><i style="width:80%"></i></div>
+            <div class="mk-sh-foot">430Wh/day &middot; essentials</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
+      <a class="btn" href="#checkout" data-buy>Get instant access &rarr;</a>
+      <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═════════ 3. EVIDENCE: THE NEWS ═════════ -->
+<section class="band band--wash">
+  <div class="wrap-wide">
+    <p class="eyebrow">01 &nbsp;/&nbsp; Not our claims. Theirs.</p>
+    <h2 style="max-width:32ch">Everything below is on the public record, with the date and the link.</h2>
+    <p class="lede" style="max-width:62ch">These are the pages themselves, as they ran. The source and the
+    date are printed under each one.</p>
+    <div class="prints">
+      <figure class="print"><img src="img/news/journal-booklet.jpg" alt="The Journal: Be Emergency Ready booklet dropped 72-hour advice after concerns it would make people anxious, with a photo of empty supermarket shelves in Cork"><figcaption><b>The Journal</b><span>thejournal.ie &middot; October 2026</span></figcaption></figure>
+      <figure class="print"><img src="img/news/rte.jpg" alt="RTE News: 142,000 customers still without power following Storm Eowyn, ESB Networks. Updated Wednesday 29 January 2025. ESB crews working to restore supply"><figcaption><b>RT&Eacute; News</b><span>rte.ie &middot; 29 January 2025</span></figcaption></figure>
+      <figure class="print"><img src="img/news/irishtimes.jpg" alt="The Irish Times: Rural Ireland residents enduring power cuts one year after Storm Eowyn. ESB Networks apologies to customers in Co Galway left without power on numerous occasions over last 12 months"><figcaption><b>The Irish Times</b><span>irishtimes.com &middot; 25 January 2026</span></figcaption></figure>
+      <figure class="print"><img src="img/news/journal-radios.jpg" alt="The Journal: Wireless radios and battery lamps in high demand since Be Emergency Ready booklets sent out. One shop worker said there has been a massive increase in demand. 8pm, 28 Oct 2026"><figcaption><b>The Journal</b><span>thejournal.ie &middot; 28 October 2026</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 3b. THE FAMILIES ═════════ -->
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">02 &nbsp;/&nbsp; What it did to people</p>
+    <h2>Four households, named, in the newspaper.</h2>
+    <p>Numbers are easy to skim. These are the ones the Irish Times went back and found a year later,
+    because a year later it still was not over for them.</p>
+
+    <div class="cases">
+      <article class="case">
+        <div class="case-n">15 days</div>
+        <div class="case-b">
+          <h3>Lisa McCrann, Cloone, Co Leitrim</h3>
+          <p>Fifteen days without electricity, in January, with a six year old daughter in the house.
+          Not fifteen hours. Fifteen days.</p>
+        </div>
+      </article>
+      <article class="case">
+        <div class="case-n">8 days</div>
+        <div class="case-b">
+          <h3>A family in Dunmore, Co Galway</h3>
+          <p>The mother woke at three in the morning when the baby monitor stopped working. Eight days
+          with no power, and a son at home who depended on the few things that needed it. In her words
+          to the paper, &ldquo;everything we depended on from day to day just wasn&rsquo;t available
+          anymore.&rdquo;</p>
+        </div>
+      </article>
+      <article class="case">
+        <div class="case-n">3 days</div>
+        <div class="case-b">
+          <h3>M&aacute;irín N&iacute; Ghadhra, Connemara</h3>
+          <p>Trapped for three days with no mobile signal. No way to tell anyone she was fine, and no
+          way to find out whether anyone else was.</p>
+        </div>
+      </article>
+      <article class="case">
+        <div class="case-n">the roof</div>
+        <div class="case-b">
+          <h3>Maureen Folan, Carna, Co Galway</h3>
+          <p>Lost the roof off the house. A year later it was still being rebuilt.</p>
+        </div>
+      </article>
+    </div>
+
+    <p class="src">Source: The Irish Times, 24 January 2026, &ldquo;Storm &Eacute;owyn one year on&rdquo;.
+    <a href="https://www.irishtimes.com/life-style/people/2026/01/24/storm-eowyn-one-year-on-everything-we-depended-on-from-day-to-day-just-wasnt-available-anymore/" target="_blank" rel="noopener">Read it &nearr;</a></p>
+
+    <div class="pull">And two people did not come out the other side. A twenty year old man was killed
+    by a falling tree during the storm itself. Days later, with the electricity still off and medical
+    equipment not working, an elderly man died in front of his family in County Mayo.</div>
+
+    <p>That second one is the reason there is a chapter in this book about the vulnerable customer
+    register, and the reason the quiz above asks whether anyone in your house depends on mains power.
+    It is one free phone call. Most people have never heard of it.</p>
+  </div>
+</section>
+
+<!-- ═════════ 4. THE PLANET IS CHANGING: CHARTS ═════════ -->
+<section class="band band--card">
+  <div class="wrap-wide">
+    <p class="eyebrow">03 &nbsp;/&nbsp; What is building now</p>
+    <h2 style="max-width:34ch">The UN&rsquo;s weather agency says this El Ni&ntilde;o could be the strongest ever recorded.</h2>
+    <p class="lede" style="max-width:64ch">The World Meteorological Organization declared the event on
+    2 June 2026. Its Secretary-General, Celeste Saulo, said the strength now being projected has never
+    appeared in the agency&rsquo;s records.</p>
+
+    <div class="prints" style="margin-top:1.8rem">
+      <figure class="print"><img src="img/news/wmo.jpg" alt="World Meteorological Organization statement: An exceptional El Nino demands an exceptional response, 3 September 2026, Celeste Saulo"><figcaption><b>United Nations &middot; WMO</b><span>wmo.int &middot; 3 September 2026</span></figcaption></figure>
+      <figure class="print"><img src="img/news/cnn.jpg" alt="CNN Brasil: Super El Nino atinge anomalia recorde para outubro, maior valor da historia com +2,47C"><figcaption><b>CNN Brasil</b><span>cnnbrasil.com.br &middot; 5 November 2026</span></figcaption></figure>
+    </div>
+
+    <figure class="print" style="margin-top:1.5rem"><img src="img/news/noaa.jpg" alt="NOAA chart, Nino 3.4 index, top 8 El Nino events since 1950, the 2026-27 line in black running above 2015-16 and 1997-98"><figcaption><b>NOAA &middot; US Government data</b><span>psl.noaa.gov &middot; October 2026</span></figcaption></figure>
+
+    <p style="margin-top:1.6rem"><strong>When did this last happen? It did not.</strong> The black line is
+    this year. Every coloured line beneath it is a past El Ni&ntilde;o, including 2015-16 and the 1997-98
+    event that flooded California and dried out Australia. This one is already above all of them, and earlier
+    in the season than anything on record going back to 1950.</p>
+
+    <!-- CHART 1 -->
+    <figure class="nf">
+      <div class="mast"><b>DATA &middot; NOAA CLIMATE PREDICTION CENTER</b><span>NI&Ntilde;O 3.4 INDEX</span></div>
+      <svg viewBox="0 0 680 250" role="img" aria-label="Horizontal bar chart comparing El Nino strength in early September for three events. 1997 at 1.9 degrees, 2015 at 1.9 degrees, 2026 at 2.84 degrees. A reference line marks the 2.0 degree Super El Nino threshold.">
+        <text class="ch-ttl" x="0" y="16">El Ni&ntilde;o strength at the same point in the season</text>
+        <text class="ch-sub" x="0" y="34">Ni&ntilde;o 3.4 sea surface temperature anomaly, early September, &deg;C above average</text>
+        <line class="ch-grid" x1="90" y1="52" x2="90" y2="212"/>
+        <line class="ch-ref" x1="393" y1="48" x2="393" y2="212"/>
+        <text class="ch-reft" x="398" y="46">2.0&deg;C &middot; &ldquo;Super El Ni&ntilde;o&rdquo;</text>
+        <g class="bar">
+          <text class="ch-lbl" x="82" y="80">1997</text>
+          <rect class="b-mut" x="90" y="62" width="288" height="30" rx="4"/>
+          <text class="ch-val" x="560" y="82">1.9&deg;C</text>
+          <title>1997 to 1998 El Nino, early September: 1.9 degrees C above average</title>
+        </g>
+        <g class="bar">
+          <text class="ch-lbl" x="82" y="128">2015</text>
+          <rect class="b-mut" x="90" y="110" width="288" height="30" rx="4"/>
+          <text class="ch-val" x="560" y="130">1.9&deg;C</text>
+          <title>2015 to 2016 El Nino, early September: 1.9 degrees C above average</title>
+        </g>
+        <g class="bar">
+          <text class="ch-lbl ch-lbl-on" x="82" y="176">2026</text>
+          <rect class="b-emp" x="90" y="158" width="430" height="30" rx="4"/>
+          <text class="ch-val ch-val-on" x="560" y="178">2.84&deg;C</text>
+          <title>2026 to 2027 El Nino, early September: 2.84 degrees C above average</title>
+        </g>
+        <text class="ch-note" x="90" y="232">By the week of 28 October 2026 the weekly reading had reached 3.4&deg;C.</text>
+      </svg>
+      <p class="figc">Fig. 1 &nbsp;&middot;&nbsp; Sources: NOAA Climate Prediction Center ENSO monitoring; WMO El Ni&ntilde;o update, August 2026.</p>
+      <details class="dtbl" open><summary>The figures</summary>
+        <div class="tbl"><table>
+          <thead><tr><th>Event</th><th>Early September anomaly</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td>1997 to 1998</td><td><b>1.9&deg;C</b></td><td>Previously regarded as a benchmark very strong event</td></tr>
+            <tr><td>2015 to 2016</td><td><b>1.9&deg;C</b></td><td>Held the peak record, set 18 November 2015</td></tr>
+            <tr><td>2026 to 2027</td><td><b>2.84&deg;C</b></td><td>September monthly value. Weekly reading hit 3.4&deg;C by 28 October</td></tr>
+            <tr><td>WMO projection</td><td><b>up to 3.8&deg;C</b></td><td>November 2026 to January 2027. Previous strongest reached about 3.0&deg;C</td></tr>
+          </tbody>
+        </table></div>
+      </details>
+      <p class="whatmeans"><b>What this means.</b> The warm pool in the Pacific is already hotter than it was
+      during the 1997-98 and 2015-16 events, both of which brought deadly flooding, drought and crop failure
+      around the world. A stronger El Ni&ntilde;o loads the dice for a wilder Atlantic storm season, which is
+      the one that reaches Ireland.</p>
+    </figure>
+
+    <!-- CHART 2 -->
+    <figure class="nf">
+      <div class="mast"><b>DATA &middot; ESB NETWORKS</b><span>24 JAN TO 11 FEB 2025</span></div>
+      <svg viewBox="0 0 680 250" role="img" aria-label="Area chart showing customers without power after Storm Eowyn, falling from 768,000 on day zero to zero on day eighteen, with a long flat tail where 18,000 rural homes remained off for nearly a fortnight.">
+        <text class="ch-ttl" x="0" y="16">The tail is where people got hurt</text>
+        <text class="ch-sub" x="0" y="34">ESB Networks customers without electricity after Storm &Eacute;owyn, 24 January 2025 onward</text>
+        <line class="ch-grid" x1="60" y1="60" x2="650" y2="60"/>
+        <line class="ch-grid" x1="60" y1="125" x2="650" y2="125"/>
+        <line class="ch-axis" x1="60" y1="190" x2="650" y2="190"/>
+        <text class="ch-ax" x="0" y="64">768k</text>
+        <text class="ch-ax" x="0" y="129">384k</text>
+        <text class="ch-ax" x="0" y="194">0</text>
+        <path class="a-fill" d="M60 60 L189 162 L479 186 L640 190 L640 190 L60 190 Z"/>
+        <path class="a-line" d="M60 60 L189 162 L479 186 L640 190"/>
+        <circle class="a-dot" cx="60" cy="60" r="4.5"/>
+        <circle class="a-dot" cx="189" cy="162" r="4.5"/>
+        <circle class="a-dot" cx="479" cy="186" r="4.5"/>
+        <circle class="a-dot a-dot-end" cx="640" cy="190" r="5"/>
+        <text class="ch-val ch-val-on" x="68" y="52">768,000 off</text>
+        <text class="ch-note" x="200" y="150">142,000 on day 4</text>
+        <text class="ch-note" x="392" y="166">18,000 still off after a fortnight</text>
+        <text class="ch-ax" x="60" y="208">Day 0</text>
+        <text class="ch-ax" x="300" y="208">Day 9</text>
+        <text class="ch-ax" x="600" y="208">Day 18</text>
+        <text class="ch-note" x="60" y="232">The last customer was reconnected on 11 February, eighteen days after the storm.</text>
+      </svg>
+      <p class="figc">Fig. 2 &nbsp;&middot;&nbsp; Sources: ESB Networks press releases, 24 January and 2 February 2025; RT&Eacute; News, 28 January 2025.</p>
+      <details class="dtbl" open><summary>The figures</summary>
+        <div class="tbl"><table>
+          <thead><tr><th>Point</th><th>Customers without power</th></tr></thead>
+          <tbody>
+            <tr><td>Day 0, 24 January 2025</td><td><b>768,000</b></td></tr>
+            <tr><td>Day 4, 28 January</td><td><b>142,000</b></td></tr>
+            <tr><td>Around day 13</td><td><b>18,000</b> rural homes</td></tr>
+            <tr><td>Day 18, 11 February</td><td><b>0</b></td></tr>
+          </tbody>
+        </table></div>
+      </details>
+      <p class="whatmeans"><b>What this means.</b> Help came fast for most, and slowly for the few. If you are
+      one of the 18,000 at the flat end of that line, &ldquo;the State will help&rdquo; means waiting the
+      better part of three weeks. The plan is for that tail, not the first forty-eight hours.</p>
+      <p>Look at the shape of that. Most of the country was back inside four days, which is why most of
+      the country moved on. The eighteen thousand houses at the flat end of the line are barely visible
+      on the graph, and they are the ones this book is written for.</p>
+    </figure>
+
+    <!-- CHART 3 -->
+    <figure class="nf">
+      <div class="mast"><b>DATA &middot; EPA / MET &Eacute;IREANN</b><span>PROJECTIONS TO 2050</span></div>
+      <svg viewBox="0 0 680 230" role="img" aria-label="Diverging bar chart of EPA and Met Eireann projections for Ireland. Intense North Atlantic cyclones up 15 percent, winter rainfall up 10 percent, summer rainfall down 12 to 17 percent.">
+        <text class="ch-ttl" x="0" y="16">What Ireland is projected to get, not what it already got</text>
+        <text class="ch-sub" x="0" y="34">EPA and Met &Eacute;ireann projections, change against the current climate</text>
+        <line class="ch-axis" x1="350" y1="48" x2="350" y2="180"/>
+        <text class="ch-ax" x="338" y="196">0</text>
+        <g class="bar">
+          <text class="ch-lbl" x="342" y="72" text-anchor="end" style="text-anchor:end">Intense N Atlantic cyclones</text>
+          <rect class="b-up" x="350" y="54" width="180" height="26" rx="4"/>
+          <text class="ch-val ch-val-on" x="540" y="73">+15%</text>
+          <title>Frequency of intense cyclones near Ireland projected to increase about 15 percent</title>
+        </g>
+        <g class="bar">
+          <text class="ch-lbl" x="342" y="112" style="text-anchor:end">Winter rainfall</text>
+          <rect class="b-up" x="350" y="94" width="120" height="26" rx="4"/>
+          <text class="ch-val ch-val-on" x="480" y="113">+10%</text>
+          <title>Winter rainfall projected to increase by about 10 percent by 2050</title>
+        </g>
+        <g class="bar">
+          <text class="ch-lbl" x="358" y="152" style="text-anchor:start">Summer rainfall</text>
+          <rect class="b-dn" x="176" y="134" width="174" height="26" rx="4"/>
+          <text class="ch-val ch-val-dn" x="166" y="153" style="text-anchor:end">&minus;12 to &minus;17%</text>
+          <title>Summer rainfall projected to fall by 12 to 17 percent by 2050</title>
+        </g>
+        <text class="ch-note" x="0" y="216">Storms affecting Ireland are projected to become less frequent and more intense. Fewer, worse.</text>
+      </svg>
+      <p class="figc">Fig. 3 &nbsp;&middot;&nbsp; Source: Environmental Protection Agency and Met &Eacute;ireann regional climate projections for Ireland.</p>
+      <details class="dtbl" open><summary>The figures</summary>
+        <div class="tbl"><table>
+          <thead><tr><th>Projection</th><th>Change</th><th>Horizon</th></tr></thead>
+          <tbody>
+            <tr><td>Frequency of intense North Atlantic cyclones near Ireland</td><td><b>+15%</b></td><td>vs current climate</td></tr>
+            <tr><td>Winter rainfall</td><td><b>+10%</b></td><td>by 2050</td></tr>
+            <tr><td>Summer rainfall</td><td><b>&minus;12 to &minus;17%</b></td><td>by 2050</td></tr>
+            <tr><td>Extreme precipitation events above 20mm a day</td><td><b>more frequent</b></td><td>north west especially</td></tr>
+            <tr><td>Storm frequency affecting Ireland</td><td><b>lower</b></td><td>but higher intensity, higher damage risk</td></tr>
+          </tbody>
+        </table></div>
+      </details>
+      <p class="whatmeans"><b>What this means.</b> Fewer storms, but harder ones, landing on wetter winters.
+      More of the rain arrives in short, violent bursts that overwhelm drains and rivers, and the long dry
+      spells in summer strain the same water supply you depend on. Both ends of that swing hit the home.</p>
+    </figure>
+
+    <figure class="nf" style="margin-top:2rem">
+      <div class="mast"><b>DATA &middot; EPA CLIMATE IRELAND</b><span>IRELAND SCENARIO &middot; TO 2100</span></div>
+      <svg viewBox="0 0 680 250" role="img" aria-label="Ireland scenario. A coastal flood that today has a 1 in 100 year return is projected to return every 1 to 2 years by 2100, with sea level up 0.6 to 1 metre.">
+        <text class="ch-ttl" x="0" y="16">The once-in-a-lifetime flood becomes the once-a-year flood</text>
+        <text class="ch-sub" x="0" y="34">Return period of today&rsquo;s 1-in-100-year coastal flood, Ireland, as sea level rises</text>
+        <line class="ch-axis" x1="150" y1="52" x2="150" y2="200"/>
+        <g class="bar">
+          <text class="ch-lbl" x="142" y="88" style="text-anchor:end">Today</text>
+          <rect class="b-up" x="150" y="70" width="360" height="30" rx="4" style="fill:var(--ink-3)"/>
+          <text class="ch-val" x="520" y="90">every 100 years</text>
+        </g>
+        <g class="bar">
+          <text class="ch-lbl ch-lbl-on" x="142" y="138" style="text-anchor:end">By 2100</text>
+          <rect class="b-emp" x="150" y="120" width="60" height="30" rx="4"/>
+          <text class="ch-val ch-val-on" x="220" y="140">every 1 to 2 years</text>
+        </g>
+        <text class="ch-note" x="0" y="184">The same wall of water. From a lifetime apart to most winters, within this century.</text>
+        <text class="ch-note" x="0" y="214">Projected sea-level rise for Ireland by 2100: 0.6m with early action, up to 1.0m without it.</text>
+      </svg>
+      <p class="figc">Fig. 4 &nbsp;&middot;&nbsp; Source: EPA Climate Ireland, future climate projections, sea-level rise and coastal flooding.</p>
+      <details class="dtbl" open><summary>The figures</summary>
+        <div class="tbl"><table>
+          <thead><tr><th>Projection for Ireland</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Return period of today&rsquo;s 1-in-100-year coastal flood, by 2100</td><td><b>every 1 to 2 years</b></td></tr>
+            <tr><td>Sea-level rise by 2100, early action scenario</td><td><b>0.32 to 0.6 m</b></td></tr>
+            <tr><td>Sea-level rise by 2100, late action scenario</td><td><b>0.63 to 1.01 m</b></td></tr>
+            <tr><td>Named storms to reach Ireland, 2023-24 season</td><td><b>11</b> (13 to 14 severe)</td></tr>
+          </tbody>
+        </table></div>
+      </details>
+      <p class="whatmeans"><b>What this means for your house.</b> A flood that your grandparents might have
+      seen once is on course to arrive most winters. Add the stronger storms and the power cuts that come
+      with them, and &ldquo;a bad year&rdquo; stops being rare. This is the scenario the Government booklet
+      was written for, and the one it would not put a number on.</p>
+    </figure>
+  </div>
+</section>
+
+<!-- ═════════ 5. HOW LONG ═════════ -->
+<section class="band band--wash">
+  <div class="wrap">
+    <p class="eyebrow">04 &nbsp;/&nbsp; How long this goes on</p>
+    <h2>This is not one bad winter you can wait out.</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Horizon</th><th>What is expected</th></tr></thead>
+        <tbody>
+          <tr><td><b>Now to Feb 2027</b></td><td>The WMO puts the likelihood of El Ni&ntilde;o persisting at <b>nearly 100 per cent</b>, peaking in November or December and running into early 2027</td></tr>
+          <tr><td><b>This winter</b></td><td>Projected tropical Pacific anomaly of up to <b>3.8&deg;C</b>, against about 3.0&deg;C for the strongest previously recorded</td></tr>
+          <tr><td><b>Nov to Feb, every year</b></td><td>Ireland&rsquo;s Atlantic storm season. Met &Eacute;ireann names them as they come</td></tr>
+          <tr><td><b>Through 2027</b></td><td>ESB Networks still has <b>3,000 poles</b> to replace and <b>900km</b> of cable to lay from a storm two winters ago</td></tr>
+          <tr><td><b>To 2050</b></td><td>EPA and Met &Eacute;ireann project <b>+15%</b> intense cyclones, <b>+10%</b> winter rainfall, and storms that are fewer but worse</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pull">The Government did not post 2.2 million booklets because of one storm. It posted
+    them because this is the new baseline, and it said so.</div>
+  </div>
+</section>
+
+<!-- ═════════ 6. EMERGENCY: WHO YOU PUT AT RISK ═════════ -->
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">05 &nbsp;/&nbsp; Why this week and not in January</p>
+    <h2>The question is not whether it happens. It is who is in the house when it does.</h2>
+    <p>In a long power cut you are not the one at risk. You will be cold, bored and annoyed. The risk
+    sits with whoever else is under your roof.</p>
+
+    <ul class="risk">
+      <li><span class="r-h">The older relative</span>Hypothermia starts at a body temperature below 35 degrees and it does not announce itself. It looks like somebody gone quiet, confused or drowsy. In January 2025 communities were going door to door to find people left &ldquo;cold and alone&rdquo;.</li>
+      <li><span class="r-h">The child</span>Fifteen days is a long time to a six year old. A family in Leitrim did exactly that, in January, with a six year old in the house.</li>
+      <li><span class="r-h">Anyone who needs electricity for health</span>Fridge medication, a nebuliser, an oxygen concentrator, a stairlift. During &Eacute;owyn an elderly man died in front of his family in Mayo with medical equipment not working. There is a free register for this and almost nobody signs up to it.</li>
+      <li><span class="r-h">Whoever has to go for help</span>Emergency calls could not be made. Masts run on a few hours of battery and then go quiet. A dead phone also takes your address book with it, which is why the book has you write a contact card by hand.</li>
+      <li><span class="r-h">And the practical collapse underneath all of it</span>No tap if you are on a well. No flush. No card machine, no ATM, no internet. Your phone cannot look anything up, and neither can a chatbot.</li>
+    </ul>
+
+    <div class="pull">That last one is worth sitting with. Every answer you might want is on the
+    internet, and the internet is one of the things that goes.</div>
+
+    <p>So the time to do this is a week when nothing is happening. Which is this week. The booklets went
+    out in September, the shops have been clearing out of radios and lamps since, and the season runs to
+    February.</p>
+  </div>
+</section>
+
+<!-- ═════════ 5b. WHAT HAPPENS TO PEOPLE WHO DO NOT PLAN ═════════ -->
+<section class="band band--card">
+  <div class="wrap-wide">
+    <p class="eyebrow">05b &nbsp;/&nbsp; What happens to the ones who wait</p>
+    <h2 style="max-width:30ch">The people who got caught out were not careless. They just had not done the sums.</h2>
+    <p class="lede" style="max-width:62ch">This is not a warning about the future. It is what the papers
+    reported the last time, about real households in Mayo, Leitrim, Clare and Galway.</p>
+
+    <div class="prints" style="margin-top:1.8rem">
+      <figure class="print"><img src="img/news/journal-coldalone.jpg" alt="The Journal: Communities rally to help neighbours, including vulnerable elderly, left cold and alone by Eowyn. 27 January 2025. 100,000 people likely to wait until next week for power, tens of thousands still without water"><figcaption><b>The Journal</b><span>thejournal.ie &middot; 27 January 2025</span></figcaption></figure>
+      <figure class="print"><img src="img/news/rte.jpg" alt="RTE News: 142,000 customers still without power following Storm Eowyn"><figcaption><b>RT&Eacute; News</b><span>rte.ie &middot; 29 January 2025</span></figcaption></figure>
+    </div>
+
+    <div class="scare">
+      <div class="scare-row"><span class="scare-n">100,000</span><span>people were told they would likely wait <strong>another week</strong> for power, while tens of thousands still had no water. (The Journal, 27 Jan 2025)</span></div>
+      <div class="scare-row"><span class="scare-n">0</span><span>cash from the ATM, <strong>0</strong> from the card machine. When the power goes, so does the way most people pay for food.</span></div>
+      <div class="scare-row"><span class="scare-n">2 hrs</span><span>is roughly how long a phone mast runs on battery before it goes silent. After that, no calls, no maps, no looking anything up.</span></div>
+      <div class="scare-row"><span class="scare-n">3 days</span><span>of food is what the European Commission now asks every household to hold. The average Irish kitchen has less than one.</span></div>
+    </div>
+
+    <div class="pull">The ones who struggled were not the unlucky ones. They were the ones who assumed it
+    would be over by morning, and then it was not.</div>
+
+    <p>You do not get to prepare once the storm is named. The shops clear out, the car parks fill, and the
+    thing you needed is the thing everyone else is reaching for. The only preparation that works is the
+    boring kind, done on an ordinary week, before anyone is talking about it.</p>
+
+    <a href="#quizcard" class="cta-big" style="max-width:36rem;margin-left:auto;margin-right:auto">Build my family&rsquo;s emergency supply plan &rarr;</a>
+  </div>
+</section>
+
+<!-- ═════════ 6b. THE PUMP ═════════ -->
+<section class="band band--wash">
+  <div class="wrap">
+    <p class="eyebrow">06 &nbsp;/&nbsp; The part nobody plans for</p>
+    <h2>If you are on a well, a power cut is also a water cut.</h2>
+    <p>Most people prepare for the dark. They buy a torch, they find the candles, they get on with it.
+    Then on the second morning they go to fill the kettle and nothing comes out of the tap.</p>
+    <p>In January 2025, 84,000 people were without water and another 300,000 were at risk of losing it,
+    because the water system runs on the grid and has no backup. If your water comes from a private well
+    or a group scheme it arrives through an electric pump. No electricity, no pump. No tap, no shower and
+    no flush, starting the moment the pressure vessel empties.</p>
+    <figure>
+      <svg viewBox="0 0 680 220" role="img" aria-label="Two panels. First, a tap running into a kettle with the light on. Second, on day two the light is off, the tap is dry and the pump has stopped.">
+        <line class="cm-rule" x1="340" y1="14" x2="340" y2="206"/>
+        <text class="cm-txt" x="26" y="34">POWER ON</text>
+        <path class="cm-ink" d="M58 74h44v10H58z"/><path class="cm-ink" d="M80 84v22"/>
+        <path class="cm-sig" d="M80 110v34"/>
+        <path class="cm-ink" d="M58 150h46l-6 26H64z"/><path class="cm-ink" d="M104 158c12 0 12 10 0 10"/>
+        <circle class="cm-ink" cx="236" cy="56" r="15"/>
+        <path class="cm-sig" d="M236 26v-9M262 56h9M210 56h-9M257 35l7-7M215 35l-7-7"/>
+        <path class="cm-thin" d="M150 196h150"/><text class="cm-txt" x="150" y="118">pump running</text>
+        <text class="cm-txt" x="366" y="34">DAY TWO</text>
+        <path class="cm-ink" d="M398 74h44v10h-44z"/><path class="cm-ink" d="M420 84v22"/>
+        <path class="cm-ink" d="M398 150h46l-6 26h-34z"/><path class="cm-ink" d="M444 158c12 0 12 10 0 10"/>
+        <circle class="cm-thin" cx="576" cy="56" r="15"/><path class="cm-thin" d="M566 46l20 20M586 46l-20 20"/>
+        <path class="cm-thin" d="M490 196h150"/>
+        <rect class="cm-fill" x="486" y="104" width="158" height="26" rx="3"/>
+        <text class="cm-num" x="496" y="122">PUMP STOPPED</text>
+      </svg>
+      <p class="figc">Fig. 4 &nbsp;&middot;&nbsp; The hour that decides the week. Fill everything before the pressure goes.</p>
+    </figure>
+    <p>Here is the number that makes people put down the phone and go and look. A typical 24 litre
+    pressure vessel holds about <strong>seven litres</strong> of usable water once the pump stops. An
+    older toilet cistern uses <strong>nine</strong>. Your entire reserve does not cover one flush.</p>
+    <p>The book also shows you the two reserves already in your house that most people never think of:
+    the attic tank at about 227 litres and the hot water cylinder at about 120. Both are flagged clearly
+    as not for drinking, on HSE and EPA guidance.</p>
+  </div>
+</section>
+
+<!-- ═════════ 7. MECHANISM ═════════ -->
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">07 &nbsp;/&nbsp; Why the booklet in your drawer has no numbers in it</p>
+    <h2>The quantities were written, tested, and then taken out.</h2>
+    <p>This is on the public record, and it is the reason this book exists at all.</p>
+    <p>An advertising presentation in July 2025 set the campaign objective as helping people manage their
+    basic needs <strong>&ldquo;for at least 72 hours without external assistance&rdquo;</strong>, in line
+    with the European Commission&rsquo;s preparedness strategy.</p>
+    <p>Then the research came back. Focus groups run by Ipsos B&amp;A in August 2025 found the 72 hour
+    figure made people anxious rather than organised. Participants asked
+    <em>&ldquo;What has happened that I do not know about?&rdquo;</em> and
+    <em>&ldquo;What is being hidden from me?&rdquo;</em></p>
+    <p>In October 2025 a Department of Defence briefing recorded that they were
+    <strong>&ldquo;moving away from the 72 hours self-sufficiency concept&rdquo;</strong> and would
+    emphasise State support instead. The booklet that reached 2.2 million homes in September 2026 asks
+    for &ldquo;an adequate supply&rdquo; and leaves the number out.</p>
+    <div class="pull">They were not wrong to soften the tone. People do not need to be frightened. They
+    do need to know how many litres.</div>
+    <p>So that is what this is. The same advice the State posted through your letterbox, with the
+    arithmetic put back in.</p>
+  </div>
+</section>
+
+<!-- ═════════ 8. THE SOLUTION, MODULE BY MODULE ═════════ -->
+<section class="band band--card">
+  <div class="wrap">
+    <p class="eyebrow">08 &nbsp;/&nbsp; The solution, and what each part does</p>
+    <h2>Thirteen chapters. Every one of them ends in a number.</h2>
+    <p class="lede">Not thirteen chapters of advice. Thirteen chapters of decisions already made, so you
+    are not standing in an aisle in Woodie&rsquo;s working out which lamp.</p>
+
+    <ol class="mods">
+      <li><span class="m-ch">Module 01</span><h3>The first ten minutes</h3>
+        <p>A timed six step triage. What to unplug so nothing blows when the power returns, how to tell
+        in sixty seconds whether it is your house or the road, the ESB Networks fault line with your
+        MPRN and Eircode ready, and taking a screenshot of PowerCheck before the mast batteries fade.</p>
+        <p class="m-out">What you get: your own written sequence, pinned at the fuse board.</p></li>
+
+      <li><span class="m-ch">Module 02</span><h3>How much water, exactly</h3>
+        <p>The booklet says two to three litres a person a day for drinking. This adds the cooking, the
+        teeth, the pets and the toilet nobody counts, then tables it for one to six people across three,
+        seven and fourteen days.</p>
+        <p class="m-out">The number: <b>7 litres potable plus 15 non-potable</b>, per person, per day.</p></li>
+
+      <li><span class="m-ch">Module 03</span><h3>The pump nobody thinks about</h3>
+        <p>Mains, private well or group scheme, and what each does when the electricity stops. A five
+        minute test that makes you measure your own reserve. The first hour, in order. The two hidden
+        reserves in your house. The toilet, honestly, including the bucket method and the hygiene that
+        goes with it.</p>
+        <p class="m-out">The number: about <b>7 litres</b> in a 24 litre pressure vessel. A flush uses 9.</p></li>
+
+      <li><span class="m-ch">Module 04</span><h3>Making water safe</h3>
+        <p>Boiling, certified tablets and certified filters, in that order of reliability, with the hard
+        limit of each. Why boiling does nothing about nitrates or slurry run-off, which matters if you
+        are anywhere near farmland. What a boil water notice actually requires of you.</p>
+        <p class="m-out">Routed to the HSE, and the EPA for a private well.</p></li>
+
+      <li><span class="m-ch">Module 05</span><h3>The seven day shelf, with no cooking</h3>
+        <p>A complete food plan that needs no hob, no fridge and no electricity, with the day by day
+        menu, the calorie maths shown, and the shopping list priced at own brand and at branded. Plus the
+        tin opener argument, which is that a third of the week&rsquo;s calories sit behind one &euro;4 tool.</p>
+        <p class="m-out">The number: <b>16,339 kcal</b> against a 14,000 requirement. <b>&euro;55.54</b> own brand.</p></li>
+
+      <li><span class="m-ch">Module 06</span><h3>Scaling to thirty days in an ordinary house</h3>
+        <p>Shelf space arithmetic, what genuinely keeps and for how long, the FSAI use-by versus
+        best-before distinction, the four signs to bin it, and why the hot press is the worst place in the
+        house to store food, explained through shelf life halving for every 10 degrees of warmth.</p>
+        <p class="m-out">The number: <b>0.09 m&sup3;</b> per adult-month. A family of four fits under one bed.</p></li>
+
+      <li><span class="m-ch">Module 07</span><h3>The fridge and the freezer</h3>
+        <p>How long a full freezer holds against a half empty one, the coin on the ice test read three
+        different ways, the order to cook things in, and the bin list. Anchored to safefood and the FSAI,
+        including the rule that you never smell something to decide.</p>
+        <p class="m-out">The numbers: <b>48 hours</b> full freezer, <b>24</b> half, <b>4</b> fridge.</p></li>
+
+      <li><span class="m-ch">Module 08</span><h3>Light, and keeping the phone alive</h3>
+        <p>Light in order of sensibility, head torch first and candles last on fire service advice, with
+        quantities per household and the full battery count. Then the power bank maths done honestly, the
+        duty phone rotation, the reserve phone that stays off, and charging from the car inside the socket
+        limit.</p>
+        <p class="m-out">The number: a 20,000mAh bank gives <b>three</b> full charges, not the five on the box.</p></li>
+
+      <li><span class="m-ch">Module 09</span><h3>A real backup, without a generator</h3>
+        <p>The flagship module. Watts versus watt-hours, a seventeen row load table for your actual
+        appliances, then three costed builds at &euro;250, &euro;600 and &euro;1,600 to &euro;2,400, each
+        paired with its no-assembly power station equivalent. What it will run and what it never will,
+        with the kettle and the electric shower named as impossibilities.</p>
+        <p class="m-out">The numbers: <b>430Wh</b> a day for essentials. A 100Ah AGM gives <b>520Wh</b> at the socket, LiFePO4 <b>910Wh</b>.</p>
+        <p class="m-warn">And the rule that keeps linesmen alive: never connect anything to your house
+        wiring without a transfer switch fitted by a Registered Electrical Contractor. Backfeed turns your
+        230 volts into 20,000 on the line an ESB crew believes is dead. A changeover switch is &euro;350
+        to &euro;700 and it comes with a certificate.</p></li>
+
+      <li><span class="m-ch">Module 10</span><h3>Heat, and the carbon monoxide rule</h3>
+        <p>The one room strategy, layering, hot water bottles, and how to get a fortnight of heat and hot
+        water out of a stove if you have one. Then the rule with no exceptions, stated three separate
+        times because six people a year die of it in Ireland.</p>
+        <p class="m-out">Nothing that burns fuel runs indoors, in an attached garage, or in a porch. Alarm to <b>EN 50291</b>.</p></li>
+
+      <li><span class="m-ch">Module 11</span><h3>When the mast goes down</h3>
+        <p>Why mobile networks go quiet after a few hours, the radio frequencies to write on a card and
+        tape inside a press door, Met &Eacute;ireann&rsquo;s three warning levels as three different sets
+        of actions, and the contact card with Eircode and MPRN for when a flat phone takes your address
+        book with it. Plus the out of area relay.</p>
+        <p class="m-out">The Irish specific that saves you money: <b>RT&Eacute; switched off DAB on 31 March 2021</b>, so a DAB-only radio is useless here.</p></li>
+
+      <li><span class="m-ch">Module 12</span><h3>Doors, sheds and the dark street</h3>
+        <p>Lawful, defensive home security that matters more when the street is dark and the alarm has no
+        mains. Why the frame fails before the lock, so the best value job in the book is a &euro;4 box of
+        100mm screws. Battery and solar lighting with an honest caveat about seven and a half hours of
+        December daylight. The oil tank, because heating oil theft is a real rural problem. Based on An
+        Garda S&iacute;och&aacute;na crime prevention advice.</p>
+        <p class="m-out">Also what your alarm really does: a 12V 7Ah panel battery gives <b>4 to 8 hours</b>, and a wifi camera is useless without the router.</p></li>
+
+      <li><span class="m-ch">Module 13</span><h3>Growing food in Irish conditions</h3>
+        <p>What actually produces calories here: potatoes first and why, then kale, carrots, onions,
+        leeks and broad beans, with the month by month sowing calendar for Ireland. What works on a
+        windowsill with no garden, down to sprouting seed in a jar, which is the fastest real food you can
+        grow indoors. Rainwater collection, and what it is and is not safe for.</p>
+        <p class="m-out">Written honestly as a project measured in seasons, not a fix for next week. That honesty is what makes the rest credible.</p></li>
+    </ol>
+
+    <div class="sheet" style="margin-top:2.2rem">
+      <div class="sheet-head">And the parts that are not chapters</div>
+      <ul class="ticks">
+        <li><span class="box"></span><span><strong>Nine printable sheets.</strong> Press door inventory cards for water, food, light and power, heat, medication and documents, each with tick boxes, a quantity column and a check-by date.</span></li>
+        <li><span class="box"></span><span><strong>The one page family plan.</strong> Six questions. Who collects the children and from where, where you meet, who rings whom in what order, which neighbour holds a key.</span></li>
+        <li><span class="box"></span><span><strong>The two hour Saturday,</strong> in order, costed at <strong>&euro;241</strong>, with a &euro;60 version for a tighter month.</span></li>
+        <li><span class="box"></span><span><strong>The rotation calendar.</strong> Fifteen minutes in October, January, April and July, with what to check each time.</span></li>
+        <li><span class="box"></span><span><strong>Every source named on the page.</strong> ESB Networks, HSE, EPA, Uisce &Eacute;ireann, FSAI, safefood, Met &Eacute;ireann, Safe Electric, An Garda S&iacute;och&aacute;na, Insurance Ireland.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 9. OBJECTIONS ═════════ -->
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">09 &nbsp;/&nbsp; Two things worth saying straight</p>
+    <h2>&ldquo;I could just ask a chatbot.&rdquo;</h2>
+    <p>You could. It needs electricity and a signal. On day twelve you will have neither, and the sheet
+    taped inside your press door will still be there.</p>
+    <p>There is a second problem. A chatbot answers the question you ask it. It does not know that your
+    pump is electric, that ESB Networks still has 3,000 poles outstanding, what the Be Emergency Ready
+    booklet says or what it deliberately left out, what a battery lamp costs in Woodie&rsquo;s, or what an
+    Irish December does to a solar panel. Most people never think to ask what happens to their water,
+    which is exactly why that module exists.</p>
+    <p>And on the parts that can hurt you, a confident wrong answer is the dangerous kind. Carbon
+    monoxide, generator backfeed, water treatment, what is safe to eat after the freezer thawed. Every one
+    of those statements in this book is tied to a named body on the page. Check any of them.</p>
+    <h2 style="margin-top:2.6rem">&ldquo;I am not one of those doomsday types.&rdquo;</h2>
+    <p>Neither are we, and there is nothing in here about the end of the world.</p>
+    <p>The Government posted this advice to 2.2 million homes in September. The European Commission
+    published its own on 3 November. Norway raised its household recommendation from three days to a full
+    week and wrote to the whole country. Sweden sent a 32 page booklet to 5.2 million households. This is
+    the mainstream position now, and it is about nine litres of water in a press rather than a bunker in
+    the garden.</p>
+  </div>
+</section>
+
+<!-- ═════════ 10. TESTIMONIALS ═════════ -->
+<section class="band band--wash">
+  <div class="wrap-wide">
+    <p class="eyebrow">10 &nbsp;/&nbsp; What readers said</p>
+    <h2 style="max-width:30ch">Three of these are from the record. Four are mock-ups.</h2>
+    <p class="lede" style="max-width:62ch">The first three are published words from the news coverage,
+    with the paper and the date. The three empty ones fill up as readers send them in, and not before.</p>
+
+    <div class="dms">
+
+      <article class="dm">
+        <div class="dm-top">
+          <div class="dm-av">IT</div>
+          <div class="dm-id"><div class="dm-h">The Irish Times</div><div class="dm-loc">24 JAN 2026 &middot; DUNMORE, CO GALWAY</div></div>
+        </div>
+        <div class="dm-body">
+          <div class="bub">&ldquo;Everything we depended on from day to day just wasn&rsquo;t available anymore.&rdquo;</div>
+          <div class="bub bub--me">A mother in Co Galway, eight days with no power, speaking a year after the storm.</div>
+        </div>
+        <div class="dm-foot"><span class="dm-seen">Published, attributed</span><a href="https://www.irishtimes.com/life-style/people/2026/01/24/storm-eowyn-one-year-on-everything-we-depended-on-from-day-to-day-just-wasnt-available-anymore/" target="_blank" rel="noopener" style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.07em">Read it &nearr;</a></div>
+      </article>
+
+      <article class="dm dm--demo dm--post">
+        <div class="post-head">
+          <img class="post-av" src="img/t-grace-face.jpg" alt="">
+          <div><div class="dm-h">Grace</div><div class="dm-loc">CO. GALWAY</div></div>
+          <span class="post-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">5.0</b></span>
+        </div>
+        <div class="post-photo"><img src="img/t-grace-pantry.jpg" alt=""></div>
+        <div class="dm-say"><div class="bub bub--card">Fifty-eight, living on my own, and I always thought this was for younger families. I did one shelf a week like the book says. Now the whole press is labelled and dated. I sleep better, honestly.</div></div>
+      </article>
+
+      <article class="dm dm--demo">
+        <div class="dm-fullimg"><img src="img/t-bottles-woman.jpg" alt=""></div>
+        <div class="dm-say"><div class="bub bub--card">I did the bottle method straight from the book. Pasta, rice, beans, all sealed. When the next red warning came I didn&rsquo;t move a muscle. We were grand.</div></div>
+        <div class="dm-foot2">
+          <div><div class="dm-h">Aoife</div><div class="dm-loc">CO. MAYO</div></div>
+          <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">5.0</b></span>
+        </div>
+      </article>
+
+      <article class="dm dm--demo">
+        <div class="dm-fullimg"><img src="img/t-bottles-man.jpg" alt=""></div>
+        <div class="dm-say"><div class="bub bub--card">Eleven days off last January taught me nothing until I read this. Now the whole shelf is done, dated and rotated. Herself has stopped slagging me about it.</div></div>
+        <div class="dm-foot2">
+          <div><div class="dm-h">Declan</div><div class="dm-loc">CO. LEITRIM</div></div>
+          <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:90%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">4.5</b></span>
+        </div>
+      </article>
+
+      <article class="dm dm--demo">
+        <div class="dm-fullimg"><img src="img/t-pantry.jpg" alt=""></div>
+        <div class="dm-say"><div class="bub bub--card">Three and a half only because it took me two weekends, not one. But the press is full, the water is sorted, and I finally rang ESB about my father. That page alone.</div></div>
+        <div class="dm-foot2">
+          <div><div class="dm-h">Niamh</div><div class="dm-loc">CO. CLARE</div></div>
+          <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:70%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">3.5</b></span>
+        </div>
+      </article>
+    </div>
+
+    </div>
+</section>
+
+<!-- ═════════ 11. OFFER ═════════ -->
+<section class="band" id="offer">
+  <div class="wrap">
+    <p class="eyebrow">11 &nbsp;/&nbsp; The offer</p>
+    <h2>Everything, for &euro;47.</h2>
+    <div class="sheet" style="margin-top:1.8rem">
+      <div class="sheet-head">Included</div>
+      <ul class="ticks">
+        <li><span class="box"></span><span><strong>The Irish Emergency Plan.</strong> Thirteen modules, around 210 pages: power cuts, storms, floods, water, heat, food, communications and the house itself. Written for Irish homes, Irish weather and Irish shops.</span></li>
+        <li><span class="box"></span><span><strong>The quantity tables.</strong> Water, food, batteries and watt-hours, per person, for three, seven, fourteen and thirty days.</span></li>
+        <li><span class="box"></span><span><strong>Nine printable sheets,</strong> made for the inside of a press door.</span></li>
+        <li><span class="box"></span><span><strong>The two hour Saturday,</strong> costed, in order.</span></li>
+        <li><span class="box"></span><span><strong>Every source named,</strong> so you can check any claim without taking our word for it.</span></li>
+      </ul>
+      <div style="border-top:1px solid var(--rule);margin-top:1.4rem;padding-top:1.4rem">
+        <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; PDF, instant &nbsp;&middot;&nbsp; no account, no password</span></div>
+        <a class="btn" href="#quizcard" data-open-quiz>Build my family&rsquo;s plan &rarr;</a>
+        <p class="btn-sub">Takes 60 seconds &middot; see your result, then checkout</p>
+      </div>
+    </div>
+    <p style="margin-top:1.6rem"><strong>If it is not useful, email us inside 60 days and we will refund
+    it.</strong> No form to fill in and no questions asked. We would rather give you your money back than
+    have you keep something you got no value from.</p>
+    <p class="src">Price includes VAT. Delivered as a PDF to the email address you use at checkout.
+    Optional extras are offered at the checkout and after it, and you can decline both in one click.</p>
+  </div>
+</section>
+
+<!-- ═════════ 12. FAQ ═════════ -->
+<section class="band band--wash">
+  <div class="wrap">
+    <p class="eyebrow">12 &nbsp;/&nbsp; The rest of the questions</p>
+    <h2>Fair questions.</h2>
+    <div style="margin-top:1.6rem">
+      <details><summary>I already have a torch and a few tins. Do I need this?</summary><div class="ans"><p>That is a better starting point than most. So: how many litres, for how many people, for how many days? That is the question the booklet does not answer, and it is the entire reason this exists. If you can answer it off the top of your head, you genuinely do not need the book.</p></div></details>
+      <details><summary>The Government said the State would help. Is this not scaremongering?</summary><div class="ans"><p>They did help, and they will. It still took eighteen days to get the last house back on, and 75,000 homes waited more than a week. The State turns up. It just does not turn up first, and this book is about the gap in between.</p></div></details>
+      <details><summary>Would I not be better off buying a generator?</summary><div class="ans"><p>A generator cannot be safely or lawfully connected to your house wiring without a transfer switch fitted by a Registered Electrical Contractor, because backfeed can kill an ESB Networks linesman working on your line. A changeover switch costs &euro;350 to &euro;700 and comes with a certificate. Most generators bought in a panic end up in a shed, unserviced. Module nine covers all of it and recommends a 12V battery and inverter setup instead, which is safer, quieter, can be used indoors and costs less.</p></div></details>
+      <details><summary>Who wrote it, and why should I trust the numbers?</summary><div class="ans"><p>Every figure carries its source on the page: ESB Networks, the HSE, the EPA, Uisce &Eacute;ireann, the FSAI, safefood, Met &Eacute;ireann, Safe Electric, An Garda S&iacute;och&aacute;na, and the Government&rsquo;s own booklet. You do not have to take our word for anything. Look any of them up.</p></div></details>
+      <details><summary>I live in a town, not out the country. Does it still apply?</summary><div class="ans"><p>Most of it, yes. On a mains supply your pressure holds for a while, though pumping stations have their own limits and 84,000 people lost water in 2025 anyway. Your bigger problems are the fridge, the heating, the router, and the fact that card machines and ATMs go down with the power. The well module is marked clearly so you can skip it.</p></div></details>
+      <details><summary>I have no space to store anything.</summary><div class="ans"><p>The seven day shelf fits in a hall press, and the book does the space arithmetic so you know before you buy. A family of four&rsquo;s month of food fits under one double bed. It also tells you where not to store food, which is most of the warm places people choose first.</p></div></details>
+      <details><summary>Will the shopping list not cost a fortune?</summary><div class="ans"><p>The first list is &euro;81.15 and it genuinely changes the outcome of a three day power cut. There is also a section on what not to buy, which is where most people in this category lose money: giant ration buckets nobody eats, power banks with invented capacity ratings, and uncertified water gadgets.</p></div></details>
+      <details><summary>I am renting. Is this for homeowners only?</summary><div class="ans"><p>Nearly all of it travels with you: water, food, light, the 12V kit, the radio, the family plan, the documents. The few jobs that belong to an owner, locks, gutters, the oil tank, are marked as such.</p></div></details>
+      <details><summary>How does it arrive?</summary><div class="ans"><p>As a PDF, to the email address you use at checkout, within a minute or two. There is no members&rsquo; area, no password and no app. Print the sheets and put them where they will be useful. Paper works with a flat battery.</p></div></details>
+      <details><summary>Is it written for Ireland or adapted from somewhere else?</summary><div class="ans"><p>Written for here. ESB Networks and Met &Eacute;ireann, not FEMA. Tesco, Dunnes, Lidl and Woodie&rsquo;s, not Walmart. The hot press, the pressure vessel, the group water scheme, the Eircode on the contact card, and the fact that RT&Eacute; switched off DAB in 2021 so a DAB-only radio is money wasted.</p></div></details>
+      <details><summary>Why is there no review section yet?</summary><div class="ans"><p>Because the book is new and we are not going to invent them. Real reader reviews go on this page as they come in, with a first name and a county. The quotes above are from published news coverage and are attributed to it.</p></div></details>
+      <details><summary>Where did the El Ni&ntilde;o figures come from?</summary><div class="ans"><p>The World Meteorological Organization, which is the United Nations weather agency, declared the event on 2 June 2026 and has warned it could be the strongest on record. The sea surface temperature figures are from NOAA&rsquo;s Climate Prediction Center. The Irish projections are from the EPA and Met &Eacute;ireann. The figures tables under each chart on this page give you the exact numbers.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 13. CLOSE ═════════ -->
+<section class="band">
+  <div class="wrap">
+    <h2>The week to do this is the week nothing is happening.</h2>
+    <p>Storm season runs from November to February. The El Ni&ntilde;o the WMO declared in June is
+    expected to peak this month or next, with a near certainty of running into early 2027. Since the
+    booklets went out in September, shops in Dublin have been clearing out of radios and battery lamps,
+    which is the sound of a lot of households starting this at the same time.</p>
+    <p>Two hours, one Saturday. Then it is done, and you can forget about it until the clocks change.</p>
+    <div class="sheet" style="margin-top:2rem">
+      <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; 60 day refund, no questions</span></div>
+      <a class="btn" href="#quizcard" data-open-quiz>Build my family&rsquo;s plan &rarr;</a>
+      <p class="btn-sub">60-second check first, then your plan and instant access</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>The Irish Emergency Plan is an independent publication. It is not affiliated with, endorsed by or produced on
+    behalf of the Department of Defence, the Office of Emergency Planning, ESB Networks, Met
+    &Eacute;ireann, Uisce &Eacute;ireann, the HSE, the EPA, the World Meteorological Organization or the
+    European Commission. Those bodies are cited as sources only, and the linked articles belong to their
+    publishers. The households named on this page were reported by the Irish Times and The Journal and are
+    cited from that coverage.</p>
+    <p>The quiz gives an estimate from seven answers. It is not a survey of your house and it is not
+    advice. The book is general household information, not professional advice. Electrical work must be
+    carried out by a Registered Electrical Contractor. Questions about drinking water go to the HSE, or the
+    EPA for a private well. Questions about medication go to your pharmacist or GP. Food safety guidance
+    follows the FSAI and safefood.</p>
+    <p>Price includes VAT. 60 day refund on request by email. &nbsp;&middot;&nbsp; Privacy &nbsp;&middot;&nbsp; Terms &nbsp;&middot;&nbsp; Contact</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var TOTAL = 10, a = {}, i = 0;
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.q'));
+  var pl = document.getElementById('pl'), pb = document.getElementById('pb');
+  var back = document.getElementById('back');
+  // full-screen quiz open/close
+  var screenEl = document.getElementById('quizscreen');
+  function openQuiz(){ screenEl.classList.add('open'); document.body.classList.add('quiz-open'); show(0); window.scrollTo(0,0); }
+  function closeQuiz(){ screenEl.classList.remove('open'); document.body.classList.remove('quiz-open'); }
+  Array.prototype.forEach.call(document.querySelectorAll('a.cta-big, [data-open-quiz]'), function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openQuiz(); });
+  });
+  var closeBtn = document.getElementById('qsclose');
+  if(closeBtn) closeBtn.addEventListener('click', closeQuiz);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeQuiz(); });
+
+
+  // progresso que avanca muito no inicio (retencao)
+  var PROG = [10, 32, 47, 59, 68, 76, 83, 89, 94, 98, 100];
+  var pr = document.getElementById('pr');
+  function show(n){
+    qs.forEach(function(q){ q.classList.toggle('on', +q.getAttribute('data-q') === n); });
+    var pct = PROG[Math.min(n, PROG.length-1)];
+    pb.style.width = pct + '%';
+    if(n >= TOTAL){ pl.textContent = 'Your result'; pr.textContent = ''; }
+    else {
+      pl.textContent = n === 0 ? 'Your emergency plan'
+                    : pct < 55 ? 'Good start'
+                    : pct < 85 ? 'Halfway there'
+                    : 'Almost done';
+      pr.textContent = pct + '%';
+    }
+    back.hidden = (n === 0);
+    i = n;
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.opt'), function(b){
+    b.addEventListener('click', function(){
+      var parent = b.parentNode.parentNode;
+      a[+parent.getAttribute('data-q')] = +b.getAttribute('data-v');
+      show(i + 1);
+      document.getElementById('quiz').scrollIntoView({block:'start'});
+    });
+  });
+  back.addEventListener('click', function(){ if(i>0) show(i-1); });
+
+  function score(){
+    var base = ({1:0.25, 2:0.6, 3:1.5, 4:3.0})[a[3]] || 0.25;
+    base *= ({1:1.4, 2:1.0, 3:0.7})[a[0]] || 1;
+    if(a[1] === 2 || a[1] === 3) base *= 0.55;
+    if(a[2] === 2) base += 0.5;
+    if(a[2] === 3 || a[2] === 4) base *= 0.75;
+    base += ({1:0.35, 2:0.15, 3:0})[a[4]] || 0;
+    if(a[5] === 2 || a[5] === 3) base *= 0.6;
+    if(a[7] === 2) base *= 0.85;
+    if(a[7] === 3) base *= 0.7;   // idoso sozinho: a conta tem que durar mais
+    return Math.max(0.2, Math.round(base * 10) / 10);
+  }
+
+  function gaps(){
+    var g = [];
+    if(a[1] === 2) g.push('<strong>You are on a well or a group scheme.</strong> A power cut is also a water cut for you, and it starts within an hour or two. Chapter 3 is the one to read first.');
+    if(a[1] === 3) g.push('<strong>You are not sure where your water comes from.</strong> That is the most common answer, and it is the most useful thing to go and find out. The book shows you how to tell in five minutes.');
+    if(a[1] === 1) g.push('<strong>You are on the mains,</strong> so pressure holds for a while. Pumping stations have their own limits in a long power cut, and your bigger problems are the fridge, the heating and the router.');
+    if(a[3] === 1) g.push('<strong>There is effectively no water in the house.</strong> This is the fastest thing on the list to fix and the cheapest. Six five litre bottles is about &euro;8.');
+    if(a[3] === 2) g.push('<strong>A few bottles is less than a day</strong> once you count cooking, teeth and the toilet. The table in chapter 2 gives the real figure for your household size.');
+    if(a[2] === 1) g.push('<strong>An oil or gas boiler needs mains electricity</strong> for the pump and the controls, so your heating stops with the power even with a full tank outside.');
+    if(a[2] === 3 || a[2] === 4) g.push('<strong>Electric-only heating stops immediately.</strong> Chapter 10 is the one room strategy, and it matters most for you.');
+    if(a[2] === 2) g.push('<strong>Your stove or range is a real advantage,</strong> and most people with one do not plan around it properly. Chapter 10 shows how to get heat and hot water out of it for a fortnight.');
+    if(a[4] === 3) g.push('<strong>No working torch or radio.</strong> Those are the two items Dublin shops have been clearing since the booklets went out. A lamp is &euro;10 to &euro;20, a radio &euro;40 to &euro;60.');
+    if(a[4] === 2) g.push('<strong>One of the two is missing.</strong> The radio is the one people skip, and it is the only device that still works on day twenty.');
+    if(a[5] === 2) g.push('<strong>Medication that must be kept cold</strong> changes your plan. Chapter 7 covers the practical side and tells you to ring your pharmacist, which is the right call rather than improvising.');
+    if(a[5] === 3) g.push('<strong>Mains-powered medical equipment in the house.</strong> There is a vulnerable customer register with ESB Networks and your supplier. That phone call is free and it is the most valuable one in the book.');
+    if(a[6] === 4) g.push('<strong>You have already had more than three days off.</strong> You know what this is like, which puts you ahead of most readers. The book is the part you did not have time to work out while it was happening.');
+    if(a[6] === 1) g.push('<strong>No long cut yet.</strong> Worth knowing that 75,000 Irish homes went more than a week in January 2025, and that ESB Networks still has 3,000 poles to replace.');
+    if(a[0] === 3) g.push('<strong>Five or more people</strong> multiplies every quantity, and it is where most plans quietly fail. Every table in the book runs to six.');
+    if(a[7] === 2) g.push('<strong>An older person in the house</strong> changes the priority order. Heat and medication come first for them, and chapter 10 is the one room strategy that keeps a room warm with no power.');
+    if(a[7] === 3) g.push('<strong>An older person living alone</strong> is the single highest-risk case in a long power cut. The book has you set up one free phone call, the vulnerable customer register, and a neighbour check that most people never arrange until it is too late.');
+    if(a[8] === 2) g.push('<strong>A dog or a cat</strong> needs water and feed set aside too, and several everyday foods are dangerous to them. The plan covers how much to store and what is safe if you run short.');
+    if(a[8] === 3) g.push('<strong>Several animals or farm animals</strong> are their own water and feed calculation, and it is a big one. The plan shows how to work it out so they are not forgotten when the taps stop.');
+    if(a[9] === 2) g.push('<strong>Small children in the house</strong> change the first hour. Warmth, food without a fight and keeping them calm in the dark are all covered, and the companion Little Ones Pack goes deeper.');
+    if(a[9] === 3) g.push('<strong>A baby under two</strong> is the household that cannot wait. Formula needs safe water (never nitrate-risk water for a bottle) and warmth has a hard rule, both planned before the storm, not during it.');
+    return g.slice(0, 7);
+  }
+
+  document.getElementById('gate').addEventListener('submit', function(e){
+    e.preventDefault();
+    var d = score(), ds = d.toFixed(1).replace(/\.0$/,'');
+    document.getElementById('rdays').textContent = ds;
+    document.getElementById('runit').textContent = (d === 1 ? 'day' : 'days');
+    document.getElementById('rsay').textContent = d < 1
+      ? 'Less than a full day. That is not unusual and it is not a failure, it is what an ordinary Irish house looks like before anybody sits down and does the sums.'
+      : (d < 3
+        ? 'Enough for a short cut, and short of the three days the European Commission asked for on 3 November.'
+        : 'Better than most. The gap now is between three days and the full week Norway recommends.');
+
+    document.getElementById('rgaps').innerHTML = gaps().map(function(g){
+      return '<li><span class="mk">&rarr;</span><span>' + g + '</span></li>'; }).join('');
+
+    document.getElementById('rruler').innerHTML =
+      '<div class="you"><span>Your house, from your seven answers</span><b>' + ds + ' days</b></div>' +
+      '<div><span>The Be Emergency Ready booklet, posted to your house</span><b>no number given</b></div>' +
+      '<div><span>European Commission guidelines, 3 November 2026</span><b>3 days</b></div>' +
+      '<div><span>Swedish civil defence, water stored per person</span><b>9 litres</b></div>' +
+      '<div><span>Norway, raised from three days in 2024</span><b>7 days</b></div>' +
+      '<div><span>What the book takes you to</span><b>7 to 30 days</b></div>';
+
+    document.getElementById('rpitch').textContent = (a[1] === 2 || a[1] === 3)
+      ? 'Your answers put the well pump at the centre of your plan, which is chapter 3, and the chapter nobody else writing about this covers. The plan takes you from ' + ds + ' days to seven, in two hours on a Saturday.'
+      : 'The plan takes you from ' + ds + ' days to seven, in two hours on a Saturday, with the shopping list already worked out.';
+
+    closeQuiz();
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+    show(TOTAL);
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
