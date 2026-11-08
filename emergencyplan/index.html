@@ -680,6 +680,25 @@ body,p{font-size:1.04rem}
 .btn{margin-left:auto;margin-right:auto}
 .btn-sub{margin-left:auto;margin-right:auto;text-align:center}
 @media(max-width:560px){.sheet-head{font-size:1.25rem!important}}
+/* A oferta vive dentro de uma caixa pontilhada: o tracejado lê como cupom,
+   recortável, e separa o preço do depoimento que vem acima sem precisar de
+   sombra (a casa não tem sombra). */
+.offer-box{max-width:34rem;margin:2.4rem auto 0;padding:2rem 1.6rem 1.7rem;
+  border:2px dashed var(--rule-strong);border-radius:6px;background:var(--paper)}
+.offer-box .price{margin:0 0 1.1rem}
+.offer-guar{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.8rem!important;
+  line-height:1.55;color:var(--ink-3);text-align:center;max-width:27rem;
+  margin:1.2rem auto 0;padding-top:1.1rem;border-top:1px dashed var(--rule)}
+.offer-guar strong{color:var(--ink-2);font-weight:600}
+@media(max-width:560px){.offer-box{padding:1.5rem 1.1rem 1.3rem}}
+
+/* Os quatro campos eram quatro linhas coladas. Viram quatro faixas com ar
+   em volta, divididas por fio, que é como o miolo do livro trata lista. */
+.offer-ticks{gap:0!important;margin-top:2rem!important;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.offer-ticks li{padding:1.05rem .3rem}
+.offer-ticks li + li{border-top:1px solid var(--rule)}
+
 </style>
 </head>
 <body>
@@ -1018,9 +1037,13 @@ body,p{font-size:1.04rem}
         </div>
       </div>
 
-      <div class="price"><span class="amt">&euro;47</span></div>
-      <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
-      <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
+      <div class="offer-box">
+        <div class="price"><span class="amt">&euro;47</span></div>
+        <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
+        <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
+        <p class="offer-guar"><strong>14 day right to cancel, and a 60 day refund on top.</strong>
+          One email to us, no questions and no form to fill in.</p>
+      </div>
       </div>
   </div>
 </section>
@@ -1812,20 +1835,37 @@ body,p{font-size:1.04rem}
     return Math.max(0.2, Math.round(base * 10) / 10);
   }
 
-  /* a frase que explica o numero. O numero nunca aparece sozinho. */
+  /* A frase que explica o numero. Cada segmento tem a sua, inteira, e cada uma
+     termina de um jeito diferente. O numero nunca aparece sozinho. */
   function pitch(ds){
-    /* Reescrito em 08/11/2026 para correr melhor. A versão antiga dizia
-       "On what is in the house today it would hold out about X days", que
-       tropeça, e "takes that to seven", que não deixa claro que é para cima. */
-    var abre = {
-      well:   'Your water comes from a well, so the pump is the whole plan. When the power goes, the tap goes with it, inside the hour.',
-      older:  'With someone older in the house, heat and medication come first. Both of them depend on the mains, and both have a clock on them.',
-      little: 'With a small child in the house, the first hour is the whole thing. Warm, fed, and not frightened, in that order.',
-      animal: 'Your answers put the animals into the sums. Water for animals is the number almost every plan forgets, and it is the biggest one.',
-      base:   'Your answers describe the ordinary Irish house, which is exactly the house this was written for.'
+    var n = '<strong>' + ds + ' days</strong>';
+    return {
+      well:
+        'If the water comes from a well, the pump is the whole story. The power goes and the ' +
+        'tap goes with it, usually inside the hour, and most people find that out on the second ' +
+        'morning when they go to fill the kettle. As the house stands today you would manage ' +
+        'about ' + n + '. Seven is where this gets you, and the well chapter is the one nobody ' +
+        'else writing about this bothers with.',
+      older:
+        'With an older person in the house the order changes. Heat first, then the medication, ' +
+        'then a way of reaching somebody. As things stand you would manage about ' + n + '. ' +
+        'Seven is where this gets you, and the very first step costs nothing: one phone call to ' +
+        'a register most people have never heard of.',
+      little:
+        'A small child changes the first hour more than anything else in here. Warmth, then a ' +
+        'feed, and neither of them waits for the shops to open. As the house stands you would ' +
+        'manage about ' + n + '. Seven is where this gets you, with the amounts worked out for ' +
+        'the age they actually are.',
+      animal:
+        'Animals are the part most plans leave out, and water is where it bites. As the house ' +
+        'stands you would manage about ' + n + ', and that is before anything they drink. ' +
+        'Seven is where this gets you, with the sums done animal by animal.',
+      base:
+        'Nothing unusual came up in your answers, and that is rather the point. This was ' +
+        'written for the ordinary house. As things stand you would manage about ' + n + ', ' +
+        'which already puts you ahead of most people who start this. Seven is where it gets ' +
+        'you, and the shopping is already worked out.'
     }[segment()];
-    return abre + ' On what is in the press right now, it would last about <strong>' + ds +
-      ' days</strong>. This plan takes it to seven. One afternoon, one shop, and the list is already done for you.';
   }
 
   function mostraResultado(){
