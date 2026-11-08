@@ -510,6 +510,31 @@ body.quiz-open{overflow:hidden}
 .qualif__out{font-size:1.02rem;line-height:1.5;color:var(--ink-3)}
 .qualif__out b{color:var(--ink)}
 @media(max-width:560px){.qualif__h{font-size:1.06rem}.qualif li{font-size:.96rem}}
+
+/* ─── Herói refeito. O medidor acusava "No visible button in the first screen",
+   e no celular a primeira tela era manchete de 4 linhas mais parágrafo de 10.
+   Agora: manchete em 2 linhas, uma frase, botão, e a prova vem depois dele. */
+h1{letter-spacing:-.03em;line-height:1.02;max-width:14ch}
+.lede--hero{margin-top:1.15rem;max-width:34ch;font-size:1.3rem;line-height:1.42}
+.cta-hero{margin-top:1.6rem;align-self:flex-start;width:100%;max-width:30rem}
+.lede--after{margin-top:2.2rem;font-size:1.04rem;line-height:1.5;color:var(--ink-3);max-width:52ch}
+
+/* ─── Barra fixa do celular. O rodapé do selo Digistore24 é fixo e tem 84px,
+   então ela senta acima dele, senão os dois brigam pelo mesmo lugar. */
+.cta-fix{position:fixed;left:0;right:0;bottom:84px;z-index:60;display:none;
+  padding:.6rem .9rem calc(.6rem + env(safe-area-inset-bottom,0px));
+  background:var(--paper);border-top:2px solid var(--ink)}
+.cta-fix a{display:flex;align-items:center;justify-content:center;gap:.5rem;
+  background:var(--signal);color:#FFF;text-decoration:none;font-family:Archivo,sans-serif;
+  font-weight:800;font-size:1.02rem;letter-spacing:-.01em;line-height:1.1;
+  min-height:52px;padding:.7rem 1rem;border-radius:6px}
+.cta-fix a:active{filter:brightness(.94)}
+@media(max-width:760px){
+  .cta-fix.on{display:block}
+  .lede--hero{font-size:1.16rem}
+  .cta-hero{font-size:1.1rem}
+}
+body.offer-mode .cta-fix{display:none!important}
 </style>
 </head>
 <body>
@@ -520,15 +545,17 @@ body.quiz-open{overflow:hidden}
       <span class="urg-a">Posted to 2.2 million homes in September. The number was left out.</span>
       <span class="urg-b">Storm season ends in February &middot; this page comes down with it</span>
     </div>
-    <div class="stamp">United Nations &middot; WMO &middot; strongest El Ni&ntilde;o on record</div>
-    <h1>Climate emergencies in 2027. Is your house ready for what is coming?</h1>
-    <p class="lede" style="margin-top:1.3rem">The UN&rsquo;s weather agency has confirmed the strongest
-    El Ni&ntilde;o ever measured, <strong>+2.47&deg;C</strong> and still climbing. In January 2025 one storm
-    left 768,000 Irish homes without power and 84,000 without water, some for twenty days. The next one is
-    a question of when, not if. In September the Government posted 2.2 million households a booklet telling
-    them to be ready, and left out the one thing that matters: how much.</p>
-    <p class="lede" style="margin-top:.9rem;color:var(--ink)"><strong>Find out in 60 seconds how long your
-    house would actually last.</strong></p>
+    <h1>How long would your house last?</h1>
+    <p class="lede lede--hero">In September the Government posted a booklet to 2.2 million Irish homes
+    telling them to be ready. It left out the number. We did the sums.</p>
+
+    <a href="#quizcard" class="cta-big cta-hero">Build my family&rsquo;s emergency supply plan &rarr;
+      <small>Seven questions &middot; 60 seconds &middot; free</small></a>
+
+    <p class="lede lede--after">The UN&rsquo;s weather agency has confirmed the strongest El Ni&ntilde;o ever
+    measured, <strong>+2.47&deg;C</strong> and still climbing. In January 2025 one storm left 768,000 Irish
+    homes without power and 84,000 without water, some for twenty days. The next one is a question of when,
+    not if.</p>
 
     
 <div class="qualif">
@@ -1673,5 +1700,22 @@ body.quiz-open{overflow:hidden}
 <!-- Begin of Digistore24 Trusted Badge Code -->
 <script type="text/javascript" src="https://www.digistore24.com/trusted-badge/49224/H74DJN4QpfrpV2u/salespage"></script>
 <!-- End of Digistore24 Trusted Badge Code -->
+
+<div class="cta-fix" id="ctafix" aria-hidden="true">
+  <a href="#quizcard">How long would your house last? &rarr;</a>
+</div>
+
+<script>
+/* A barra fixa só entra depois que o botão do herói sai da tela: antes disso
+   seriam dois CTAs iguais competindo na mesma dobra. */
+(function(){
+  var alvo = document.querySelector('.cta-hero'), barra = document.getElementById('ctafix');
+  if(!alvo || !barra || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function(e){
+    barra.classList.toggle('on', !e[0].isIntersecting);
+    barra.setAttribute('aria-hidden', e[0].isIntersecting ? 'true' : 'false');
+  }, {rootMargin:'-10px 0px 0px 0px'}).observe(alvo);
+})();
+</script>
 </body>
 </html>
