@@ -622,6 +622,38 @@ body,p{font-size:1.04rem}
   .cta-hero{margin-top:1rem;padding:.95rem 1rem}
   body,p{font-size:1rem}
 }
+
+/* ══ Botões recuperados em 08/11/2026 ══
+   A classe .btn seguia no HTML mas a regra tinha sumido do <style>, então
+   "Get instant access" e "Download the PDF" renderizavam como link sublinhado.
+   Recuperado de index-v2-backup-1642.html. */
+.btn{display:block;width:100%;max-width:30rem;text-align:center;font-family:Archivo,sans-serif;
+  font-weight:800;font-size:1.1rem;background:var(--signal);color:#FFFFFF;border:0;border-radius:4px;
+  padding:1.15rem 1.35rem;text-decoration:none!important;cursor:pointer;
+  transition:filter .12s ease, transform .12s ease}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+.btn--ghost{background:transparent;color:var(--signal);border:2px solid var(--signal);
+  font-size:1rem;padding:.95rem 1.2rem}
+.btn-sub{font-size:.8rem!important;letter-spacing:.04em;color:var(--ink-3);margin:.75rem 0 0;
+  max-width:30rem;text-align:center}
+
+/* o preço voltou a ser um preço, e não "€47one payment" colado */
+.price{display:flex;flex-wrap:wrap;align-items:baseline;gap:.8rem;margin:0 0 1.3rem}
+.price .amt{font-family:Archivo,sans-serif;font-weight:800;font-size:3.2rem;letter-spacing:-.03em;
+  line-height:1;color:var(--ink)}
+.price .note{font-family:"IBM Plex Mono",monospace;font-size:.82rem!important;color:var(--ink-3);
+  letter-spacing:.03em}
+
+/* ══ A faixa cinza estava espremida: conteúdo colado nas bordas ══ */
+.band--card,.sheet,.band--wash{padding-top:3.2rem;padding-bottom:3.6rem}
+#result .band--card,#result .sheet{padding:2.6rem 2rem 3rem}
+.free{margin-top:2.6rem;padding-top:2.4rem;border-top:0}
+@media(max-width:560px){
+  .band--card,.sheet,.band--wash{padding-top:2.2rem;padding-bottom:2.6rem}
+  #result .band--card,#result .sheet{padding:1.8rem 1.2rem 2.2rem}
+  .price .amt{font-size:2.6rem}
+}
 </style>
 </head>
 <body>
@@ -832,13 +864,6 @@ body,p{font-size:1.04rem}
             <div class="mk-sh-foot">430Wh/day &middot; essentials</div>
           </div>
         </div>
-      </div>
-
-      <div class="specs">
-        <div class="spec"><b>447</b><span>pages</span></div>
-        <div class="spec"><b>41</b><span>chapters, in five parts</span></div>
-        <div class="spec"><b>97</b><span>drawn illustrations</span></div>
-        <div class="spec"><b>18</b><span>printable A4 sheets</span></div>
       </div>
 
       <div class="toc">
