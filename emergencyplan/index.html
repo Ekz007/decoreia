@@ -652,6 +652,12 @@ body,p{font-size:1.04rem}
   .price .amt{font-size:2.6rem}
 }
 
+
+/* A capa era desenhada em CSS com spans. Agora é a capa real, renderizada do
+   PDF: é o produto que a pessoa vai receber, não uma representação dele. */
+.mk-capa{display:block;width:100%;height:auto;border-radius:3px;
+  box-shadow:0 20px 44px -24px rgba(17,17,17,.6)}
+.mk-book{background:none!important;border:0!important;padding:0!important}
 </style>
 </head>
 <body>
@@ -837,13 +843,9 @@ body,p{font-size:1.04rem}
 
       <div class="mockup">
         <div class="mk-book">
-          <div class="mk-cover">
-            <span class="mk-kicker">THE IRISH</span>
-            <span class="mk-title">EMERGENCY<br>PLAN</span>
-            <span class="mk-sub">Water &middot; Food &middot; Power &middot; Heat<br>The numbers the booklet left out</span>
-            <span class="mk-badge">447 pages &middot; 18 printable sheets</span>
+            <img src="img/produto/capa.jpg" alt="The cover of the book"
+                 class="mk-capa" width="438" height="620" loading="lazy">
           </div>
-        </div>
         <div class="mk-sheets">
           <div class="mk-sheet">
             <div class="mk-sh-head">WATER &middot; LITRES PER PERSON</div>
@@ -993,7 +995,7 @@ body,p{font-size:1.04rem}
         </div>
       </div>
 
-      <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
+      <div class="price"><span class="amt">&euro;47</span></div>
       <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
       <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
       </div>
