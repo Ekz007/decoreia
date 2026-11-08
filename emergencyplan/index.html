@@ -580,6 +580,30 @@ figure.print{box-shadow:none!important;border:0!important}
 h1{font-size:clamp(2.4rem,8.5vw,4.4rem)}
 h2{font-size:clamp(1.7rem,4.2vw,2.5rem);line-height:1.05;letter-spacing:-.025em;max-width:20ch}
 h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015em}
+
+/* O cintilho do topo eram dois textos de tamanhos diferentes espremidos em
+   três linhas, e é a primeira coisa que se lê. Agora é uma linha só. */
+.urg{display:block!important;font-size:.95rem!important;line-height:1.4;
+  color:var(--ink-3);margin-bottom:1.4rem;max-width:46ch}
+.urg-a,.urg-b{display:inline!important;font-size:inherit!important;background:none!important;
+  padding:0!important;border:0!important;color:inherit!important;letter-spacing:0!important;
+  font-family:inherit!important;text-transform:none!important;white-space:normal!important}
+.urg-a{font-weight:700;color:var(--ink)}
+.urg-b::before{content:" \00B7  "}
+
+/* a linha de apoio do botão não pode quebrar em duas */
+.cta-big small{font-size:.8rem!important;letter-spacing:.02em;white-space:nowrap}
+@media(max-width:400px){.cta-big{font-size:1.12rem}.cta-big small{font-size:.72rem!important}}
+
+/* o herói sobe: no celular o botão tem que caber na primeira tela */
+@media(max-width:430px){
+  #quiz{padding-top:1.1rem}
+  .urg{font-size:.88rem!important;margin-bottom:1rem;max-width:none}
+  h1{font-size:2.35rem;line-height:1.03}
+  .lede--hero{margin-top:.85rem;font-size:1.08rem;line-height:1.38}
+  .cta-hero{margin-top:1.15rem}
+  .herofoto{margin-top:1.8rem}
+}
 </style>
 </head>
 <body>
@@ -950,7 +974,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <section class="band band--wash">
   <div class="wrap-wide">
     <p class="eyebrow">Not our claims. Theirs.</p>
-    <h2 style="max-width:32ch">Everything below is on the public record, with the date and the link.</h2>
+    <h2 style="max-width:20ch">All of it is on the public record.</h2>
     <p class="lede" style="max-width:62ch">These are the pages themselves, as they ran. The source and the
     date are printed under each one.</p>
     <div class="prints">
@@ -1023,7 +1047,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <section class="band band--card">
   <div class="wrap-wide">
     <p class="eyebrow">What is building now</p>
-    <h2 style="max-width:34ch">The UN&rsquo;s weather agency says this El Ni&ntilde;o could be the strongest ever recorded.</h2>
+    <h2>The strongest El Ni&ntilde;o ever measured.</h2>
     <p class="lede" style="max-width:64ch">The World Meteorological Organization declared the event on
     2 June 2026. Its Secretary-General, Celeste Saulo, said the strength now being projected has never
     appeared in the agency&rsquo;s records.</p>
@@ -1244,7 +1268,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <section class="band">
   <div class="wrap">
     <p class="eyebrow">Why this week and not in January</p>
-    <h2>The question is not whether it happens. It is who is in the house when it does.</h2>
+    <h2>Who is in the house when it happens.</h2>
     <p>In a long power cut you are not the one at risk. You will be cold, bored and annoyed. The risk
     sits with whoever else is under your roof.</p>
 
@@ -1269,7 +1293,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <section class="band band--card">
   <div class="wrap-wide">
     <p class="eyebrow">05b &nbsp;/&nbsp; What happens to the ones who wait</p>
-    <h2 style="max-width:30ch">The people who got caught out were not careless. They just had not done the sums.</h2>
+    <h2 style="max-width:22ch">They were not careless. They had not done the sums.</h2>
     <p class="lede" style="max-width:62ch">This is not a warning about the future. It is what the papers
     reported the last time, about real households in Mayo, Leitrim, Clare and Galway.</p>
 
@@ -1300,7 +1324,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <section class="band band--wash">
   <div class="wrap">
     <p class="eyebrow">The part nobody plans for</p>
-    <h2>If you are on a well, a power cut is also a water cut.</h2>
+    <h2>On a well, a power cut is a water cut.</h2>
     <p>Most people prepare for the dark. They buy a torch, they find the candles, they get on with it.
     Then on the second morning they go to fill the kettle and nothing comes out of the tap.</p>
     <p>In January 2025, 84,000 people were without water and another 300,000 were at risk of losing it,
@@ -1340,7 +1364,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <section class="band">
   <div class="wrap">
     <p class="eyebrow">Why the booklet in your drawer has no numbers in it</p>
-    <h2>The quantities were written, tested, and then taken out.</h2>
+    <h2>The numbers were written, then taken out.</h2>
     <p>This is on the public record, and it is the reason this book exists at all.</p>
     <p>An advertising presentation in July 2025 set the campaign objective as helping people manage their
     basic needs <strong>&ldquo;for at least 72 hours without external assistance&rdquo;</strong>, in line
