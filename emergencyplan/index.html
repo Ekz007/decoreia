@@ -638,6 +638,29 @@ body,p{font-size:1.04rem}
 
 /* o preço voltou a ser um preço, e não "€47one payment" colado */
 .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:.8rem;margin:0 0 1.3rem}
+/* o quadro de promocao em volta do preco */
+.deal{position:relative;border:1.5px solid var(--signal);border-radius:6px;
+  background:linear-gradient(180deg,var(--signal-tint),transparent 70%);
+  padding:1.5rem 1.3rem 1.2rem;margin:0 0 1.3rem}
+.deal-top{position:absolute;top:-.72rem;left:0;right:0;display:flex;justify-content:center;
+  align-items:center;gap:.5rem}
+.deal-tag{font-family:"IBM Plex Mono",monospace;font-size:.62rem;font-weight:600;
+  letter-spacing:.11em;text-transform:uppercase;color:#fff;background:var(--signal);
+  border-radius:3px;padding:.3rem .6rem;white-space:nowrap}
+.deal-pct{display:inline-flex;align-items:baseline;gap:.2rem;font-family:Archivo,sans-serif;
+  font-weight:800;font-size:.92rem;letter-spacing:-.01em;color:#fff;background:var(--ink);
+  border-radius:3px;padding:.26rem .5rem;white-space:nowrap}
+.deal-pct small{font-family:"IBM Plex Mono",monospace;font-size:.56rem;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;opacity:.85}
+.deal .price{margin:0 0 .35rem;justify-content:center}
+.deal-save{text-align:center;font-family:"IBM Plex Mono",monospace;font-size:.66rem;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
+@media (max-width:620px){
+  .deal{padding:1.5rem 1rem 1.1rem}
+  .deal-tag{font-size:.56rem;letter-spacing:.08em;padding:.28rem .45rem}
+  .deal-pct{font-size:.82rem;padding:.24rem .42rem}
+  .deal-save{font-size:.6rem;letter-spacing:.06em}
+}
 .price .was{font-family:Archivo,sans-serif;font-weight:700;font-size:1.7rem;letter-spacing:-.02em;
   color:var(--ink-3);text-decoration:line-through;text-decoration-thickness:2px;
   text-decoration-color:var(--signal);opacity:.75}
@@ -1043,7 +1066,14 @@ body,p{font-size:1.04rem}
       </div>
 
       <div class="offer-box">
-        <div class="price"><span class="was">&euro;75</span><span class="amt">&euro;47</span></div>
+        <div class="deal">
+          <div class="deal-top">
+            <span class="deal-tag">Launch offer</span>
+            <span class="deal-pct">37%<small>off</small></span>
+          </div>
+          <div class="price"><span class="was">&euro;75</span><span class="amt">&euro;47</span></div>
+          <div class="deal-save">You save &euro;28 on the launch price</div>
+        </div>
         <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
         <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
         <p class="offer-guar"><strong>14 day right to cancel, and a 60 day refund on top.</strong>
