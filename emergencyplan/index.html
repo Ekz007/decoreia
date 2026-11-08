@@ -604,6 +604,24 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
   .cta-hero{margin-top:1.15rem}
   .herofoto{margin-top:1.8rem}
 }
+
+/* Os cartões de imprensa traziam 55 rótulos em caixa alta minúscula
+   ("THE JOURNAL", "THEJOURNAL.IE · OUTUBRO 2026"). Vira caixa normal e
+   tamanho legível: a fonte da notícia é informação, não decoração. */
+.figc,.figc *{font-family:Lato,system-ui,sans-serif!important;text-transform:none!important;
+  letter-spacing:0!important;font-size:.84rem!important;line-height:1.4}
+.figc b,.figc strong{font-weight:700;color:var(--ink)}
+
+/* filetes: o que separa é espaço e um degrau de tom, não linha de 1px */
+figure.print,figure.print *{border:0!important}
+.band--wash{border-top:0!important;border-bottom:0!important}
+.sheet,.sheet *{border-color:transparent!important}
+.sheet{background:#F6F6F4}
+li{border-bottom:0!important}
+
+/* corpo em 16px cheios; o cinza fica só para nota */
+body,p{font-size:1.04rem}
+.lede--after{color:var(--ink-2)}
 </style>
 </head>
 <body>
@@ -1293,7 +1311,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <section class="band band--card">
   <div class="wrap-wide">
     <p class="eyebrow">05b &nbsp;/&nbsp; What happens to the ones who wait</p>
-    <h2 style="max-width:22ch">They were not careless. They had not done the sums.</h2>
+    <h2 style="max-width:22ch">Not careless. They had not done the sums.</h2>
     <p class="lede" style="max-width:62ch">This is not a warning about the future. It is what the papers
     reported the last time, about real households in Mayo, Leitrim, Clare and Galway.</p>
 
@@ -1388,7 +1406,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <section class="band band--card">
   <div class="wrap">
     <p class="eyebrow">The solution, and what each part does</p>
-    <h2>Thirteen chapters. Every one of them ends in a number.</h2>
+    <h2>Thirteen chapters, thirteen numbers.</h2>
     <p class="lede">Not thirteen chapters of advice. Thirteen chapters of decisions already made, so you
     are not standing in an aisle in Woodie&rsquo;s working out which lamp.</p>
 
@@ -1550,7 +1568,7 @@ h3{font-size:clamp(1.15rem,2.4vw,1.45rem);line-height:1.18;letter-spacing:-.015e
 <!-- ═════════ 13. CLOSE ═════════ -->
 <section class="band">
   <div class="wrap">
-    <h2>The week to do this is the week nothing is happening.</h2>
+    <h2>Do it in a week when nothing is happening.</h2>
     <p>Storm season runs from November to February. The El Ni&ntilde;o the WMO declared in June is
     expected to peak this month or next, with a near certainty of running into early 2027. Since the
     booklets went out in September, shops in Dublin have been clearing out of radios and battery lamps,
