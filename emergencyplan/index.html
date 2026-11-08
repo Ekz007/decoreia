@@ -92,7 +92,9 @@ input[type=email]{width:100%;font-family:"IBM Plex Mono",monospace;font-size:.98
 #result{display:none}
 /* modo oferta: ao terminar o quiz a pagina vira so a oferta.
    Nada de landing repetida embaixo, nada de CTA que reabre o quiz. */
-body.offer-mode > *:not(#result):not(footer){display:none !important}
+/* o badge e o rodape do Digistore24 (ds24b-*) ficam em TODAS as telas:
+   e exigencia de aprovacao deles, e some sem isso no modo oferta */
+body.offer-mode > *:not(#result):not(footer):not([id^="ds24b-"]){display:none !important}
 body.offer-mode #result{display:block;padding-top:2.2rem}
 body.offer-mode footer{margin-top:0}
 
