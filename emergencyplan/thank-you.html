@@ -32,5 +32,47 @@ p{font-size:1.1rem;line-height:1.55;margin:0;max-width:30ch}
 <!-- Begin of Digistore24 Trusted Badge Code -->
 <script type="text/javascript" src="https://www.digistore24.com/trusted-badge/49225/c0CO0FxGyNUHJdx/thankyoupage"></script>
 <!-- End of Digistore24 Trusted Badge Code -->
+<script>
+(function(){
+  /* Purchase na pagina de obrigado. Pixel + CAPI com o mesmo event_id.
+     So dispara com consentimento, a mesma escolha feita na landing. */
+  var PIXEL = '1676307384086334';
+  var CAPI  = 'https://yreedufkyjcriwedmtkg.supabase.co/functions/v1/capi';
+  var CHAVE = 'br_consent';
+
+  function consentiu(){ try{ return localStorage.getItem(CHAVE) === 'yes'; }catch(e){ return false; } }
+  function cookie(n){ var m = document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; }
+  if(!consentiu()) return;
+
+  var P = new URLSearchParams(location.search);
+  /* o Digistore24 manda os dados do pedido se "add order data to thank you
+     page URL" estiver ligado. Sem isso, cai no valor do core. */
+  var valor  = parseFloat(P.get('amount') || P.get('order_amount') || '47') || 47;
+  var moeda  = P.get('currency') || 'EUR';
+  var pedido = P.get('order_id') || P.get('purchase_id') || '';
+  var id = 'p' + (pedido || Date.now().toString(36) + Math.random().toString(36).slice(2,8));
+
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+  (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  window.fbq('init', PIXEL);
+  window.fbq('track', 'PageView');
+  window.fbq('track', 'Purchase', {value: valor, currency: moeda,
+    content_name: 'The Irish Emergency Plan'}, {eventID: id});
+
+  try{
+    fetch(CAPI, {method:'POST', keepalive:true,
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({event_name:'Purchase', event_id:id,
+        event_source_url: location.href, value: valor, currency: moeda,
+        order_id: pedido, content_name:'The Irish Emergency Plan',
+        fbp: cookie('_fbp'), fbc: cookie('_fbc'),
+        client_user_agent: navigator.userAgent})
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
