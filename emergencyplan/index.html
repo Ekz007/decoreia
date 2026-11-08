@@ -160,8 +160,6 @@ body.offer-mode footer{margin-top:0}
 /* 4. "Read it" dos depoimentos, 16px de altura. */
 .dm-foot a{display:inline-flex;align-items:center;min-height:44px}
 
-/* 5. "Download the PDF" entrega a isca, nao pode ser dificil de acertar. */
-.freebie a{display:inline-flex;align-items:center;min-height:44px}
 
 /* 5b. As perguntas do FAQ tinham 26px. Sao 14 linhas de toque seguidas,
        e errar uma abre a de cima ou a de baixo. */
@@ -648,23 +646,12 @@ body,p{font-size:1.04rem}
 /* ══ A faixa cinza estava espremida: conteúdo colado nas bordas ══ */
 .band--card,.sheet,.band--wash{padding-top:3.2rem;padding-bottom:3.6rem}
 #result .band--card,#result .sheet{padding:2.6rem 2rem 3rem}
-.free{margin-top:2.6rem;padding-top:2.4rem;border-top:0}
 @media(max-width:560px){
   .band--card,.sheet,.band--wash{padding-top:2.2rem;padding-bottom:2.6rem}
   #result .band--card,#result .sheet{padding:1.8rem 1.2rem 2.2rem}
   .price .amt{font-size:2.6rem}
 }
 
-/* A isca grátis era um link sublinhado logo abaixo do botão de compra,
-   o que faz os dois competirem. Vira botão secundário, com ar entre eles. */
-.freebie{margin-top:2.2rem;padding-top:2rem;border-top:2px solid rgba(17,17,17,.10)}
-.freebie p{margin-bottom:1.3rem;max-width:46ch}
-.freebie a{display:inline-flex!important;align-items:center;justify-content:center;gap:.5rem;
-  min-height:56px;padding:.9rem 1.6rem;background:transparent;color:var(--signal);
-  border:2px solid var(--signal)!important;border-color:var(--signal)!important;
-  border-radius:4px;text-decoration:none!important;
-  font-family:Archivo,sans-serif;font-weight:800;font-size:1rem}
-.freebie a:hover{background:var(--signal);color:#fff}
 </style>
 </head>
 <body>
@@ -1009,11 +996,7 @@ body,p{font-size:1.04rem}
       <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
       <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
       <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
-      <div class="freebie">
-        <p><strong>Your free one page checklist,</strong> as promised. One A4 sheet for the press door, nothing to buy.</p>
-        <a href="the-one-page-checklist.pdf" download type="application/pdf">Download the PDF &darr;</a>
       </div>
-    </div>
   </div>
 </section>
 
