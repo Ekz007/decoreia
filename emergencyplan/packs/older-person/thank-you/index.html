@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thank you &middot; The Older Person's Pack</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23C8102E%22/%3E%3Ctext x=%2250%22 y=%2250%22 dy=%22.35em%22 text-anchor=%22middle%22 font-family=%22Arial,Helvetica,sans-serif%22 font-size=%2252%22 font-weight=%22800%22 fill=%22%23fff%22%3ECE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Lato:wght@400&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#fff;color:#2E2E2E;font-family:Lato,system-ui,sans-serif;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:2rem 1.4rem;-webkit-font-smoothing:antialiased}
+h1{font-family:Archivo,sans-serif;font-size:2.6rem;font-weight:800;letter-spacing:-.03em;
+  color:#111;line-height:1.1;margin:0 0 1rem}
+p{font-size:1.1rem;line-height:1.55;margin:0;max-width:46ch}
+.what{font-size:.98rem;color:#4D5257;margin-top:1rem}
+.debit{margin-top:1.1rem;font-size:.92rem;color:#4D5257}
+@media (max-width:620px){h1{font-size:2rem}}
+</style>
+</head>
+<body>
+  <div>
+    <h1>Thank you.</h1>
+    <p><strong>The Older Person's Pack</strong> is on its way. It is a PDF, and it arrives by email
+    within a minute of your payment, to the address you entered at the checkout.</p>
+    <p class="what">Inside: cold, falls, medication and the free phone call to the register that changes how you are treated. Twelve months of downloads, unlimited.</p>
+    <p class="what">Nothing to install, no members area and no password. If it has not
+    arrived in five minutes, check the spam folder, then email us and we will send it again.</p>
+    <p class="debit">The debit will be performed by Digistore24.com<br>
+    Your credit card statement will show a charge from Digistore24.</p>
+  </div>
+<!-- Begin of Digistore24 Trusted Badge Code -->
+<script type="text/javascript" src="https://www.digistore24.com/trusted-badge/49225/c0CO0FxGyNUHJdx/thankyoupage"></script>
+<!-- End of Digistore24 Trusted Badge Code -->
+<script>
+(function(){
+  /* Purchase na pagina de obrigado. Pixel + CAPI com o mesmo event_id.
+     So dispara com consentimento, a mesma escolha feita na landing. */
+  var PIXEL = '1676307384086334';
+  var CAPI  = 'https://yreedufkyjcriwedmtkg.supabase.co/functions/v1/capi';
+  var CHAVE = 'br_consent';
+
+  function consentiu(){ try{ return localStorage.getItem(CHAVE) === 'yes'; }catch(e){ return false; } }
+  function cookie(n){ var m = document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; }
+  if(!consentiu()) return;
+
+  var P = new URLSearchParams(location.search);
+  /* o Digistore24 manda os dados do pedido se "add order data to thank you
+     page URL" estiver ligado. Sem isso, cai no valor do core. */
+  var valor  = parseFloat(P.get('amount') || P.get('order_amount') || '17') || 17;
+  var moeda  = P.get('currency') || 'EUR';
+  var pedido = P.get('order_id') || P.get('purchase_id') || '';
+  var id = 'p' + (pedido || Date.now().toString(36) + Math.random().toString(36).slice(2,8));
+
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+  (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  window.fbq('init', PIXEL);
+  window.fbq('track', 'PageView');
+  window.fbq('track', 'Purchase', {value: valor, currency: moeda,
+    content_name: 'The Older Person's Pack'}, {eventID: id});
+
+  try{
+    fetch(CAPI, {method:'POST', keepalive:true,
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({event_name:'Purchase', event_id:id,
+        event_source_url: location.href, value: valor, currency: moeda,
+        order_id: pedido, content_name:'The Older Person's Pack',
+        fbp: cookie('_fbp'), fbc: cookie('_fbc'),
+        client_user_agent: navigator.userAgent})
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
