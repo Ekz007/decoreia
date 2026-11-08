@@ -221,6 +221,48 @@ body.offer-mode footer{margin-top:0}
   text-transform:uppercase;color:#fff;background:var(--signal);border-radius:2px;
   padding:.3rem .5rem;white-space:nowrap}
 @media (max-width:620px){.urg-a{font-size:.9rem}}
+/* ───────── correcoes de celular ─────────
+   Medidas tiradas de uma auditoria em 320, 360, 390, 430 e 768px.
+   Alvo de toque minimo de 44px (WCAG 2.5.5 / guia da Apple). */
+
+/* 1. O selo tinha nowrap e estourava a pagina inteira ate 430px.
+      Agora quebra linha e volta a caber. */
+@media (max-width:640px){
+  .urg-b{white-space:normal;font-size:.66rem;line-height:1.45;padding:.4rem .55rem}
+  .urg{gap:.5rem}
+}
+
+/* 2. O "Close" do quiz tinha 17px de altura. Num celular isso e o botao
+      de sair de uma tela cheia, tem que dar pra acertar. */
+.qs-close{min-height:44px;display:inline-flex;align-items:center;padding:0 .7rem;margin-right:-.7rem}
+
+/* 3. "THE FIGURES" abre a tabela de numeros e tinha 23px. */
+.dtbl summary{min-height:44px;display:flex;align-items:center;padding:.3rem 0}
+
+/* 4. "Read it" dos depoimentos, 16px de altura. */
+.dm-foot a{display:inline-flex;align-items:center;min-height:44px}
+
+/* 5. "Download the PDF" entrega a isca, nao pode ser dificil de acertar. */
+.freebie a{display:inline-flex;align-items:center;min-height:44px}
+
+/* 5b. As perguntas do FAQ tinham 26px. Sao 14 linhas de toque seguidas,
+       e errar uma abre a de cima ou a de baixo. */
+details summary{min-height:44px;padding:.55rem 0}
+
+/* 5c. O "Read it" da fonte do Irish Times, solto no paragrafo. */
+.src a{display:inline-flex;align-items:center;min-height:44px}
+
+/* 5d. A caixa do bump: o rotulo inteiro ja e clicavel, mas no dedo
+       uma caixa de 21px parece pequena demais pra confiar. */
+.bump input{width:1.45rem;height:1.45rem}
+
+/* 6. Rotulos pequenos demais para ler num telefone. */
+@media (max-width:640px){
+  .bump-n{font-size:.68rem}
+  .bumps-head,.proof-head{font-size:.7rem}
+  .dm-loc{font-size:.66rem}
+}
+
 .ticks{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
 .ticks li{display:grid;grid-template-columns:1.15rem 1fr;gap:.75rem;align-items:start;font-size:1rem}
 .ticks .box{width:1.15rem;height:1.15rem;margin-top:.22rem;border:1.5px solid var(--rule-strong);border-radius:2px;position:relative}
