@@ -638,6 +638,10 @@ body,p{font-size:1.04rem}
 
 /* o preço voltou a ser um preço, e não "€47one payment" colado */
 .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:.8rem;margin:0 0 1.3rem}
+.price .was{font-family:Archivo,sans-serif;font-weight:700;font-size:1.7rem;letter-spacing:-.02em;
+  color:var(--ink-3);text-decoration:line-through;text-decoration-thickness:2px;
+  text-decoration-color:var(--signal);opacity:.75}
+@media (max-width:620px){.price .was{font-size:1.4rem}}
 .price .amt{font-family:Archivo,sans-serif;font-weight:800;font-size:3.2rem;letter-spacing:-.03em;
   line-height:1;color:var(--ink)}
 .price .note{font-family:"IBM Plex Mono",monospace;font-size:.82rem!important;color:var(--ink-3);
@@ -1040,7 +1044,7 @@ body,p{font-size:1.04rem}
       </div>
 
       <div class="offer-box">
-        <div class="price"><span class="amt">&euro;47</span></div>
+        <div class="price"><span class="was">&euro;75</span><span class="amt">&euro;47</span></div>
         <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
         <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
         <p class="offer-guar"><strong>14 day right to cancel, and a 60 day refund on top.</strong>
