@@ -622,6 +622,17 @@ li{border-bottom:0!important}
 /* corpo em 16px cheios; o cinza fica só para nota */
 body,p{font-size:1.04rem}
 .lede--after{color:var(--ink-2)}
+
+/* Último ajuste do herói no celular: o botão tem que estar na primeira tela
+   em 390px, que é a largura real de quem vem de Reels. */
+@media(max-width:430px){
+  .urg{font-size:.84rem!important;margin-bottom:.8rem}
+  h1{font-size:2.2rem}
+  .lede--hero{margin-top:.7rem;font-size:1.04rem}
+  .cta-hero{margin-top:1rem;padding:.95rem 1rem}
+  .herofoto{margin-top:1.5rem}
+  body,p{font-size:1rem}
+}
 </style>
 </head>
 <body>
@@ -1264,7 +1275,7 @@ body,p{font-size:1.04rem}
 <section class="band band--wash">
   <div class="wrap">
     <p class="eyebrow">How long this goes on</p>
-    <h2>This is not one bad winter you can wait out.</h2>
+    <h2>Not one bad winter to wait out.</h2>
     <div class="tbl">
       <table>
         <thead><tr><th>Horizon</th><th>What is expected</th></tr></thead>
@@ -1606,7 +1617,8 @@ body,p{font-size:1.04rem}
   /* ─── medicao. Enquanto META_PIXEL estiver vazio NADA carrega e a barra
      de consentimento nem aparece: nao ha o que consentir. Preencher com o
      id do pixel liga tudo de uma vez. ─── */
-  var META_PIXEL = '';
+  var META_PIXEL = '1676307384086334';
+  var CAPI_URL = 'https://yreedufkyjcriwedmtkg.supabase.co/functions/v1/capi';
   var CONSENT_KEY = 'br_consent';
   function consentimento(){ try{ return localStorage.getItem(CONSENT_KEY); }catch(e){ return null; } }
   function gravaConsentimento(v){ try{ localStorage.setItem(CONSENT_KEY, v); }catch(e){} }
@@ -1619,11 +1631,37 @@ body,p{font-size:1.04rem}
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
     (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     window.fbq('init', META_PIXEL);
-    window.fbq('track', 'PageView');
+    evento('PageView', {});
   }
-  /* eventos. Se nao houve consentimento, nao faz nada e nao quebra. */
+  /* eventos. Vao pelos dois caminhos com o MESMO event_id: o navegador
+     (pixel) e o servidor (CAPI). A Meta junta os dois em vez de contar duas
+     vezes. Se nao houve consentimento, nada sai. */
+  function cookie(n){
+    var m = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : '';
+  }
+  function novoId(){
+    return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+  }
   function evento(nome, dados){
-    if(window.fbq) window.fbq('track', nome, dados || {});
+    if(consentimento() !== 'yes') return;
+    var id = novoId();
+    var d = dados || {};
+    if(window.fbq) window.fbq('track', nome, d, {eventID: id});
+    try{
+      fetch(CAPI_URL, {
+        method: 'POST', keepalive: true,
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          event_name: nome, event_id: id,
+          event_source_url: location.href,
+          fbp: cookie('_fbp'), fbc: cookie('_fbc'),
+          client_user_agent: navigator.userAgent,
+          value: d.value, currency: d.currency,
+          content_name: d.content_name, content_category: d.content_category
+        })
+      }).catch(function(){});
+    }catch(e){}
   }
   function barraConsentimento(){
     var bar = document.getElementById('cbar');
@@ -1769,6 +1807,8 @@ body,p{font-size:1.04rem}
     document.body.classList.add('offer-mode');
     document.getElementById('result').style.display = 'block';
     window.scrollTo(0, 0);
+    evento('ViewContent', {value: 47, currency: 'EUR',
+      content_name: 'The Irish Emergency Plan', content_category: segment()});
   }
 
   wireBuy();
