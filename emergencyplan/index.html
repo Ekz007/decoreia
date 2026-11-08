@@ -1814,15 +1814,18 @@ body,p{font-size:1.04rem}
 
   /* a frase que explica o numero. O numero nunca aparece sozinho. */
   function pitch(ds){
+    /* Reescrito em 08/11/2026 para correr melhor. A versão antiga dizia
+       "On what is in the house today it would hold out about X days", que
+       tropeça, e "takes that to seven", que não deixa claro que é para cima. */
     var abre = {
-      well:   'Your answers put the well pump at the centre of your plan. A power cut is a water cut in your house, and it starts within an hour.',
-      older:  'Your answers put heat and medication at the top, because of the older person in the house.',
-      little: 'Your answers put warmth and feeding a small child first, which is what changes the first hour.',
-      animal: 'Your answers add the animals to the sums, and water for animals is the number most plans forget.',
-      base:   'Your answers are the ordinary Irish house, which is exactly who this was written for.'
+      well:   'Your water comes from a well, so the pump is the whole plan. When the power goes, the tap goes with it, inside the hour.',
+      older:  'With someone older in the house, heat and medication come first. Both of them depend on the mains, and both have a clock on them.',
+      little: 'With a small child in the house, the first hour is the whole thing. Warm, fed, and not frightened, in that order.',
+      animal: 'Your answers put the animals into the sums. Water for animals is the number almost every plan forgets, and it is the biggest one.',
+      base:   'Your answers describe the ordinary Irish house, which is exactly the house this was written for.'
     }[segment()];
-    return abre + ' On what is in the house today it would hold out about <strong>' + ds +
-      ' days</strong>. The plan below takes that to seven, in two hours on a Saturday, with the buying already worked out.';
+    return abre + ' On what is in the press right now, it would last about <strong>' + ds +
+      ' days</strong>. This plan takes it to seven. One afternoon, one shop, and the list is already done for you.';
   }
 
   function mostraResultado(){
