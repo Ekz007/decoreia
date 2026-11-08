@@ -674,23 +674,6 @@ body.quiz-open{overflow:hidden}
         </div>
       </div>
 
-      <div class="q" data-q="10">
-        <h3>Where should we send your result?</h3>
-        <p class="qhint">Your number comes up on the next screen, with the free one page checklist to download.</p>
-        <form id="gate">
-          <input type="email" id="em" required placeholder="you@example.ie" autocomplete="email">
-          <ul class="ticks" style="margin-bottom:.9rem;font-size:.93rem">
-            <li><span class="box" style="border-color:var(--signal)"></span><span>Your result and the free one page checklist, on the next screen and to that address.</span></li>
-          </ul>
-          <label class="consent" for="tips">
-            <input type="checkbox" id="tips">
-            <span>Email me occasional practical tips on home preparedness. Unsubscribe any time. Tick this one or leave it, you get the checklist either way.</span>
-          </label>
-          <button class="btn" type="submit">Show me my number</button>
-          <p class="btn-sub">We will not pass your address to anyone.</p>
-        </form>
-      </div>
-
       <button type="button" class="qback" id="back" hidden>Back a question</button>
     </div>
   </div>
@@ -1494,7 +1477,7 @@ body.quiz-open{overflow:hidden}
 
 <script>
 (function(){
-  var TOTAL = 10, a = {}, i = 0;
+  var TOTAL = 10, a = {}, i = 0;   /* 10 perguntas, 0 a 9 */
 
   /* ─── medicao. Enquanto META_PIXEL estiver vazio NADA carrega e a barra
      de consentimento nem aparece: nao ha o que consentir. Preencher com o
@@ -1565,8 +1548,6 @@ body.quiz-open{overflow:hidden}
   }
   function checkoutUrl(){
     var seg = segment(), q = ['tracking=' + encodeURIComponent(trackingKey(seg))];
-    var em = (document.getElementById('em') || {}).value;
-    if(em) q.push('email=' + encodeURIComponent(em.trim()));
     return 'https://www.digistore24.com/product/' + CORE[seg] + '?' + q.join('&');
   }
   function wireBuy(){
@@ -1584,47 +1565,6 @@ body.quiz-open{overflow:hidden}
     });
   }
 
-  /* ─── captura do lead: insert-only numa tabela do Supabase em eu-west-1 ─── */
-  var LEAD = {
-    url: 'https://yreedufkyjcriwedmtkg.supabase.co/rest/v1/leads',
-    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlyZWVkdWZreWpjcml3ZWRtdGtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQwNzEwODQsImV4cCI6MjEwOTY0NzA4NH0.RMgHEK3V3l7oAaHcZbF1P2Fmec3hs_jKyrNGtqlyT-8'
-  };
-  function saveLead(email, days){
-    var seg = segment();
-    var tips = document.getElementById('tips');
-    var body = JSON.stringify({
-      email: email, days: days, segment: seg, product_id: CORE[seg],
-      consent_tips: !!(tips && tips.checked),
-      answers: a, source: 'quiz', utm: utm(),
-      user_agent: (navigator.userAgent || '').slice(0, 300)
-    });
-    try{
-      fetch(LEAD.url, {
-        method: 'POST', keepalive: true,
-        headers: {'apikey': LEAD.key, 'Authorization': 'Bearer ' + LEAD.key,
-                  'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
-        body: body
-      }).catch(function(){ queue(body); });
-    }catch(e){ queue(body); }
-  }
-  /* se a rede falhar, guarda e tenta no proximo carregamento */
-  function queue(body){
-    try{
-      var q = JSON.parse(localStorage.getItem('br_lead_q') || '[]');
-      q.push(body); localStorage.setItem('br_lead_q', JSON.stringify(q.slice(-10)));
-    }catch(e){}
-  }
-  function flushQueue(){
-    var q;
-    try{ q = JSON.parse(localStorage.getItem('br_lead_q') || '[]'); }catch(e){ return; }
-    if(!q.length) return;
-    localStorage.removeItem('br_lead_q');
-    q.forEach(function(body){
-      fetch(LEAD.url, {method:'POST', headers:{'apikey': LEAD.key,
-        'Authorization':'Bearer ' + LEAD.key, 'Content-Type':'application/json',
-        'Prefer':'return=minimal'}, body: body}).catch(function(){ queue(body); });
-    });
-  }
   var qs = Array.prototype.slice.call(document.querySelectorAll('.q'));
   var pl = document.getElementById('pl'), pb = document.getElementById('pb');
   var back = document.getElementById('back');
@@ -1663,6 +1603,7 @@ body.quiz-open{overflow:hidden}
     b.addEventListener('click', function(){
       var parent = b.parentNode.parentNode;
       a[+parent.getAttribute('data-q')] = +b.getAttribute('data-v');
+      if(i + 1 >= TOTAL){ mostraResultado(); return; }
       show(i + 1);
       document.getElementById('quiz').scrollIntoView({block:'start'});
     });
@@ -1695,25 +1636,18 @@ body.quiz-open{overflow:hidden}
       ' days</strong>. The plan below takes that to seven, in two hours on a Saturday, with the buying already worked out.';
   }
 
-  document.getElementById('gate').addEventListener('submit', function(e){
-    e.preventDefault();
+  function mostraResultado(){
     var d = score(), ds = d.toFixed(1).replace(/\.0$/,'');
-    var em = document.getElementById('em').value.trim();
-    saveLead(em, d);
     wireBuy();
-
     document.getElementById('rpitch').innerHTML = pitch(ds);
     evento('Lead', {content_name: 'quiz', content_category: segment(), value: 0, currency: 'EUR'});
-
     closeQuiz();
     document.body.classList.add('offer-mode');
     document.getElementById('result').style.display = 'block';
     window.scrollTo(0, 0);
-    show(TOTAL);
-  });
+  }
 
   wireBuy();
-  flushQueue();
   barraConsentimento();
   show(0);
 
