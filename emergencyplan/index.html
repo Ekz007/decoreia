@@ -128,102 +128,7 @@ body.offer-mode footer{margin-top:0}
 .offer-ticks{margin:1.8rem 0 0;gap:.75rem}
 .offer-ticks li{font-size:.94rem;line-height:1.45;color:var(--ink-2)}
 .offer-ticks .box{border-color:var(--signal)}
-/* a prova, dentro da oferta */
-.proof{margin:1.9rem 0 0;padding-top:1.5rem;border-top:1px solid var(--rule)}
-.proof-head{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--ink-3);margin-bottom:.5rem}
-.proof-note{font-size:.86rem;line-height:1.5;color:var(--ink-3);margin:0 0 1.1rem;max-width:58ch}
-.proof .dm{margin:0}
 
-/* o order bump de verdade: marca aqui, chega marcado no Digistore24 */
-.bumps{margin:1.9rem 0 0;display:grid;gap:.7rem}
-.bumps-head{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--signal)}
-.bump{display:grid;grid-template-columns:1.3rem 1fr;gap:.85rem;align-items:start;cursor:pointer;
-  border:1.5px dashed var(--signal);border-radius:4px;padding:1rem 1.1rem;
-  background:var(--signal-tint);transition:background .15s,border-color .15s}
-.bump:hover{background:rgba(200,16,46,.09)}
-.bump.on{border-style:solid;background:rgba(200,16,46,.11)}
-.bump input{width:1.3rem;height:1.3rem;margin:.1rem 0 0;accent-color:var(--signal);cursor:pointer}
-.bump-t{display:block;font-family:Archivo,sans-serif;font-size:1rem;font-weight:800;
-  letter-spacing:-.01em;color:var(--ink);line-height:1.3}
-.bump-t b{color:var(--signal);white-space:nowrap}
-.bump-d{display:block;font-size:.88rem;line-height:1.5;color:var(--ink-2);margin-top:.3rem}
-.bump-n{display:block;font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.07em;
-  text-transform:uppercase;color:var(--ink-3);margin-top:.4rem}
-
-.score{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
-  padding:1.6rem 0 1.2rem;border-bottom:1px solid var(--rule);margin-bottom:1.4rem}
-.score .big{font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(3.2rem,12vw,5rem);
-  line-height:.9;letter-spacing:-.04em;color:var(--signal);font-variant-numeric:tabular-nums}
-.score .unit{font-family:Archivo,sans-serif;font-weight:700;font-size:1.3rem;color:var(--ink-2)}
-.gaps{list-style:none;margin:0 0 1.4rem;padding:0;display:grid;gap:.8rem}
-.gaps li{display:grid;grid-template-columns:1.4rem 1fr;gap:.7rem;font-size:1rem;align-items:start}
-.gaps .mk{font-family:Archivo,sans-serif;font-weight:800;color:var(--signal);line-height:1.5}
-.ruler{margin:1.4rem 0;border:1px solid var(--rule);border-radius:3px;overflow:hidden}
-.ruler div{display:grid;grid-template-columns:1fr auto;gap:1rem;padding:.7rem .9rem;
-  font-size:.95rem;border-top:1px solid var(--rule);background:var(--card)}
-.ruler div:first-child{border-top:0}
-.ruler div.you{background:var(--signal-tint);font-weight:600}
-.ruler b{font-family:Archivo,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
-
-.sheet{background:var(--card);border:1px solid var(--rule-strong);border-radius:4px;box-shadow:var(--shadow);padding:1.6rem 1.5rem}
-.sheet-head{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
-  padding-bottom:.7rem;margin-bottom:1.1rem;border-bottom:1px solid var(--rule)}
-.price{display:flex;flex-wrap:wrap;align-items:baseline;gap:.75rem;margin:0 0 1.2rem}
-.price .amt{font-family:Archivo,sans-serif;font-weight:800;font-size:3.2rem;letter-spacing:-.03em;line-height:1}
-.price .note{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-3);letter-spacing:.03em}
-.btn{display:block;width:100%;text-align:center;font-family:Archivo,sans-serif;font-weight:700;
-  font-size:1.05rem;background:var(--signal);color:#FFFFFF;border:0;border-radius:3px;
-  padding:1.05rem 1.25rem;text-decoration:none;cursor:pointer;transition:filter .12s ease, transform .12s ease}
-.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
-.btn:focus-visible{outline:3px solid var(--spruce);outline-offset:3px}
-.btn-sub{font-size:.7rem;letter-spacing:.06em;color:var(--ink-3);text-align:center;margin:.7rem 0 0}
-.facts{display:grid;margin:0;padding:0;list-style:none}
-.facts li{display:grid;grid-template-columns:5.4rem 1fr;gap:1.1rem;padding:.95rem 0;border-top:1px solid var(--rule);align-items:baseline}
-.facts li:first-child{border-top:0}
-.facts .n{font-family:Archivo,sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-.025em;color:var(--signal);font-variant-numeric:tabular-nums}
-.facts .t{font-size:.96rem;line-height:1.45}
-/* consentimento de marketing: caixa de verdade, desmarcada (ePrivacy IE) */
-.consent{display:grid;grid-template-columns:1.15rem 1fr;gap:.75rem;align-items:start;
-  margin:0 0 1.2rem;font-size:.9rem;line-height:1.45;color:var(--ink-3);cursor:pointer}
-.consent input{width:1.15rem;height:1.15rem;margin:.18rem 0 0;accent-color:var(--signal);cursor:pointer}
-/* a isca, entregue na hora */
-.freebie{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;justify-content:space-between;
-  margin:1.4rem 0 0;padding:.95rem 1.1rem;border:1px solid var(--rule);border-radius:4px;
-  background:var(--signal-tint)}
-.freebie p{margin:0;font-size:.9rem;color:var(--ink-2);max-width:40ch}
-.freebie a{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.07em;
-  text-transform:uppercase;color:var(--signal);border-bottom:1px solid var(--signal);
-  text-decoration:none;white-space:nowrap}
-.freebie a:hover{color:var(--c-emp);border-color:var(--c-emp)}
-footer .legal-min a{color:inherit;text-decoration:underline;text-underline-offset:2px}
-footer .legal-min a:hover{color:var(--signal)}
-
-/* barra de medicao: so aparece se existir pixel configurado */
-.cbar{position:fixed;left:0;right:0;bottom:0;z-index:1200;display:none;
-  background:var(--ink);color:#fff;box-shadow:0 -8px 30px -20px rgba(0,0,0,.6)}
-.cbar.on{display:block}
-.cbar-in{max-width:68rem;margin:0 auto;padding:1rem 1.2rem;display:flex;flex-wrap:wrap;
-  align-items:center;gap:.8rem 1.4rem;justify-content:space-between}
-.cbar p{margin:0;font-size:.84rem;line-height:1.5;max-width:62ch;color:rgba(255,255,255,.88)}
-.cbar-btns{display:flex;gap:.6rem;flex-shrink:0}
-.cbtn{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.09em;
-  text-transform:uppercase;font-weight:600;padding:.6rem 1.1rem;border-radius:3px;cursor:pointer;
-  border:1px solid var(--signal);background:var(--signal);color:#fff}
-.cbtn:hover{filter:brightness(1.08)}
-.cbtn--ghost{background:transparent;border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
-.cbtn--ghost:hover{border-color:#fff;color:#fff;filter:none}
-@media (max-width:620px){.cbar-in{padding:.9rem 1rem}.cbar-btns{width:100%}.cbtn{flex:1}}
-
-/* a linha acima do titulo: as duas unicas urgencias que sao verdade */
-.urg{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem .9rem;margin:0 0 .9rem}
-.urg-a{font-family:Archivo,sans-serif;font-size:.95rem;font-weight:800;letter-spacing:-.01em;
-  line-height:1.35;color:var(--ink)}
-.urg-b{font-family:"IBM Plex Mono",monospace;font-size:.6rem;font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;color:#fff;background:var(--signal);border-radius:2px;
-  padding:.3rem .5rem;white-space:nowrap}
-@media (max-width:620px){.urg-a{font-size:.9rem}}
 /* ───────── correcoes de celular ─────────
    Medidas tiradas de uma auditoria em 320, 360, 390, 430 e 768px.
    Alvo de toque minimo de 44px (WCAG 2.5.5 / guia da Apple). */
@@ -912,28 +817,8 @@ body.quiz-open{overflow:hidden}
         <li><span class="box"></span><span><strong>60 day refund.</strong> One email, no questions and no form to fill in.</span></li>
       </ul>
 
-      <div class="proof">
-        <div class="proof-head">What readers said</div>
-        <p class="proof-note">Published words from the news coverage, with the paper and the date.
-        Reader reviews go up here as they come in, and not before.</p>
-        <article class="dm">
-          <div class="dm-top">
-            <div class="dm-av">IT</div>
-            <div class="dm-id"><div class="dm-h">The Irish Times</div><div class="dm-loc">24 JAN 2026 &middot; DUNMORE, CO GALWAY</div></div>
-          </div>
-          <div class="dm-body">
-            <div class="bub">&ldquo;Everything we depended on from day to day just wasn&rsquo;t available anymore.&rdquo;</div>
-            <div class="bub bub--me">A mother in Co Galway, eight days with no power, speaking a year after the storm.</div>
-          </div>
-          <div class="dm-foot"><span class="dm-seen">Published, attributed</span><a href="https://www.irishtimes.com/life-style/people/2026/01/24/storm-eowyn-one-year-on-everything-we-depended-on-from-day-to-day-just-wasnt-available-anymore/" target="_blank" rel="noopener" style="font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.07em">Read it &nearr;</a></div>
-        </article>
-      </div>
 
-      <div class="bumps" id="rbumps">
-        <div class="bumps-head">Add to your plan, one tick</div>
-      </div>
-
-      <div class="price"><span class="amt" id="rtotal">&euro;47</span><span class="note" id="rtotnote">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
+      <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
       <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
       <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
       <div class="freebie">
@@ -1626,67 +1511,11 @@ body.quiz-open{overflow:hidden}
               .toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,40);
     return (c + '_' + seg).slice(0,60);
   }
-  /* os add-ons, com o id do Digistore24. Marcar aqui pre-marca la,
-     por quantity_<id>=1 na URL do formulario de pedido. */
-  var BUMPS = {
-    shopping: {id:'761395', eur:19, nome:'The Shopping Pack', pags:60,
-      texto:'The exact buying list at three budgets, &euro;81, &euro;199 and &euro;444. What to buy, where, and what it costs, so one Saturday morning finishes the job.'},
-    well:     {id:'761396', eur:17, nome:"The Well Owner's Pack", pags:36,
-      texto:'Your pump, your tank and your filter, sized and worked out. What a power cut does to a private well, and how to have water standing before it happens.'},
-    older:    {id:'761398', eur:17, nome:"The Older Person's Pack", pags:33,
-      texto:'Heat, medication and the phone calls that matter when an older person is at home. The vulnerable customer register, and the one warm room that needs no power.'},
-    little:   {id:'761399', eur:17, nome:'The Little Ones Pack', pags:29,
-      texto:'Formula, safe water and warmth for a baby or a small child, planned before the storm instead of during it. The first hour, hour by hour.'},
-    animal:   {id:'761397', eur:17, nome:'The Animal Plan', pags:54,
-      texto:'Dogs, cats, rabbits, the fish tank, hens and the herd. Water and feed worked out per animal, and the everyday foods that are dangerous to them.'}
-  };
-  function bumpsDaVez(){
-    var seg = segment(), lista = [BUMPS.shopping];
-    if(BUMPS[seg]) lista.push(BUMPS[seg]);
-    return lista;
-  }
-  function marcados(){
-    return Array.prototype.filter.call(
-      document.querySelectorAll('#rbumps .bump'), function(b){ return b.querySelector('input').checked; });
-  }
   function checkoutUrl(){
     var seg = segment(), q = ['tracking=' + encodeURIComponent(trackingKey(seg))];
     var em = (document.getElementById('em') || {}).value;
     if(em) q.push('email=' + encodeURIComponent(em.trim()));
-    marcados().forEach(function(b){ q.push('quantity_' + b.getAttribute('data-bump') + '=1'); });
     return 'https://www.digistore24.com/product/' + CORE[seg] + '?' + q.join('&');
-  }
-  /* desenha as caixas e mantem o total e o link em dia */
-  function montaBumps(){
-    var alvo = document.getElementById('rbumps');
-    if(!alvo) return;
-    Array.prototype.forEach.call(alvo.querySelectorAll('.bump'), function(n){ n.remove(); });
-    bumpsDaVez().forEach(function(b){
-      var l = document.createElement('label');
-      l.className = 'bump';
-      l.setAttribute('data-bump', b.id);
-      l.setAttribute('data-eur', b.eur);
-      l.innerHTML = '<input type="checkbox">' +
-        '<span class="bump-body"><span class="bump-t">' + b.nome + ' <b>+&euro;' + b.eur + '</b></span>' +
-        '<span class="bump-d">' + b.texto + '</span>' +
-        '<span class="bump-n">' + b.pags + ' page PDF &middot; added to the same download</span></span>';
-      l.querySelector('input').addEventListener('change', function(){
-        l.classList.toggle('on', this.checked);
-        atualizaTotal();
-      });
-      alvo.appendChild(l);
-    });
-    atualizaTotal();
-  }
-  function atualizaTotal(){
-    var extra = 0;
-    marcados().forEach(function(b){ extra += parseInt(b.getAttribute('data-eur'), 10); });
-    var t = document.getElementById('rtotal'), n = document.getElementById('rtotnote');
-    if(t) t.innerHTML = '&euro;' + (47 + extra);
-    if(n) n.innerHTML = (extra
-        ? 'plan &euro;47 plus &euro;' + extra + ' added'
-        : 'one payment') + ' &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund';
-    wireBuy();
   }
   function wireBuy(){
     var url = checkoutUrl();
@@ -1696,9 +1525,7 @@ body.quiz-open{overflow:hidden}
       if(!b.dataset.wired){
         b.dataset.wired = '1';
         b.addEventListener('click', function(){
-          var total = 47;
-          marcados().forEach(function(x){ total += parseInt(x.getAttribute('data-eur'), 10); });
-          evento('InitiateCheckout', {value: total, currency: 'EUR',
+          evento('InitiateCheckout', {value: 47, currency: 'EUR',
                  content_name: 'The Irish Emergency Plan', content_category: segment()});
         });
       }
@@ -1824,7 +1651,6 @@ body.quiz-open{overflow:hidden}
     wireBuy();
 
     document.getElementById('rpitch').innerHTML = pitch(ds);
-    montaBumps();
     evento('Lead', {content_name: 'quiz', content_category: segment(), value: 0, currency: 'EUR'});
 
     closeQuiz();
@@ -1849,7 +1675,7 @@ body.quiz-open{overflow:hidden}
     if(s === 'little') a[9] = 3;
     if(s === 'animal') a[8] = 3;
     document.getElementById('rpitch').innerHTML = pitch('0.6');
-    montaBumps();
+    wireBuy();
     document.body.classList.add('offer-mode');
     document.getElementById('result').style.display = 'block';
   }
