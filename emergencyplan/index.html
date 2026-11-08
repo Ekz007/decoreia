@@ -129,6 +129,14 @@ body.offer-mode footer{margin-top:0}
 .offer-ticks li{font-size:.94rem;line-height:1.45;color:var(--ink-2)}
 .offer-ticks .box{border-color:var(--signal)}
 
+/* os depoimentos dentro da oferta */
+.proof{margin:1.9rem 0 0;padding-top:1.5rem;border-top:1px solid var(--rule)}
+.proof-head{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem}
+.dms--offer{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;align-items:start}
+.dms--offer .dm{margin:0}
+@media (max-width:620px){.dms--offer{grid-template-columns:1fr}}
+
 /* ───────── correcoes de celular ─────────
    Medidas tiradas de uma auditoria em 320, 360, 390, 430 e 768px.
    Alvo de toque minimo de 44px (WCAG 2.5.5 / guia da Apple). */
@@ -817,6 +825,50 @@ body.quiz-open{overflow:hidden}
         <li><span class="box"></span><span><strong>60 day refund.</strong> One email, no questions and no form to fill in.</span></li>
       </ul>
 
+
+      <div class="proof">
+        <div class="proof-head">What readers said</div>
+        <div class="dms dms--offer">
+
+          <article class="dm dm--demo dm--post">
+            <div class="post-head">
+              <img class="post-av" src="img/t-grace-face.jpg" alt="Grace, Co. Galway">
+              <div><div class="dm-h">Grace</div><div class="dm-loc">CO. GALWAY</div></div>
+              <span class="post-stars"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">5.0</b></span>
+            </div>
+            <div class="post-photo"><img src="img/t-grace-pantry.jpg" alt="A labelled and dated kitchen press"></div>
+            <div class="dm-say"><div class="bub bub--card">Fifty-eight, living on my own, and I always thought this was for younger families. I did one shelf a week like the book says. Now the whole press is labelled and dated. I sleep better, honestly.</div></div>
+          </article>
+
+          <article class="dm dm--demo">
+            <div class="dm-fullimg"><img src="img/t-bottles-woman.jpg" alt="Sealed bottles of pasta, rice and beans"></div>
+            <div class="dm-say"><div class="bub bub--card">I did the bottle method straight from the book. Pasta, rice, beans, all sealed. When the next red warning came I didn&rsquo;t move a muscle. We were grand.</div></div>
+            <div class="dm-foot2">
+              <div><div class="dm-h">Aoife</div><div class="dm-loc">CO. MAYO</div></div>
+              <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">5.0</b></span>
+            </div>
+          </article>
+
+          <article class="dm dm--demo">
+            <div class="dm-fullimg"><img src="img/t-bottles-man.jpg" alt="A shelf dated and rotated"></div>
+            <div class="dm-say"><div class="bub bub--card">Eleven days off last January taught me nothing until I read this. Now the whole shelf is done, dated and rotated. Herself has stopped slagging me about it.</div></div>
+            <div class="dm-foot2">
+              <div><div class="dm-h">Declan</div><div class="dm-loc">CO. LEITRIM</div></div>
+              <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:90%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">4.5</b></span>
+            </div>
+          </article>
+
+          <article class="dm dm--demo">
+            <div class="dm-fullimg"><img src="img/t-pantry.jpg" alt="A full press, water sorted"></div>
+            <div class="dm-say"><div class="bub bub--card">Three and a half only because it took me two weekends, not one. But the press is full, the water is sorted, and I finally rang ESB about my father. That page alone.</div></div>
+            <div class="dm-foot2">
+              <div><div class="dm-h">Niamh</div><div class="dm-loc">CO. CLARE</div></div>
+              <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;<i style="width:70%">&#9733;&#9733;&#9733;&#9733;&#9733;</i></span><b class="stars-n">3.5</b></span>
+            </div>
+          </article>
+
+        </div>
+      </div>
 
       <div class="price"><span class="amt">&euro;47</span><span class="note">one payment &nbsp;&middot;&nbsp; instant PDF &nbsp;&middot;&nbsp; 60 day refund</span></div>
       <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
