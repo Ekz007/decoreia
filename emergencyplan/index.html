@@ -666,7 +666,12 @@ body,p{font-size:1.04rem}
    porque parte do público rural irlandês ainda está em 4G. */
 .devs{position:relative;flex:none;width:min(100%,420px);margin:0 auto 1rem;padding-bottom:2.2rem}
 .dev-tela{overflow:hidden;background:#0B0E11}
-.dev-tela img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+/* contain, não cover: a página é retrato e a tela é paisagem. Com cover o
+   celular cortava a capa em "lackout eady" e o notebook cortava o texto.
+   Um leitor de PDF mostra a página inteira com tarja dos lados, e é assim
+   que a pessoa vai ver de verdade. */
+.dev-tela img{display:block;width:100%;height:100%;object-fit:contain;
+  object-position:center;background:#1B1E22}
 
 .dev--lap{position:relative}
 .dev--lap .dev-tela{border:9px solid #16191D;border-bottom-width:11px;border-radius:9px;
