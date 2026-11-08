@@ -199,6 +199,30 @@ body.offer-mode .legal-long{display:none}
   text-transform:uppercase;color:var(--signal);border-bottom:1px solid var(--signal);
   text-decoration:none;white-space:nowrap}
 .freebie a:hover{color:var(--c-emp);border-color:var(--c-emp)}
+/* barra de medicao: so aparece se existir pixel configurado */
+.cbar{position:fixed;left:0;right:0;bottom:0;z-index:1200;display:none;
+  background:var(--ink);color:#fff;box-shadow:0 -8px 30px -20px rgba(0,0,0,.6)}
+.cbar.on{display:block}
+.cbar-in{max-width:68rem;margin:0 auto;padding:1rem 1.2rem;display:flex;flex-wrap:wrap;
+  align-items:center;gap:.8rem 1.4rem;justify-content:space-between}
+.cbar p{margin:0;font-size:.84rem;line-height:1.5;max-width:62ch;color:rgba(255,255,255,.88)}
+.cbar-btns{display:flex;gap:.6rem;flex-shrink:0}
+.cbtn{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.09em;
+  text-transform:uppercase;font-weight:600;padding:.6rem 1.1rem;border-radius:3px;cursor:pointer;
+  border:1px solid var(--signal);background:var(--signal);color:#fff}
+.cbtn:hover{filter:brightness(1.08)}
+.cbtn--ghost{background:transparent;border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85)}
+.cbtn--ghost:hover{border-color:#fff;color:#fff;filter:none}
+@media (max-width:620px){.cbar-in{padding:.9rem 1rem}.cbar-btns{width:100%}.cbtn{flex:1}}
+
+/* a linha acima do titulo: as duas unicas urgencias que sao verdade */
+.urg{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem .9rem;margin:0 0 .9rem}
+.urg-a{font-family:Archivo,sans-serif;font-size:.95rem;font-weight:800;letter-spacing:-.01em;
+  line-height:1.35;color:var(--ink)}
+.urg-b{font-family:"IBM Plex Mono",monospace;font-size:.6rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:#fff;background:var(--signal);border-radius:2px;
+  padding:.3rem .5rem;white-space:nowrap}
+@media (max-width:620px){.urg-a{font-size:.9rem}}
 .ticks{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
 .ticks li{display:grid;grid-template-columns:1.15rem 1fr;gap:.75rem;align-items:start;font-size:1rem}
 .ticks .box{width:1.15rem;height:1.15rem;margin-top:.22rem;border:1.5px solid var(--rule-strong);border-radius:2px;position:relative}
@@ -534,6 +558,10 @@ body.quiz-open{overflow:hidden}
 
 <section id="quiz">
   <div class="wrap">
+    <div class="urg">
+      <span class="urg-a">Posted to 2.2 million homes in September. The number was left out.</span>
+      <span class="urg-b">Storm season runs to March</span>
+    </div>
     <div class="stamp">United Nations &middot; WMO &middot; strongest El Ni&ntilde;o on record</div>
     <h1>Climate emergencies in 2027. Is your house ready for what is coming?</h1>
     <p class="lede" style="margin-top:1.3rem">The UN&rsquo;s weather agency has confirmed the strongest
@@ -1467,6 +1495,17 @@ body.quiz-open{overflow:hidden}
   </div>
 </section>
 
+<div id="cbar" class="cbar" role="dialog" aria-label="Measurement">
+  <div class="cbar-in">
+    <p>We measure which advert brought you here, and nothing else. No profiling, no selling
+    your data, no advertising cookies unless you say yes. Decline and the page works exactly the same.</p>
+    <div class="cbar-btns">
+      <button type="button" id="cno" class="cbtn cbtn--ghost">Decline</button>
+      <button type="button" id="cyes" class="cbtn">Accept</button>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <p class="legal-long">The Irish Emergency Plan is an independent publication. It is not affiliated with, endorsed by or produced on
@@ -1487,6 +1526,44 @@ body.quiz-open{overflow:hidden}
 <script>
 (function(){
   var TOTAL = 10, a = {}, i = 0;
+
+  /* ─── medicao. Enquanto META_PIXEL estiver vazio NADA carrega e a barra
+     de consentimento nem aparece: nao ha o que consentir. Preencher com o
+     id do pixel liga tudo de uma vez. ─── */
+  var META_PIXEL = '';
+  var CONSENT_KEY = 'br_consent';
+  function consentimento(){ try{ return localStorage.getItem(CONSENT_KEY); }catch(e){ return null; } }
+  function gravaConsentimento(v){ try{ localStorage.setItem(CONSENT_KEY, v); }catch(e){} }
+
+  function carregaPixel(){
+    if(!META_PIXEL || window.fbq) return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init', META_PIXEL);
+    window.fbq('track', 'PageView');
+  }
+  /* eventos. Se nao houve consentimento, nao faz nada e nao quebra. */
+  function evento(nome, dados){
+    if(window.fbq) window.fbq('track', nome, dados || {});
+  }
+  function barraConsentimento(){
+    var bar = document.getElementById('cbar');
+    if(!bar) return;
+    if(!META_PIXEL) return;                       /* nada a medir, nada a perguntar */
+    var c = consentimento();
+    if(c === 'yes'){ carregaPixel(); return; }
+    if(c === 'no') return;
+    bar.classList.add('on');
+    document.getElementById('cyes').addEventListener('click', function(){
+      gravaConsentimento('yes'); bar.classList.remove('on'); carregaPixel();
+    });
+    document.getElementById('cno').addEventListener('click', function(){
+      gravaConsentimento('no'); bar.classList.remove('on');
+    });
+  }
 
   /* ─── checkout: 5 copias do core no Digistore24, uma por segmento.
      O Digistore24 anexa add-on no nivel do PRODUTO, nao do link, por isso
@@ -1584,6 +1661,15 @@ body.quiz-open{overflow:hidden}
     Array.prototype.forEach.call(document.querySelectorAll('[data-buy]'), function(b){
       b.setAttribute('href', url);
       b.setAttribute('rel', 'noopener');
+      if(!b.dataset.wired){
+        b.dataset.wired = '1';
+        b.addEventListener('click', function(){
+          var total = 47;
+          marcados().forEach(function(x){ total += parseInt(x.getAttribute('data-eur'), 10); });
+          evento('InitiateCheckout', {value: total, currency: 'EUR',
+                 content_name: 'The Irish Emergency Plan', content_category: segment()});
+        });
+      }
     });
   }
 
@@ -1707,6 +1793,7 @@ body.quiz-open{overflow:hidden}
 
     document.getElementById('rpitch').innerHTML = pitch(ds);
     montaBumps();
+    evento('Lead', {content_name: 'quiz', content_category: segment(), value: 0, currency: 'EUR'});
 
     closeQuiz();
     document.body.classList.add('offer-mode');
@@ -1717,6 +1804,7 @@ body.quiz-open{overflow:hidden}
 
   wireBuy();
   flushQueue();
+  barraConsentimento();
   show(0);
 
   /* ?preview=offer abre a tela da oferta direto, sem responder o quiz.
