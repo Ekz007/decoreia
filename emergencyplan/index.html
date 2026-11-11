@@ -55,7 +55,7 @@ h2{font-size:clamp(1.45rem,3.8vw,2.05rem);margin-bottom:1.1rem}
 h3{font-size:1.08rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.35rem}
 p{margin:0 0 1.15rem;font-weight:400} p:last-child{margin-bottom:0}
 strong{font-weight:600} a{color:var(--signal)}
-.eyebrow,.src,.btn-sub,.figc,.sheet-head,.qprog{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.eyebrow,.src,.btn-sub,.figc,.sheet-head,.qprog{margin-top:.45rem;font-family:"IBM Plex Mono",ui-monospace,monospace}
 .eyebrow{font-size:.74rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin:0 0 1.15rem}
 .src{font-size:.78rem;line-height:1.55;color:var(--ink-3);margin:.5rem 0 0;font-weight:500}
 .lede{font-size:1.24rem;line-height:1.5;color:var(--ink);font-weight:400}
@@ -82,7 +82,7 @@ strong{font-weight:600} a{color:var(--signal)}
   transition:border-color .12s ease, background .12s ease}
 .opt:hover{border-color:var(--signal);background:var(--signal-tint)}
 .opt:focus-visible{outline:3px solid var(--spruce);outline-offset:2px}
-.opt small{display:block;font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--ink-3);margin-top:.22rem;letter-spacing:.02em}
+.opt small{display:block;font-size:.86rem;color:var(--ink-3);margin-top:.22rem;line-height:1.4}
 .qback{background:none;border:0;font-family:"IBM Plex Mono",monospace;font-size:.7rem;
   letter-spacing:.08em;color:var(--ink-3);cursor:pointer;padding:.9rem 0 0;text-decoration:underline}
 input[type=email]{width:100%;font-family:"IBM Plex Mono",monospace;font-size:.98rem;
@@ -179,6 +179,47 @@ details summary{min-height:44px;padding:.55rem 0}
   .dm-loc{font-size:.66rem}
 }
 
+/* ───── quiz: cartao de opcao com ilustracao ───── */
+.opt{display:grid;grid-template-columns:2.9rem 1fr 1rem;align-items:center;gap:.95rem;
+  width:100%;text-align:left;background:#fff;border:1.5px solid var(--rule);border-radius:7px;
+  padding:.85rem 1rem;cursor:pointer;transition:border-color .13s,background .13s,transform .08s;
+  font-family:inherit;color:var(--ink);font-size:1.02rem;line-height:1.35}
+.opt:hover{border-color:var(--signal);background:var(--signal-tint)}
+.opt:active{transform:scale(.995)}
+.opt-ico{width:2.9rem;height:2.9rem;flex:none;display:block;overflow:visible}
+.opt-txt{display:block;font-weight:700;letter-spacing:-.01em}
+.opt-txt small{display:block;margin-top:.2rem;font-weight:400;font-size:.86rem;line-height:1.4;
+  color:var(--ink-3);letter-spacing:0}
+.opt-go{font-size:1.5rem;color:var(--rule-strong);line-height:1;justify-self:end}
+.opt:hover .opt-go{color:var(--signal)}
+.opts{display:grid;gap:.6rem}
+@media (max-width:620px){
+  .opt{grid-template-columns:2.4rem 1fr .8rem;gap:.75rem;padding:.75rem .85rem;font-size:.97rem}
+  .opt-ico{width:2.4rem;height:2.4rem}
+  .opt-txt small{font-size:.82rem}
+}
+
+/* ───── barra de progresso em secoes ───── */
+.qsec{display:flex;align-items:center;gap:.4rem;margin:0 0 .5rem}
+.qsec span{flex:1;font-family:"IBM Plex Mono",monospace;font-size:.56rem;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);text-align:center;padding-bottom:.35rem;
+  border-bottom:2px solid var(--rule);transition:color .2s,border-color .2s}
+.qsec span.on{color:var(--signal);border-bottom-color:var(--signal);font-weight:600}
+.qsec span.done{color:var(--ink-3);border-bottom-color:var(--signal)}
+
+/* ───── pausa de prova social no meio do quiz ───── */
+.qpause{display:none;text-align:center;padding:.5rem 0 0}
+.qpause.on{display:block}
+.qpause-n{font-family:Archivo,sans-serif;font-size:2.6rem;font-weight:800;letter-spacing:-.03em;
+  color:var(--signal);line-height:1}
+.qpause-l{font-size:1.05rem;line-height:1.45;color:var(--ink);margin:.5rem 0 1.3rem;
+  max-width:30ch;margin-left:auto;margin-right:auto}
+.qpause-src{border:1px solid var(--rule);border-radius:6px;padding:1rem 1.1rem;text-align:left;
+  background:var(--signal-tint)}
+.qpause-src q{display:block;font-size:1rem;line-height:1.5;color:var(--ink);font-style:italic}
+.qpause-src cite{display:block;margin-top:.6rem;font-family:"IBM Plex Mono",monospace;
+  font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-style:normal}
+.qpause .btn{margin-top:1.3rem}
 .ticks{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
 .ticks li{display:grid;grid-template-columns:1.15rem 1fr;gap:.75rem;align-items:start;font-size:1rem}
 .ticks .box{width:1.15rem;height:1.15rem;margin-top:.22rem;border:1.5px solid var(--rule-strong);border-radius:2px;position:relative}
@@ -781,17 +822,23 @@ body,p{font-size:1.04rem}
   </div>
   <div class="qs-stage">
     <div class="qcard" id="quizcard">
-      <div class="qprog"><span id="pl">Your emergency plan</span><span id="pr"></span></div>
+      <div class="qsec" id="qsec">
+        <span data-sec="0">Your house</span>
+        <span data-sec="1">What you have</span>
+        <span data-sec="2">What happened</span>
+        <span data-sec="3">Who lives here</span>
+      </div>
       <div class="qbar"><span id="pb"></span></div>
+      <div class="qprog"><span id="pl"></span><span id="pr"></span></div>
 
       <div class="q on" data-q="0">
         <div class="q-icon"><svg viewBox="0 0 52 48" aria-hidden="true"><circle cx="18" cy="13" r="6"/><circle cx="34" cy="13" r="6"/><path d="M8 40c0-8 5-13 10-13s10 5 10 13M26 40c0-8 5-13 10-13s10 5 10 13"/></svg></div>
         <h3>How many people live in the house?</h3>
         <p class="qhint">Everything scales from this, so it is the first question.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">One or two</button>
-          <button type="button" class="opt" data-v="2">Three or four</button>
-          <button type="button" class="opt" data-v="3">Five or more</button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="14" r="4"/><path d="M11 34c0-6 2.7-10 6-10s6 4 6 10"/><circle cx="31" cy="14" r="4"/><path d="M25 34c0-6 2.7-10 6-10s6 4 6 10"/></svg><span class="opt-txt">One or two</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="14" r="4"/><path d="M5 34c0-6 2.7-10 6-10s6 4 6 10"/><circle cx="24" cy="14" r="4"/><path d="M18 34c0-6 2.7-10 6-10s6 4 6 10"/><circle cx="37" cy="14" r="4"/><path d="M31 34c0-6 2.7-10 6-10s6 4 6 10"/><path d="M6 42h36" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Three or four</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="14" r="4"/><path d="M4 34c0-6 2.7-10 6-10s6 4 6 10"/><circle cx="20" cy="14" r="4"/><path d="M14 34c0-6 2.7-10 6-10s6 4 6 10"/><circle cx="30" cy="14" r="4"/><path d="M24 34c0-6 2.7-10 6-10s6 4 6 10"/><circle cx="40" cy="14" r="4"/><path d="M34 34c0-6 2.7-10 6-10s6 4 6 10"/><path d="M6 42h36" stroke="#A8420E" stroke-width="4.4"/><text x="24" y="47" font-family="monospace" font-size="0" fill="none"></text></svg><span class="opt-txt">Five or more</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
       </div>
 
@@ -800,9 +847,9 @@ body,p{font-size:1.04rem}
         <h3>Is your water from the mains, or from a well?</h3>
         <p class="qhint">This is the question that changes the answer most, and most people have to go and check.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">Mains, from Uisce &Eacute;ireann<small>A public supply</small></button>
-          <button type="button" class="opt" data-v="2">A private well or a group water scheme<small>Pumped, so it stops with the electricity</small></button>
-          <button type="button" class="opt" data-v="3">I am not sure<small>Very common, and the book shows you how to tell in five minutes</small></button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14h14a8 8 0 0 1 8 8v4"/><path d="M12 10v8"/><path d="M34 28v6"/><path d="M34 38v4" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Mains, from Uisce &Eacute;ireann<small>A public supply</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 40h28"/><path d="M14 40V20h20v20"/><path d="M24 20v-8"/><path d="M24 28v8" stroke="#A8420E" stroke-width="4.4"/><path d="M19 31l5 5 5-5" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">A private well or a group water scheme<small>Pumped, so it stops with the electricity</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14h14a8 8 0 0 1 8 8v4"/><path d="M12 10v8"/><path d="M30 36c0-3 5-3 5-6a3.5 3.5 0 0 0-7 0" stroke="#A8420E" stroke-width="4.4"/><circle cx="31.5" cy="42" r="1.6" fill="#A8420E" stroke="none"/></svg><span class="opt-txt">I am not sure<small>Very common, and the book shows you how to tell in five minutes</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
       </div>
 
@@ -811,11 +858,22 @@ body,p{font-size:1.04rem}
         <h3>How do you heat the house?</h3>
         <p class="qhint">Some heating keeps working without electricity. Most does not.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">Oil or gas boiler<small>Needs mains power for the pump and controls</small></button>
-          <button type="button" class="opt" data-v="2">A solid fuel stove, range or open fire<small>Works with no electricity at all</small></button>
-          <button type="button" class="opt" data-v="3">Electric only, storage heaters or panels</button>
-          <button type="button" class="opt" data-v="4">Heat pump</button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="10" width="24" height="28" rx="2"/><path d="M18 18h12M18 24h12"/><path d="M24 30c2 2 2 4 0 6" stroke="#A8420E" stroke-width="4.4"/><path d="M24 42v-4"/></svg><span class="opt-txt">Oil or gas boiler<small>Needs mains power for the pump and controls</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="14" width="28" height="24" rx="2"/><path d="M10 38v4M38 38v4"/><path d="M24 20c3 3 3 7 0 10-3-3-3-7 0-10Z" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">A solid fuel stove, range or open fire<small>Works with no electricity at all</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="12" width="24" height="24" rx="2"/><path d="M18 12v24M24 12v24M30 12v24"/><path d="M26 18l-5 8h6l-5 8" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Electric only, storage heaters or panels</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="4"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="12" width="28" height="26" rx="2"/><circle cx="24" cy="25" r="8"/><path d="M24 17v8l6 3" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Heat pump</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
+      </div>
+
+      <div class="qpause" data-pause="2">
+        <div class="qpause-n">768,000</div>
+        <p class="qpause-l">Irish homes lost power in one night in January 2025. The last one was
+        reconnected eighteen days later.</p>
+        <div class="qpause-src">
+          <q>Everything we depended on from day to day just wasn&rsquo;t available anymore.</q>
+          <cite>A mother in Co Galway &middot; The Irish Times, 24 January 2026</cite>
+        </div>
+        <button type="button" class="btn" data-go>Keep going &rarr;</button>
       </div>
 
       <div class="q" data-q="3">
@@ -823,10 +881,10 @@ body,p{font-size:1.04rem}
         <h3>How much drinking water is in the house right now?</h3>
         <p class="qhint">Right now, not what you would buy. Count what is actually in the press.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">None, or whatever is in the tap</button>
-          <button type="button" class="opt" data-v="2">A few bottles</button>
-          <button type="button" class="opt" data-v="3">A case of bottles or more</button>
-          <button type="button" class="opt" data-v="4">Twenty litres or more, stored on purpose</button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 14h16l-2 26H18Z"/><path d="M14 44h20" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">None, or whatever is in the tap</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 12h5v4l2 4v20h-9V20l2-4Z"/><path d="M30 12h5v4l2 4v20h-9V20l2-4Z"/><path d="M15 30h9M28 30h9" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">A few bottles</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 10h6v4l1.5 3v21h-9V17L11 14Z"/><path d="M21 10h6v4l1.5 3v21h-9V17L21 14Z"/><path d="M31 10h6v4l1.5 3v21h-9V17L31 14Z"/><path d="M9 26h30" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">A case of bottles or more</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="4"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14h24v26H12Z"/><path d="M18 14v-4h12v4"/><path d="M12 26h24" stroke="#A8420E" stroke-width="4.4"/><path d="M16 33h8"/></svg><span class="opt-txt">Twenty litres or more, stored on purpose</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
       </div>
 
@@ -835,9 +893,9 @@ body,p{font-size:1.04rem}
         <h3>Have you a working torch and a battery radio?</h3>
         <p class="qhint">Working means you know where it is and the batteries are good.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">Both, and I know where they are</button>
-          <button type="button" class="opt" data-v="2">One of the two</button>
-          <button type="button" class="opt" data-v="3">Neither, or I would have to go looking</button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18h10l4-4v20l-4-4H8Z"/><rect x="26" y="14" width="14" height="20" rx="2"/><path d="M30 20h6M30 26h6" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Both, and I know where they are</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18h12l6-6v24l-6-6H10Z"/><path d="M34 18l4 6-4 6" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">One of the two</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18h12l6-6v24l-6-6H10Z" opacity=".35"/><path d="M12 12l24 24" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Neither, or I would have to go looking</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
       </div>
 
@@ -846,9 +904,9 @@ body,p{font-size:1.04rem}
         <h3>Does anyone in the house depend on electricity for health?</h3>
         <p class="qhint">Medication that has to stay cold, a nebuliser, a stairlift, an oxygen concentrator.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">No</button>
-          <button type="button" class="opt" data-v="2">Yes, medication that must be kept cold</button>
-          <button type="button" class="opt" data-v="3">Yes, mains-powered equipment<small>There is a register for this, and it is the most valuable phone call in the book</small></button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24 24 10l16 14"/><path d="M12 24v16h24V24"/></svg><span class="opt-txt">No</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="8" width="20" height="32" rx="2"/><path d="M14 22h20"/><path d="M20 29h8M24 25v8" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Yes, medication that must be kept cold</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10v8M30 10v8"/><rect x="14" y="18" width="20" height="10" rx="2"/><path d="M24 28v6"/><path d="M14 40h6l2-5 3 10 3-7 2 2h6" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Yes, mains-powered equipment<small>There is a register for this, and it is the most valuable phone call in the book</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
       </div>
 
@@ -857,11 +915,22 @@ body,p{font-size:1.04rem}
         <h3>What is the longest power cut you have had in the last two years?</h3>
         <p class="qhint">Nearly there.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">None worth remembering</button>
-          <button type="button" class="opt" data-v="2">Under a day</button>
-          <button type="button" class="opt" data-v="3">One to three days</button>
-          <button type="button" class="opt" data-v="4">More than three days</button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="14"/><path d="M24 16v8l6 4"/></svg><span class="opt-txt">None worth remembering</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="8"/><path d="M24 8v4M24 36v4M8 24h4M36 24h4M13 13l3 3M32 32l3 3M35 13l-3 3M16 32l-3 3"/></svg><span class="opt-txt">Under a day</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 38V26M20 38V20M28 38V28" /><path d="M36 38V12" stroke="#A8420E" stroke-width="4.4"/><path d="M8 42h32"/></svg><span class="opt-txt">One to three days</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="4"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 38V18M18 38V12M26 38V16M34 38V8" stroke="#A8420E" stroke-width="4.4"/><path d="M6 42h36"/></svg><span class="opt-txt">More than three days</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
+      </div>
+
+      <div class="qpause" data-pause="6">
+        <div class="qpause-n">0</div>
+        <p class="qpause-l">That is how many litres the Government booklet named. It went to 2.2
+        million homes and asked for &ldquo;an adequate supply&rdquo;.</p>
+        <div class="qpause-src">
+          <q>Moving away from the 72 hours self-sufficiency concept.</q>
+          <cite>Department of Defence briefing, October 2025</cite>
+        </div>
+        <button type="button" class="btn" data-go>Three more &rarr;</button>
       </div>
 
       <div class="q" data-q="7">
@@ -869,9 +938,9 @@ body,p{font-size:1.04rem}
         <h3>Does anyone aged 70 or over live in the house?</h3>
         <p class="qhint">Older people are most at risk of cold and of losing heat and medication in a long power cut.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">No</button>
-          <button type="button" class="opt" data-v="2">Yes, one person</button>
-          <button type="button" class="opt" data-v="3">Yes, and they live alone<small>The household the fire service goes looking for first in a long cut</small></button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24 24 10l16 14"/><path d="M12 24v16h24V24"/></svg><span class="opt-txt">No</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="22" cy="12" r="4"/><path d="M22 18v14M22 24l-5 4M22 24l5 4M18 42l4-10 4 10"/><path d="M33 18v24" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Yes, one person</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22 20 10l14 12"/><path d="M9 22v18h22V22"/><circle cx="20" cy="28" r="3"/><path d="M20 31v7" /><path d="M38 20v22" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Yes, and they live alone<small>The household the fire service goes looking for first in a long cut</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
       </div>
 
@@ -880,9 +949,9 @@ body,p{font-size:1.04rem}
         <h3>Do you have any pets or animals?</h3>
         <p class="qhint">Most plans forget them, and some human foods are dangerous to dogs and cats.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">No</button>
-          <button type="button" class="opt" data-v="2">A dog or a cat</button>
-          <button type="button" class="opt" data-v="3">Several animals, or farm animals<small>Water and feed for animals is its own calculation</small></button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24 24 10l16 14"/><path d="M12 24v16h24V24"/></svg><span class="opt-txt">No</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="18" r="4"/><circle cx="24" cy="14" r="4"/><circle cx="32" cy="18" r="4"/><path d="M24 24c-6 0-10 5-10 9a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4c0-4-4-9-10-9Z" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">A dog or a cat</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="16" r="3"/><circle cx="20" cy="13" r="3"/><circle cx="27" cy="16" r="3"/><path d="M20 21c-5 0-8 4-8 7a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3c0-3-3-7-8-7Z"/><path d="M34 26c0-4 3-7 7-7M34 26v12M41 19v19" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Several animals, or farm animals<small>Water and feed for animals is its own calculation</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
       </div>
 
@@ -891,9 +960,9 @@ body,p{font-size:1.04rem}
         <h3>Are there babies or small children in the house?</h3>
         <p class="qhint">Keeping a small child warm and fed changes the first hour completely.</p>
         <div class="opts">
-          <button type="button" class="opt" data-v="1">No</button>
-          <button type="button" class="opt" data-v="2">Yes, small children</button>
-          <button type="button" class="opt" data-v="3">Yes, a baby under two<small>Formula and warmth come first, and both need planning before the storm</small></button>
+          <button type="button" class="opt" data-v="1"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24 24 10l16 14"/><path d="M12 24v16h24V24"/></svg><span class="opt-txt">No</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="2"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="16" r="4"/><path d="M18 22v10M18 26l-4 3M18 26l4 3M15 42l3-8 3 8"/><circle cx="33" cy="22" r="3" stroke="#A8420E" stroke-width="4.4"/><path d="M33 26v7M33 29l-3 2M33 29l3 2M31 40l2-5 2 5" stroke="#A8420E" stroke-width="4.4"/></svg><span class="opt-txt">Yes, small children</span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
+          <button type="button" class="opt" data-v="3"><svg class="opt-ico" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#1C242B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12h10v5l3 4v17a3 3 0 0 1-3 3H19a3 3 0 0 1-3-3V21l3-4Z"/><path d="M18 28h12" stroke="#A8420E" stroke-width="4.4"/><path d="M22 12V8h4v4"/></svg><span class="opt-txt">Yes, a baby under two<small>Formula and warmth come first, and both need planning before the storm</small></span><span class="opt-go" aria-hidden="true">&rsaquo;</span></button>
         </div>
       </div>
 
@@ -1840,7 +1909,35 @@ body,p{font-size:1.04rem}
   // progresso que avanca muito no inicio (retencao)
   var PROG = [10, 32, 47, 59, 68, 76, 83, 89, 94, 98, 100];
   var pr = document.getElementById('pr');
+  /* a que secao pertence cada pergunta, pra barra de cima */
+  var SECAO = [0,0, 1,1,1, 2,2, 3,3,3];
+  function pintaSecoes(n){
+    var atual = SECAO[Math.min(n, SECAO.length-1)];
+    Array.prototype.forEach.call(document.querySelectorAll('#qsec span'), function(e){
+      var i = +e.getAttribute('data-sec');
+      e.classList.toggle('on', i === atual);
+      e.classList.toggle('done', i < atual);
+    });
+  }
+  /* as pausas de prova: aparecem antes da pergunta marcada, uma vez so */
+  var pausasVistas = {};
+  function pausaDe(n){
+    return document.querySelector('.qpause[data-pause="' + n + '"]');
+  }
   function show(n){
+    var pausa = pausaDe(n);
+    if(pausa && !pausasVistas[n]){
+      pausasVistas[n] = true;
+      qs.forEach(function(q){ q.classList.remove('on'); });
+      Array.prototype.forEach.call(document.querySelectorAll('.qpause'), function(e){ e.classList.remove('on'); });
+      pausa.classList.add('on');
+      pintaSecoes(n);
+      i = n;
+      back.hidden = true;
+      return;
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('.qpause'), function(e){ e.classList.remove('on'); });
+    pintaSecoes(n);
     qs.forEach(function(q){ q.classList.toggle('on', +q.getAttribute('data-q') === n); });
     var pct = PROG[Math.min(n, PROG.length-1)];
     pb.style.width = pct + '%';
@@ -1866,6 +1963,14 @@ body,p{font-size:1.04rem}
     });
   });
   back.addEventListener('click', function(){ if(i>0) show(i-1); });
+
+  /* "Keep going" das pausas */
+  Array.prototype.forEach.call(document.querySelectorAll('.qpause [data-go]'), function(b){
+    b.addEventListener('click', function(){
+      show(i);
+      document.getElementById('quiz').scrollIntoView({block:'start'});
+    });
+  });
 
   function score(){
     var base = ({1:0.25, 2:0.6, 3:1.5, 4:3.0})[a[3]] || 0.25;
