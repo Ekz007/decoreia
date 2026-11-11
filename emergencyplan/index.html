@@ -199,14 +199,6 @@ details summary{min-height:44px;padding:.55rem 0}
   .opt-txt small{font-size:.82rem}
 }
 
-/* ───── barra de progresso em secoes ───── */
-.qsec{display:flex;align-items:center;gap:.4rem;margin:0 0 .5rem}
-.qsec span{flex:1;font-family:"IBM Plex Mono",monospace;font-size:.56rem;letter-spacing:.09em;
-  text-transform:uppercase;color:var(--ink-3);text-align:center;padding-bottom:.35rem;
-  border-bottom:2px solid var(--rule);transition:color .2s,border-color .2s}
-.qsec span.on{color:var(--signal);border-bottom-color:var(--signal);font-weight:600}
-.qsec span.done{color:var(--ink-3);border-bottom-color:var(--signal)}
-
 /* ───── pausa de prova social no meio do quiz ───── */
 .qpause{display:none;text-align:center;padding:.5rem 0 0}
 .qpause.on{display:block}
@@ -822,12 +814,6 @@ body,p{font-size:1.04rem}
   </div>
   <div class="qs-stage">
     <div class="qcard" id="quizcard">
-      <div class="qsec" id="qsec">
-        <span data-sec="0">Your house</span>
-        <span data-sec="1">What you have</span>
-        <span data-sec="2">What happened</span>
-        <span data-sec="3">Who lives here</span>
-      </div>
       <div class="qbar"><span id="pb"></span></div>
       <div class="qprog"><span id="pl"></span><span id="pr"></span></div>
 
@@ -1909,16 +1895,6 @@ body,p{font-size:1.04rem}
   // progresso que avanca muito no inicio (retencao)
   var PROG = [10, 32, 47, 59, 68, 76, 83, 89, 94, 98, 100];
   var pr = document.getElementById('pr');
-  /* a que secao pertence cada pergunta, pra barra de cima */
-  var SECAO = [0,0, 1,1,1, 2,2, 3,3,3];
-  function pintaSecoes(n){
-    var atual = SECAO[Math.min(n, SECAO.length-1)];
-    Array.prototype.forEach.call(document.querySelectorAll('#qsec span'), function(e){
-      var i = +e.getAttribute('data-sec');
-      e.classList.toggle('on', i === atual);
-      e.classList.toggle('done', i < atual);
-    });
-  }
   /* as pausas de prova: aparecem antes da pergunta marcada, uma vez so */
   var pausasVistas = {};
   function pausaDe(n){
@@ -1931,13 +1907,11 @@ body,p{font-size:1.04rem}
       qs.forEach(function(q){ q.classList.remove('on'); });
       Array.prototype.forEach.call(document.querySelectorAll('.qpause'), function(e){ e.classList.remove('on'); });
       pausa.classList.add('on');
-      pintaSecoes(n);
       i = n;
       back.hidden = true;
       return;
     }
     Array.prototype.forEach.call(document.querySelectorAll('.qpause'), function(e){ e.classList.remove('on'); });
-    pintaSecoes(n);
     qs.forEach(function(q){ q.classList.toggle('on', +q.getAttribute('data-q') === n); });
     var pct = PROG[Math.min(n, PROG.length-1)];
     pb.style.width = pct + '%';
