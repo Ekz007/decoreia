@@ -1751,25 +1751,13 @@ body,p{font-size:1.04rem}
     <p>Two hours, one Saturday. Then it is done, and you can forget about it until the clocks change.</p>
     <div class="sheet" style="margin-top:2rem">
       <a class="btn" href="#quizcard" data-open-quiz>Build my family&rsquo;s plan &rarr;</a>
-      <p class="btn-sub">60-second check first, then your plan and instant access</p>
     </div>
   </div>
 </section>
 
-<div id="cbar" class="cbar" role="dialog" aria-label="Measurement">
-  <div class="cbar-in">
-    <p>We measure which advert brought you here, and nothing else. No profiling, no selling
-    your data, no advertising cookies unless you say yes. Decline and the page works exactly the same.</p>
-    <div class="cbar-btns">
-      <button type="button" id="cno" class="cbtn cbtn--ghost">Decline</button>
-      <button type="button" id="cyes" class="cbtn">Accept</button>
-    </div>
-  </div>
-</div>
 
 <footer>
   <div class="wrap">
-    <p class="legal-min">Price includes VAT. 60 day refund on request by email. &nbsp;&middot;&nbsp; <a href="legal/privacy">Privacy</a> &nbsp;&middot;&nbsp; <a href="legal/terms">Terms</a> &nbsp;&middot;&nbsp; <a href="legal/contact">Contact</a></p>
     <p class="legal-min">&copy; 2026 Synthor Tecnologia em Intelig&ecirc;ncia Artificial LTDA. All rights reserved.</p>
   </div>
 </footer>
@@ -1778,40 +1766,27 @@ body,p{font-size:1.04rem}
 (function(){
   var TOTAL = 10, a = {}, i = 0;   /* 10 perguntas, 0 a 9 */
 
-  /* ─── medicao. Enquanto META_PIXEL estiver vazio NADA carrega e a barra
-     de consentimento nem aparece: nao ha o que consentir. Preencher com o
-     id do pixel liga tudo de uma vez. ─── */
+  /* ─── medicao: so servidor. Sem pixel de navegador e sem cookie de
+     publicidade, por isso nao ha barra de consentimento. Os eventos saem
+     pela Conversions API, com o fbclid da URL como atribuicao. ─── */
   var META_PIXEL = '1676307384086334';
   var CAPI_URL = 'https://yreedufkyjcriwedmtkg.supabase.co/functions/v1/capi';
-  var CONSENT_KEY = 'br_consent';
-  function consentimento(){ try{ return localStorage.getItem(CONSENT_KEY); }catch(e){ return null; } }
-  function gravaConsentimento(v){ try{ localStorage.setItem(CONSENT_KEY, v); }catch(e){} }
 
-  function carregaPixel(){
-    if(!META_PIXEL || window.fbq) return;
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
-    (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    window.fbq('init', META_PIXEL);
-    evento('PageView', {});
-  }
-  /* eventos. Vao pelos dois caminhos com o MESMO event_id: o navegador
-     (pixel) e o servidor (CAPI). A Meta junta os dois em vez de contar duas
-     vezes. Se nao houve consentimento, nada sai. */
+  /* eventos: um caminho so, o servidor. */
   function cookie(n){
     var m = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)');
     return m ? m.pop() : '';
+  }
+  function fbcDaUrl(){
+    var m = location.search.match(/[?&]fbclid=([^&]+)/);
+    return m ? 'fb.1.' + Date.now() + '.' + m[1] : '';
   }
   function novoId(){
     return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
   }
   function evento(nome, dados){
-    if(consentimento() !== 'yes') return;
     var id = novoId();
     var d = dados || {};
-    if(window.fbq) window.fbq('track', nome, d, {eventID: id});
     try{
       fetch(CAPI_URL, {
         method: 'POST', keepalive: true,
@@ -1819,7 +1794,7 @@ body,p{font-size:1.04rem}
         body: JSON.stringify({
           event_name: nome, event_id: id,
           event_source_url: location.href,
-          fbp: cookie('_fbp'), fbc: cookie('_fbc'),
+          fbp: cookie('_fbp'), fbc: fbcDaUrl() || cookie('_fbc'),
           client_user_agent: navigator.userAgent,
           value: d.value, currency: d.currency,
           content_name: d.content_name, content_category: d.content_category
@@ -1827,20 +1802,9 @@ body,p{font-size:1.04rem}
       }).catch(function(){});
     }catch(e){}
   }
-  function barraConsentimento(){
-    var bar = document.getElementById('cbar');
-    if(!bar) return;
-    if(!META_PIXEL) return;                       /* nada a medir, nada a perguntar */
-    var c = consentimento();
-    if(c === 'yes'){ carregaPixel(); return; }
-    if(c === 'no') return;
-    bar.classList.add('on');
-    document.getElementById('cyes').addEventListener('click', function(){
-      gravaConsentimento('yes'); bar.classList.remove('on'); carregaPixel();
-    });
-    document.getElementById('cno').addEventListener('click', function(){
-      gravaConsentimento('no'); bar.classList.remove('on');
-    });
+  function medicao(){
+    if(!META_PIXEL) return;
+    evento('PageView', {});
   }
 
   /* ─── checkout: 5 copias do core no Digistore24, uma por segmento.
@@ -2016,7 +1980,7 @@ body,p{font-size:1.04rem}
   }
 
   wireBuy();
-  barraConsentimento();
+  medicao();
   show(0);
 
   /* ?preview=offer abre a tela da oferta direto, sem responder o quiz.
