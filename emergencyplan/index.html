@@ -199,6 +199,17 @@ details summary{min-height:44px;padding:.55rem 0}
   .opt-txt small{font-size:.82rem}
 }
 
+/* a comparacao: tres paises com numero, e a Irlanda com uma palavra */
+.qcmp{display:grid;gap:.45rem;text-align:left;margin:0 0 1.1rem}
+.qcmp div{display:flex;align-items:baseline;gap:.8rem;padding:.6rem .85rem;
+  border:1px solid var(--rule);border-radius:5px}
+.qcmp b{font-family:Archivo,sans-serif;font-size:1.15rem;font-weight:800;letter-spacing:-.02em;
+  color:var(--ink);white-space:nowrap;min-width:6.2rem}
+.qcmp span{font-size:.88rem;line-height:1.4;color:var(--ink-3)}
+.qcmp-us{border-color:var(--signal)!important;background:var(--signal-tint)}
+.qcmp-us b{color:var(--signal)}
+.qcmp-us span{color:var(--ink-2)}
+.qpause-foot{font-size:.92rem;line-height:1.5;color:var(--ink-2);margin:0;text-align:left}
 /* ───── pausa de prova social no meio do quiz ───── */
 .qpause{display:none;text-align:center;padding:.5rem 0 0}
 .qpause.on{display:block}
@@ -909,13 +920,16 @@ body,p{font-size:1.04rem}
       </div>
 
       <div class="qpause" data-pause="6">
-        <div class="qpause-n">0</div>
-        <p class="qpause-l">That is how many litres the Government booklet named. It went to 2.2
-        million homes and asked for &ldquo;an adequate supply&rdquo;.</p>
-        <div class="qpause-src">
-          <q>Moving away from the 72 hours self-sufficiency concept.</q>
-          <cite>Department of Defence briefing, October 2025</cite>
+        <p class="qpause-l" style="margin-bottom:1.1rem">Every government in Europe is telling
+        households the same thing. Only one of them forgot the number.</p>
+        <div class="qcmp">
+          <div><b>7 days</b><span>Norway, raised from three</span></div>
+          <div><b>9 litres</b><span>Sweden, water per person</span></div>
+          <div><b>3 days</b><span>European Commission</span></div>
+          <div class="qcmp-us"><b>&ldquo;adequate&rdquo;</b><span>Ireland, the booklet in your hall</span></div>
         </div>
+        <p class="qpause-foot">That word went to 2.2 million Irish homes in September. It is the
+        only one on this list you cannot put in a shopping basket.</p>
         <button type="button" class="btn" data-go>Three more &rarr;</button>
       </div>
 
