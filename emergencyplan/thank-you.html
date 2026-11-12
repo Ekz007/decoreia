@@ -34,17 +34,18 @@ p{font-size:1.1rem;line-height:1.55;margin:0;max-width:30ch}
 <!-- End of Digistore24 Trusted Badge Code -->
 <script>
 (function(){
-  /* Purchase na pagina de obrigado. Pixel + CAPI com o mesmo event_id.
-     So dispara com consentimento, a mesma escolha feita na landing. */
+  /* Purchase na pagina de obrigado. So servidor, pela Conversions API:
+     a landing nao carrega mais pixel de navegador e nao grava cookie de
+     publicidade, entao aqui tambem nao. O sinal de atribuicao vem do
+     fbclid que a landing empurrou pro parametro de tracking do
+     Digistore24 e que volta aqui no retorno do pedido. */
   var PIXEL = '1676307384086334';
   var CAPI  = 'https://yreedufkyjcriwedmtkg.supabase.co/functions/v1/capi';
-  var CHAVE = 'br_consent';
-
-  function consentiu(){ try{ return localStorage.getItem(CHAVE) === 'yes'; }catch(e){ return false; } }
-  function cookie(n){ var m = document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; }
-  if(!consentiu()) return;
+  if(!PIXEL) return;
 
   var P = new URLSearchParams(location.search);
+  function cookie(n){ var m = document.cookie.match('(^|;)\s*'+n+'\s*=\s*([^;]+)'); return m ? m.pop() : ''; }
+
   /* o Digistore24 manda os dados do pedido se "add order data to thank you
      page URL" estiver ligado. Sem isso, cai no valor do core. */
   var valor  = parseFloat(P.get('amount') || P.get('order_amount') || '47') || 47;
@@ -52,15 +53,14 @@ p{font-size:1.1rem;line-height:1.55;margin:0;max-width:30ch}
   var pedido = P.get('order_id') || P.get('purchase_id') || '';
   var id = 'p' + (pedido || Date.now().toString(36) + Math.random().toString(36).slice(2,8));
 
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
-  (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  window.fbq('init', PIXEL);
-  window.fbq('track', 'PageView');
-  window.fbq('track', 'Purchase', {value: valor, currency: moeda,
-    content_name: 'The Irish Emergency Plan'}, {eventID: id});
+  /* o tracking volta como tracking, campaignkey ou cid dependendo do
+     ajuste do produto. Em qualquer um deles, o pedaco depois de "fbc-" e
+     o fbclid original do anuncio. */
+  function fbcDoRetorno(){
+    var t = P.get('tracking') || P.get('campaignkey') || P.get('cid') || '';
+    var m = /fbc-([A-Za-z0-9_.-]+)/.exec(t);
+    return m ? 'fb.1.' + Date.now() + '.' + m[1] : '';
+  }
 
   try{
     fetch(CAPI, {method:'POST', keepalive:true,
@@ -68,7 +68,7 @@ p{font-size:1.1rem;line-height:1.55;margin:0;max-width:30ch}
       body: JSON.stringify({event_name:'Purchase', event_id:id,
         event_source_url: location.href, value: valor, currency: moeda,
         order_id: pedido, content_name:'The Irish Emergency Plan',
-        fbp: cookie('_fbp'), fbc: cookie('_fbc'),
+        fbp: cookie('_fbp'), fbc: fbcDoRetorno() || cookie('_fbc'),
         client_user_agent: navigator.userAgent})
     }).catch(function(){});
   }catch(e){}
