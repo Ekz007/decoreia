@@ -760,11 +760,28 @@ body,p{font-size:1.04rem}
 .offer-box{max-width:34rem;margin:2.4rem auto 0;padding:2rem 1.6rem 1.7rem;
   border:2px dashed var(--rule-strong)!important;border-radius:6px;background:var(--paper)}
 .offer-box .price{margin:0 0 1.1rem}
-.offer-guar{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.8rem!important;
-  line-height:1.55;color:var(--ink-3);text-align:center;max-width:27rem;
-  margin:1.2rem auto 0;padding-top:1.1rem;
-  border-top:1px dashed var(--rule-strong)!important}
-.offer-guar strong{color:var(--ink-2);font-weight:600}
+/* A garantia e o unico argumento que tira o risco todo do comprador,
+   entao ela para de ser nota de rodape e vira selo. */
+.guar{display:flex;align-items:center;gap:1.1rem;text-align:left;
+  max-width:30rem;margin:1.4rem auto 0;padding:1.1rem 1.2rem;
+  border:1.5px solid var(--signal);border-radius:6px;
+  background:var(--signal-tint)}
+.guar-seal{flex:0 0 auto;width:4.4rem;height:4.4rem;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border:2px solid var(--signal);background:var(--paper);color:var(--signal)}
+.guar-seal b{font-family:Archivo,sans-serif;font-size:1.65rem;font-weight:800;
+  line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.guar-seal span{font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.52rem;letter-spacing:.16em;margin-top:.14rem}
+.guar-t{font-family:Archivo,sans-serif;font-size:1rem;font-weight:700;
+  letter-spacing:-.01em;color:var(--ink);margin:0 0 .3rem;line-height:1.25}
+.guar-l{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.76rem;
+  line-height:1.6;color:var(--ink-3);margin:0}
+.guar-l b{color:var(--ink-2);font-weight:600}
+@media(max-width:480px){
+  .guar{flex-direction:column;text-align:center;gap:.85rem;padding:1.2rem 1rem}
+  .guar-l{font-size:.74rem}
+}
 @media(max-width:560px){.offer-box{padding:1.5rem 1.1rem 1.3rem}}
 
 /* Os quatro campos eram quatro linhas coladas. Viram quatro faixas com ar
@@ -1146,8 +1163,14 @@ body,p{font-size:1.04rem}
         </div>
         <a class="btn" href="https://www.digistore24.com/product/761393" data-buy>Get instant access &rarr;</a>
         <p class="btn-sub">Card &middot; Apple Pay &middot; Google Pay &middot; delivered to your inbox in minutes</p>
-        <p class="offer-guar"><strong>60 day refund, no questions asked.</strong>
-          Four times what the law requires. One email to us, and no form to fill in.</p>
+        <div class="guar">
+          <div class="guar-seal" aria-hidden="true"><b>60</b><span>DAYS</span></div>
+          <div>
+            <p class="guar-t">Refund for 60 days, no questions asked.</p>
+            <p class="guar-l"><b>Four times what the law requires.</b><br>
+            One email to us, and no form to fill in.</p>
+          </div>
+        </div>
       </div>
       </div>
   </div>
