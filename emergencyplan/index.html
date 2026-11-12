@@ -1857,7 +1857,11 @@ body,p{font-size:1.04rem}
   function trackingKey(seg){
     var c = (PARAMS.get('utm_campaign') || PARAMS.get('utm_source') || 'direct')
               .toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,40);
-    return (c + '_' + seg).slice(0,60);
+    /* o fbclid viaja junto no tracking do Digistore24 e volta na pagina de
+       obrigado. E o unico sinal de atribuicao que sobra pro Purchase, ja
+       que nao ha cookie de publicidade em lugar nenhum do funil. */
+    var f = (PARAMS.get('fbclid') || '').replace(/[^A-Za-z0-9_.-]/g,'').slice(0,80);
+    return (c + '_' + seg + (f ? '__fbc-' + f : '')).slice(0,180);
   }
   function checkoutUrl(){
     var seg = segment(), q = ['tracking=' + encodeURIComponent(trackingKey(seg))];
