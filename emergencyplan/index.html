@@ -1807,6 +1807,10 @@ body,p{font-size:1.04rem}
   function novoId(){
     return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
   }
+  /* sid: marca desta visita. Vai no tracking do Digistore24 e volta no aviso
+     de pagamento (funcao ds24-ipn), que acha IP, navegador e clique guardados
+     no InitiateCheckout e devolve a compra para o anuncio certo. */
+  var SID = (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)).replace(/[^a-z0-9]/g,'');
   function evento(nome, dados){
     var id = novoId();
     var d = dados || {};
@@ -1820,7 +1824,8 @@ body,p{font-size:1.04rem}
           fbp: cookie('_fbp'), fbc: fbcDaUrl() || cookie('_fbc'),
           client_user_agent: navigator.userAgent,
           value: d.value, currency: d.currency,
-          content_name: d.content_name, content_category: d.content_category
+          content_name: d.content_name, content_category: d.content_category,
+          sid: SID
         })
       }).catch(function(){});
     }catch(e){}
@@ -1861,7 +1866,8 @@ body,p{font-size:1.04rem}
        obrigado. E o unico sinal de atribuicao que sobra pro Purchase, ja
        que nao ha cookie de publicidade em lugar nenhum do funil. */
     var f = (PARAMS.get('fbclid') || '').replace(/[^A-Za-z0-9_.-]/g,'').slice(0,80);
-    return (c + '_' + seg + (f ? '__fbc-' + f : '')).slice(0,180);
+    /* o sid vai ANTES do fbclid para nunca ser cortado pelo limite */
+    return (c + '_' + seg + '__s-' + SID + (f ? '__fbc-' + f : '')).slice(0,180);
   }
   function checkoutUrl(){
     var seg = segment(), q = ['tracking=' + encodeURIComponent(trackingKey(seg))];
