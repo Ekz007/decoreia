@@ -46,7 +46,7 @@
       if(src==="demo"&&P==="b2b")ev("demo",{plan:plan});
       if(pay&&C.checkoutUrl){location.href=C.checkoutUrl+(C.checkoutUrl.indexOf("?")>-1?"&":"?")+"plan="+encodeURIComponent(plan)+"&utm_campaign="+encodeURIComponent(utm.utm_campaign)}
       else if(pay){finish("Checkout do Pix ainda não configurado (EP.checkoutUrl). Seu cadastro foi salvo.")}
-      else finish("Pronto. Você entrou na lista e a gente chama no WhatsApp em até 24 horas.")})});
+      else finish(C.doneMsg||"Pronto. Você entrou na lista e a gente chama no WhatsApp em até 24 horas.")})});
   /* reserva paga: o checkout deve voltar para ?paid=1; o evento definitivo deve vir do webhook, este é só reforço */
   if(q.get("paid")==="1")ev("purchase",{value:19,currency:"BRL"},true);
 })();

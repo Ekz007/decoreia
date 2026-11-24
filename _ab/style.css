@@ -95,3 +95,20 @@ footer a{margin-right:18px}
 
 .msg.ok{background:rgba(88,246,177,.14)}.big.hl,.calc .big{background:linear-gradient(transparent 62%,var(--lime) 62%);display:inline-block}.done .big{color:var(--ink)}.card.plan.hot .price{background:none}
 .calc .out .mono{display:block}
+
+.shot{border:1px solid rgba(1,1,2,.14);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(98,70,212,.18)}
+.shot .bar{display:flex;gap:6px;padding:11px 14px;background:#f4f2fb;border-bottom:1px solid var(--line)}
+.shot .bar i{width:10px;height:10px;border-radius:50%;background:rgba(1,1,2,.18)}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{padding:14px 18px;font-size:15px;color:var(--mute);border-top:1px solid var(--line)}
+.shot figcaption b{color:var(--ink);font-weight:500;display:block;font-size:17px}
+.hero.b .wrap{grid-template-columns:.9fr 1.1fr}
+.mod{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:72px}
+.mod.rev .shot{order:-1}
+@media(max-width:860px){.hero.b .wrap,.mod{grid-template-columns:minmax(0,1fr)}.mod.rev .shot{order:0}.mod{gap:28px;margin-top:48px}}
+
+.phone.l{--ink:#010102;--mute:#5a566e;--line:rgba(1,1,2,.12);background:#fff;border:1px solid rgba(1,1,2,.14);box-shadow:0 30px 80px rgba(98,70,212,.2)}
+.phone.l .mono{color:var(--lavt)}.phone.l .big{color:var(--ink)}
+.phone.l .msg.in{background:#f1eefb}.phone.l .msg.out{background:var(--lav);color:#010102}
+.phone.l .msg.ok{background:rgba(88,246,177,.3);border:1px solid rgba(1,1,2,.15);color:#010102}
+.phone.l .panel-row span:last-child{color:var(--mute)}
