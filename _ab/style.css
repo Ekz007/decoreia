@@ -167,3 +167,20 @@ footer a{margin-right:18px}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.chips span{border:1px solid rgba(1,1,2,.18);border-radius:999px;padding:9px 16px;font-size:14px;background:#fff}
 .free{display:inline-block;background:var(--lime);color:#010102;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:500;margin-bottom:10px}
 @media(max-width:860px){.hero.c .wrap,.step,.sim{grid-template-columns:minmax(0,1fr)!important}.step{gap:28px;padding:40px 0}.step.rev .win,.step.rev .ph,.step.rev .vis{order:0}.herovis .ph{position:relative;right:auto;bottom:auto;margin:-40px auto 0}.herovis .win{margin-right:0}.u2{grid-template-columns:1fr}}
+
+/* ===== frames flutuando ===== */
+.win,.ph,.shot{border:1px solid rgba(1,1,2,.10);
+ box-shadow:0 0 0 7px rgba(173,150,241,.10),0 2px 3px rgba(1,1,2,.05),0 18px 32px -8px rgba(98,70,212,.22),0 48px 80px -16px rgba(98,70,212,.30),0 90px 140px -30px rgba(1,1,2,.22);
+ will-change:transform}
+.ph{box-shadow:0 2px 3px rgba(1,1,2,.2),0 24px 40px -8px rgba(98,70,212,.45),0 60px 100px -20px rgba(1,1,2,.35)}
+.vis{position:relative;padding-bottom:34px}
+.vis::after{content:"";position:absolute;left:12%;right:12%;bottom:4px;height:26px;border-radius:50%;background:radial-gradient(closest-side,rgba(98,70,212,.32),transparent);filter:blur(6px);z-index:0}
+.vis .win,.vis .ph{position:relative;z-index:1}
+@keyframes flt{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-12px) rotate(var(--r,0deg))}}
+.step .vis .win,.step .vis .ph{animation:flt 7s ease-in-out infinite}
+.step:nth-child(odd) .vis .win{--r:-.6deg}.step:nth-child(even) .vis .win{--r:.6deg;animation-delay:-3s}
+.herovis .win{animation:flt 8s ease-in-out infinite;--r:-.5deg}
+.herovis .ph{animation:flt 6s ease-in-out infinite -2s;--r:2deg}
+.win{transition:box-shadow .3s}
+.win:hover{box-shadow:0 0 0 9px rgba(173,150,241,.16),0 24px 40px -8px rgba(98,70,212,.3),0 70px 110px -16px rgba(98,70,212,.36),0 110px 160px -30px rgba(1,1,2,.26)}
+@media(prefers-reduced-motion:reduce){.step .vis .win,.step .vis .ph,.herovis .win,.herovis .ph{animation:none}}
