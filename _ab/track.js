@@ -40,12 +40,12 @@
     cb&&cb(d)}
   function finish(msg){f.style.display="none";var d=document.getElementById("done");d.style.display="block";d.querySelector("p").textContent=msg}
   f.addEventListener("submit",function(e){e.preventDefault();if(!f.reportValidity())return;
-    var pay=e.submitter&&e.submitter.value==="pay";
-    save({reserva:pay?"sim":"nao"},function(d){
+    var sv=e.submitter&&e.submitter.value,pay=sv==="pay"||sv==="go";
+    save({reserva:sv==="pay"?"sim":"nao"},function(d){
       ev("lead",{plan:plan,reserva:d.reserva});
       if(src==="demo"&&P==="b2b")ev("demo",{plan:plan});
       if(pay&&C.checkoutUrl){location.href=C.checkoutUrl+(C.checkoutUrl.indexOf("?")>-1?"&":"?")+"plan="+encodeURIComponent(plan)+"&utm_campaign="+encodeURIComponent(utm.utm_campaign)}
-      else if(pay){finish("Checkout do Pix ainda não configurado (EP.checkoutUrl). Seu cadastro foi salvo.")}
+      else if(pay&&sv==="pay"){finish("Checkout do Pix ainda não configurado (EP.checkoutUrl). Seu cadastro foi salvo.")}
       else finish(C.doneMsg||"Pronto. Você entrou na lista e a gente chama no WhatsApp em até 24 horas.")})});
   /* reserva paga: o checkout deve voltar para ?paid=1; o evento definitivo deve vir do webhook, este é só reforço */
   if(q.get("paid")==="1")ev("purchase",{value:19,currency:"BRL"},true);
