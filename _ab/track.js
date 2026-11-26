@@ -13,7 +13,7 @@
   if(C.clarity){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script",C.clarity)}
   var fired={};
   function ev(name,data,once,eid){if(once&&fired[name])return;fired[name]=1;var full=P+"_"+name;
-    if(window.fbq){fbq("trackCustom",full,data||{},eid?{eventID:eid+"_c"}:undefined);if(name==="lead")fbq("track","Lead",data||{},{eventID:eid})}
+    if(window.fbq){fbq("trackCustom",full,data||{},eid?{eventID:eid+"_c"}:undefined);var SD={pricing_view:"ViewContent",modal_open:"InitiateCheckout",lead:"Lead",lead_qualificado:"CompleteRegistration"}[name];if(SD)fbq("track",SD,data||{},eid?{eventID:eid}:undefined)}
     if(window.gtag)gtag("event",full,data||{});
     if(window.clarity)clarity("event",full);
     if(window.lintrk&&C.linkedinConv&&C.linkedinConv[name])lintrk("track",{conversion_id:C.linkedinConv[name]});
@@ -23,9 +23,13 @@
   ev("view",{},true);
   var pr=document.getElementById("planos");
   if(pr&&"IntersectionObserver"in window){new IntersectionObserver(function(es,o){es.forEach(function(e){if(e.isIntersecting){ev("pricing_view",{},true);o.disconnect()}})},{threshold:.35}).observe(pr)}
+  /* engajamento: 30s na página e 50%/90% de rolagem */
+  setTimeout(function(){ev("engaged_30s",{},true)},30000);
+  var sc=function(){var p=(scrollY+innerHeight)/document.documentElement.scrollHeight;if(p>=.5)ev("scroll_50",{},true);if(p>=.9){ev("scroll_90",{},true);removeEventListener("scroll",sc)}};
+  addEventListener("scroll",sc,{passive:true});
   /* modal */
   var m=document.getElementById("modal"),f=document.getElementById("lead-form"),plan="",src="";
-  function open(p,s){plan=p||"";src=s||"";m.classList.add("open");document.body.style.overflow="hidden";var t=document.getElementById("plan-name");if(t)t.textContent=plan?("Plano escolhido: "+plan):"";setTimeout(function(){f.querySelector("input").focus()},50)}
+  function open(p,s){ev("modal_open",{plan:p||"",origem:s||""},true);plan=p||"";src=s||"";m.classList.add("open");document.body.style.overflow="hidden";var t=document.getElementById("plan-name");if(t)t.textContent=plan?("Plano escolhido: "+plan):"";setTimeout(function(){f.querySelector("input").focus()},50)}
   function close(){m.classList.remove("open");document.body.style.overflow=""}
   document.querySelectorAll("[data-plan]").forEach(function(b){b.addEventListener("click",function(){var p=b.getAttribute("data-plan");ev("price_click",{plan:p});open(p,"preco")})});
   document.querySelectorAll("[data-goto]").forEach(function(b){b.addEventListener("click",function(){ev("cta_click",{},true)})});
@@ -35,7 +39,11 @@
   document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
   function maskPhone(el){el.addEventListener("input",function(){var d=el.value.replace(/\D/g,"").slice(0,11);el.value=d.length>10?d.replace(/(\d{2})(\d{5})(\d{4})/,"($1) $2-$3"):d.replace(/(\d{2})(\d{4})(\d{0,4})/,"($1) $2-$3").replace(/-$/,"")})}
   maskPhone(f.querySelector("[name=whatsapp]"));
-  function save(extra,cb){var d=Object.fromEntries(new FormData(f).entries());d.plano=plan;d.origem=src;d.variante=P;d.pagina=location.pathname;d.quando=new Date().toISOString();d.event_id="lead_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);var ck=function(n){var m=document.cookie.match("(?:^|; )"+n+"=([^;]*)");return m?m[1]:""};d.fbp=ck("_fbp");d.fbc=ck("_fbc");d.ua=navigator.userAgent;d.url=location.href;Object.assign(d,utm,extra||{});
+  function qual(d){var t="C",v=100;
+    if(P==="b2b"){var m={"Até 50":["C",4740],"51 a 150":["B",11940],"151 a 400":["A",26940],"Mais de 400":["A",26940]}[d.clientes];if(m){t=m[0];v=m[1]}else{v=4740}}
+    else{var f=d.faturamento||"",n=d.funcionarios||"";if(/1 milhão|360 mil a/.test(f)||/6 a 20|Mais de 20/.test(n)){t="A";v=815}else if(/81 mil a/.test(f)||/1 a 5/.test(n)){t="B";v=400}else{t="C";v=100}}
+    return {t:t,v:v}}
+  function save(extra,cb){var d=Object.fromEntries(new FormData(f).entries());d.plano=plan;d.origem=src;d.variante=P;d.pagina=location.pathname;d.quando=new Date().toISOString();d.event_id="lead_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);var ck=function(n){var m=document.cookie.match("(?:^|; )"+n+"=([^;]*)");return m?m[1]:""};var Q=qual(d);d.qualificacao=Q.t;d.valor=Q.v;d.fbp=ck("_fbp");d.fbc=ck("_fbc");d.ua=navigator.userAgent;d.url=location.href;Object.assign(d,utm,extra||{});
     if(C.leadEndpoint){fetch(C.leadEndpoint,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(d),keepalive:true}).catch(function(){})}
     try{var a=JSON.parse(localStorage.getItem("ep_leads")||"[]");a.push(d);localStorage.setItem("ep_leads",JSON.stringify(a))}catch(e){}
     cb&&cb(d)}
@@ -43,7 +51,7 @@
   f.addEventListener("submit",function(e){e.preventDefault();if(!f.reportValidity())return;
     var sv=e.submitter&&e.submitter.value,pay=sv==="pay"||sv==="go";
     save({reserva:sv==="pay"?"sim":"nao"},function(d){
-      ev("lead",{plan:plan,reserva:d.reserva},false,d.event_id);
+      var ld={plan:plan,reserva:d.reserva,value:d.valor,currency:"BRL",qualificacao:d.qualificacao,clientes:d.clientes||"",faturamento:d.faturamento||"",funcionarios:d.funcionarios||""};ev("lead",ld,false,d.event_id);if(d.qualificacao!=="C")ev("lead_qualificado",ld,false,d.event_id+"_q");if(d.qualificacao==="A")ev("lead_premium",ld,false,d.event_id+"_a");
       if(src==="demo"&&P==="b2b")ev("demo",{plan:plan});
       if(pay&&C.checkoutUrl){location.href=C.checkoutUrl+(C.checkoutUrl.indexOf("?")>-1?"&":"?")+"plan="+encodeURIComponent(plan)+"&utm_campaign="+encodeURIComponent(utm.utm_campaign)}
       else if(pay&&sv==="pay"){finish("Checkout do Pix ainda não configurado (EP.checkoutUrl). Seu cadastro foi salvo.")}
