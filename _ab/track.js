@@ -12,8 +12,8 @@
   /* Clarity */
   if(C.clarity){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script",C.clarity)}
   var fired={};
-  function ev(name,data,once){if(once&&fired[name])return;fired[name]=1;var full=P+"_"+name;
-    if(window.fbq)fbq("trackCustom",full,data||{});
+  function ev(name,data,once,eid){if(once&&fired[name])return;fired[name]=1;var full=P+"_"+name;
+    if(window.fbq){fbq("trackCustom",full,data||{},eid?{eventID:eid+"_c"}:undefined);if(name==="lead")fbq("track","Lead",data||{},{eventID:eid})}
     if(window.gtag)gtag("event",full,data||{});
     if(window.clarity)clarity("event",full);
     if(window.lintrk&&C.linkedinConv&&C.linkedinConv[name])lintrk("track",{conversion_id:C.linkedinConv[name]});
@@ -35,7 +35,7 @@
   document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
   function maskPhone(el){el.addEventListener("input",function(){var d=el.value.replace(/\D/g,"").slice(0,11);el.value=d.length>10?d.replace(/(\d{2})(\d{5})(\d{4})/,"($1) $2-$3"):d.replace(/(\d{2})(\d{4})(\d{0,4})/,"($1) $2-$3").replace(/-$/,"")})}
   maskPhone(f.querySelector("[name=whatsapp]"));
-  function save(extra,cb){var d=Object.fromEntries(new FormData(f).entries());d.plano=plan;d.origem=src;d.variante=P;d.pagina=location.pathname;d.quando=new Date().toISOString();Object.assign(d,utm,extra||{});
+  function save(extra,cb){var d=Object.fromEntries(new FormData(f).entries());d.plano=plan;d.origem=src;d.variante=P;d.pagina=location.pathname;d.quando=new Date().toISOString();d.event_id="lead_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);var ck=function(n){var m=document.cookie.match("(?:^|; )"+n+"=([^;]*)");return m?m[1]:""};d.fbp=ck("_fbp");d.fbc=ck("_fbc");d.ua=navigator.userAgent;d.url=location.href;Object.assign(d,utm,extra||{});
     if(C.leadEndpoint){fetch(C.leadEndpoint,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(d),keepalive:true}).catch(function(){})}
     try{var a=JSON.parse(localStorage.getItem("ep_leads")||"[]");a.push(d);localStorage.setItem("ep_leads",JSON.stringify(a))}catch(e){}
     cb&&cb(d)}
@@ -43,7 +43,7 @@
   f.addEventListener("submit",function(e){e.preventDefault();if(!f.reportValidity())return;
     var sv=e.submitter&&e.submitter.value,pay=sv==="pay"||sv==="go";
     save({reserva:sv==="pay"?"sim":"nao"},function(d){
-      ev("lead",{plan:plan,reserva:d.reserva});
+      ev("lead",{plan:plan,reserva:d.reserva},false,d.event_id);
       if(src==="demo"&&P==="b2b")ev("demo",{plan:plan});
       if(pay&&C.checkoutUrl){location.href=C.checkoutUrl+(C.checkoutUrl.indexOf("?")>-1?"&":"?")+"plan="+encodeURIComponent(plan)+"&utm_campaign="+encodeURIComponent(utm.utm_campaign)}
       else if(pay&&sv==="pay"){finish("Checkout do Pix ainda não configurado (EP.checkoutUrl). Seu cadastro foi salvo.")}
