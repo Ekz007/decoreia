@@ -28,6 +28,7 @@
   function open(p,s){plan=p||"";src=s||"";m.classList.add("open");document.body.style.overflow="hidden";var t=document.getElementById("plan-name");if(t)t.textContent=plan?("Plano escolhido: "+plan):"";setTimeout(function(){f.querySelector("input").focus()},50)}
   function close(){m.classList.remove("open");document.body.style.overflow=""}
   document.querySelectorAll("[data-plan]").forEach(function(b){b.addEventListener("click",function(){var p=b.getAttribute("data-plan");ev("price_click",{plan:p});open(p,"preco")})});
+  document.querySelectorAll("[data-goto]").forEach(function(b){b.addEventListener("click",function(){ev("cta_click",{},true)})});
   document.querySelectorAll("[data-gancho]").forEach(function(b){b.addEventListener("click",function(){ev("gancho_click",{});open("","gancho")})});
   document.querySelectorAll("[data-demo]").forEach(function(b){b.addEventListener("click",function(){open(b.getAttribute("data-demo")||"","demo")})});
   m.addEventListener("click",function(e){if(e.target===m||e.target.classList.contains("x"))close()});

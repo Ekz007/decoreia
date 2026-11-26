@@ -291,3 +291,4 @@ footer a{margin-right:18px}
 @media(max-width:860px){.xi{grid-template-columns:36px minmax(0,1fr)}}
 .xi .tabs span{white-space:nowrap;padding:4px 7px}.xi .tabs{gap:2px;padding:10px 6px 8px}
 @media(max-width:860px){.xtab.hm th:nth-child(2),.xtab.hm td:nth-child(2){display:none}}
+section[id]{scroll-margin-top:72px}
